@@ -40,7 +40,7 @@ function handleEvent(event) {
     if (event.type !== 'message' || event.message.type !== 'text') {
         return Promise.resolve(null);
     }
-    client.replyMessage(event.replyToken, { type: 'text', 'text': e.message});
+    client.replyMessage(event.replyToken, { type: 'text', 'text': event.message.text});
 }
 
 // catch 404 and forward to error handler
