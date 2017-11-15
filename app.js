@@ -1,3 +1,10 @@
+const config = {
+    channelAccessToken: process.env.CHANNEL_SECRET,
+    channelSecret: process.env.CHANNEL_ACCESS_TOKEN
+};
+
+const line = require('@line/bot-sdk');
+const client = new line.Client(config);
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -24,6 +31,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+
+app.post('/webhook', line.middleware(config), (req, res) => {
+    res.json(req.body.events.map(handleEvent))
+});
+
+function handleEvent(event) {
+    if (event.type !== 'message' || event.message.type !== 'text') {
+        return Promise.resolve(null);
+    }
+    client.replyMessage(event.replyToken, { type: 'text', 'text': e.message});
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
