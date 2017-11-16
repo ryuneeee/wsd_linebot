@@ -22,5 +22,5 @@ $ npm start
 
 ### Webhook URI
 ```
-https://{your.domain.com}/bot
+https://your.domain.com/bot
 ```
