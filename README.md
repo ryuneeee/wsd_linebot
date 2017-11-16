@@ -5,6 +5,7 @@ Javascript document type LINE bot with Node.js sandbox VM based.
 Installation
 ---
 ```bash
+$ git clone https://github.com/ryuneeee/wsd_linebot
 $ npm install
 ```
 
