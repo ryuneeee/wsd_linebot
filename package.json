@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "PORT=5000 node ./bin/www"
   },
   "dependencies": {
     "@line/bot-sdk": "^5.0.1",
