@@ -13,11 +13,14 @@ $ npm install
 
 Configuration & start
 ---
+
+You can find tokens in [this page](https://developers.line.me/console/)
 ```bash
 $ export CHANNEL_SECRET=YOUR_CHANNEL_SECRET
 $ export CHANNEL_ACCESS_TOKEN=YOUR_CHANNEL_ACCESS_TOKEN
 $ npm start
 ```
+
 
 Webhook URI
 ---
