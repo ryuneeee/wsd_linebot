@@ -6,6 +6,7 @@ Installation
 ---
 ```bash
 $ git clone https://github.com/ryuneeee/wsd_linebot
+$ cd wsd_linebot
 $ npm install
 ```
 
