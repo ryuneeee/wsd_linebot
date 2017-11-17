@@ -19,6 +19,17 @@ $ export CHANNEL_ACCESS_TOKEN=YOUR_CHANNEL_ACCESS_TOKEN
 $ npm start
 ```
 
+### Background start
+Using forever.
+```bash
+$ sudo npm install forever --global
+$ PORT=5000 forever start bin/www
+$ ps ax | grep node
+ 7651 ?        Ssl    0:00 /usr/bin/node /usr/lib/node_modules/forever/bin/monitor bin/www
+ 7657 ?        Sl     0:00 /usr/bin/node /home/ubuntu/wsd_linebot/bin/www
+ 7669 pts/0    R+     0:00 grep --color=auto node
+```
+
 
 ### Webhook URI
 ```
