@@ -1,5 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const domain = require('domain').create();
+const express = require('express');
+const cheerio = require('cheerio');
+const router = express.Router();
 
 const config = {
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
@@ -24,7 +26,7 @@ Function.prototype.toString = function(){
 
 // require module wrapper
 const whiteRequire = function(moduleName){
-    let whitelist = ['http'];
+    let whitelist = ['request', 'cheerio'];
     if(whitelist.includes(moduleName)) {
         return require(moduleName);
     }else{
@@ -54,6 +56,7 @@ function handleEvent(event) {
     let ctxId = getCtxId(event);
     let context = getContext(ctxId);
     const reply = function (message) {
+        if(!(message instanceof String)) message = String(message);
         client.pushMessage(ctxId, {type: 'text', 'text': message});
     };
 
@@ -71,14 +74,18 @@ function handleEvent(event) {
             getValue: function(k) { return context.get(k); },
             delValue: function(k) { context.delete(k); }
         };
-        try {
+
+        // http://programmingsummaries.tistory.com/375
+        domain.on('error', (err) => {
+            client.replyMessage(event.replyToken, {type:'text', text: err.message});
+        });
+
+        domain.run(function(){
             const script = new vm.Script(code);
             script.runInNewContext(sandbox, {timeout: timeout, displayErrors: true});
-        } catch (e) {
-            client.replyMessage(event.replyToken, { type: 'text', 'text': e.message});
-        }
+
+        });
     }
 }
-
 
 module.exports = router;
