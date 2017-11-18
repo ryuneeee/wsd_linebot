@@ -75,16 +75,18 @@ function handleEvent(event) {
             delValue: function(k) { context.delete(k); }
         };
 
-        // http://programmingsummaries.tistory.com/375
-        domain.on('error', (err) => {
-            client.replyMessage(event.replyToken, {type:'text', text: err.message});
-        });
-
-        domain.run(function(){
-            const script = new vm.Script(code);
-            script.runInNewContext(sandbox, {timeout: timeout, displayErrors: true});
-
-        });
+        try {
+            // http://programmingsummaries.tistory.com/375
+            domain.on('error', (err) => {
+                client.replyMessage(event.replyToken, {type:'text', text: err.message});
+            });
+            domain.run(function(){
+                const script = new vm.Script(code);
+                script.runInNewContext(sandbox, {timeout: timeout, displayErrors: true});
+            });
+        } catch (e) {
+            reply(e);
+        }
     }
 }
 
