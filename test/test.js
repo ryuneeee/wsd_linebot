@@ -1,8 +1,11 @@
-let request = require('request');
-var cheerio = require('cheerio');
-request('http://music.naver.com', function (error, response, body) {
-    let $ = cheerio.load(body);
-    $(".album>a").toArray().forEach(function(e){
-        console.log(e.children[0].data);
-    });
+const schedule = require('node-schedule');
+
+// var rule = new schedule.RecurrenceRule();
+// rule.minute = 1;
+//
+// var j = schedule.scheduleJob(rule, function(){
+//     console.log('The answer to life, the universe, and everything!');
+// });
+let j = schedule.scheduleJob("*/1 * * * *", function(){
+    console.log('The answer to life, the universe, and everything!');
 });

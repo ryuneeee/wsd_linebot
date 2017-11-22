@@ -62,7 +62,8 @@ function handleEvent(event) {
     };
 
     if (event.message.text[0] === '*') {
-        schedule.scheduleJob('*/1 * * * *', extracted());
+        schedule.scheduleJob('*/1 * * * *', extracted);
+
     }
 
     if (event.message.text[0] === '>') {
