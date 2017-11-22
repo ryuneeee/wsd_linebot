@@ -1,6 +1,7 @@
 const domain = require('domain').create();
 const express = require('express');
 const cheerio = require('cheerio');
+const schedule = require('node-schedule');
 const router = express.Router();
 
 const config = {
@@ -60,7 +61,15 @@ function handleEvent(event) {
         client.pushMessage(ctxId, {type: 'text', 'text': message});
     };
 
+    if (event.message.text[0] === '*') {
+        schedule.scheduleJob('1 * * * *', extracted());
+    }
+
     if (event.message.text[0] === '>') {
+        extracted();
+    }
+
+    function extracted() {
         let code = event.message.text.substring(1);
 
         code = '(function(){\n' + code + '\n})();';
@@ -70,17 +79,23 @@ function handleEvent(event) {
             event: event,
             message: event.message,
             reply: reply,
-            setValue: function(k, v) { context.set(k, v); },
-            getValue: function(k) { return context.get(k); },
-            delValue: function(k) { context.delete(k); }
+            setValue: function (k, v) {
+                context.set(k, v);
+            },
+            getValue: function (k) {
+                return context.get(k);
+            },
+            delValue: function (k) {
+                context.delete(k);
+            }
         };
 
         try {
             // http://programmingsummaries.tistory.com/375
             domain.on('error', (err) => {
-                client.replyMessage(event.replyToken, {type:'text', text: err.message});
+                client.replyMessage(event.replyToken, {type: 'text', text: err.message});
             });
-            domain.run(function(){
+            domain.run(function () {
                 const script = new vm.Script(code);
                 script.runInNewContext(sandbox, {timeout: timeout, displayErrors: true});
             });
@@ -88,6 +103,7 @@ function handleEvent(event) {
             reply(e);
         }
     }
+
 }
 
 module.exports = router;
