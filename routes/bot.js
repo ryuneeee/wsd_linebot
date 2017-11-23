@@ -27,7 +27,7 @@ Function.prototype.toString = function(){
 
 // require module wrapper
 const whiteRequire = function(moduleName){
-    let whitelist = ['request', 'cheerio'];
+    let whitelist = ['request', 'cheerio', 'iconv'];
     if(whitelist.includes(moduleName)) {
         return require(moduleName);
     }else{
