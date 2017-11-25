@@ -3,13 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "ng": "ng",
-    "start": "nodemon ./bin/www > /dev/null 2>&1 & echo $! > app.nodemon.pid & ng build --watch > /dev/null 2>&1 & echo $! > app.angular.pid &",
-    "stop": "kill -TERM $(cat app.angular.pid) $(cat app.nodemon.pid)",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start": "PORT=5000 ng build && node ./bin/www"
   },
   "dependencies": {
     "@angular/animations": "^5.0.0",
