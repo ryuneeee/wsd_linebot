@@ -10,7 +10,7 @@ const app = express();
 
 //express router
 // app.use('/', require('./routes/index'));
-app.use('/bot', require('./routes/bot'));
+app.use('/bot', require('./routes/linebot'));
 app.use('/users', require('./routes/users'));
 
 // proxy to Angular
