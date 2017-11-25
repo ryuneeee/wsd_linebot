@@ -1,3 +1,7 @@
+# Angular
+dist/
+
+# Package
 package-lock.json
 
 #Intellij IDEA
