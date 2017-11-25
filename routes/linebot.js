@@ -32,6 +32,9 @@ function script(event) {
 }
 
 function handleEvent(event) {
+    if (event.type !== 'message' || event.message.type !== 'text') {
+        return Promise.resolve(null);
+    }
     if (event.message.text[0] === '*') {
         schedule.scheduleJob(jobId.toString(), '*/1 * * * *', function () { script(event); });
         lineSandbox(client, event).reply('jobId: ' + jobId++);
