@@ -1,16 +1,27 @@
+import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { FormsModule }   from '@angular/forms';
 
+import { AppComponent }       from './app.component';
+import { CodeListComponent }  from './code-list/code-list.component';
+import { CodeWriteComponent } from './code-write/code-write.component';
+import { CodeViewComponent }  from './code-view/code-view.component';
+import { CodeEditComponent }  from './code-edit/code-edit.component';
 
-import { AppComponent } from './app.component';
-
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CodeListComponent,
+    CodeWriteComponent,
+    CodeViewComponent,
+    CodeEditComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
