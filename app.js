@@ -1,24 +1,32 @@
+// modules
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const path = require('path');
+
 //express
 const express = require('express');
 const app = express();
 
 //express router
-app.use('/', require('./routes/index'));
+// app.use('/', require('./routes/index'));
 app.use('/bot', require('./routes/bot'));
 app.use('/users', require('./routes/users'));
 
+// proxy to Angular
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
+
+
 // parser & view engine setup
-const path = require('path');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 
 // catch 404 and forward to error handler
