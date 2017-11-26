@@ -2,6 +2,8 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 
+import { AceEditorModule } from 'ng2-ace-editor';
+
 import { AppComponent }       from './app.component';
 import { CodeListComponent }  from './code-list/code-list.component';
 import { CodeWriteComponent } from './code-write/code-write.component';
@@ -21,7 +23,8 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AceEditorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

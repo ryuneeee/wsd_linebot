@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./code-edit.component.css']
 })
 export class CodeEditComponent implements OnInit {
+  code: string = "let test = 'a';\nreply('foobar');\n\n";
 
   constructor() { }
 
