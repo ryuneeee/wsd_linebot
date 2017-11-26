@@ -1,0 +1,29 @@
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">line-bot</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li (click)="showLoginModal = !showLoginModal"><a>Login</a></li>
+            <li (click) = "showJoinModal = !showJoinModal"><a>Join</a></li>
+        </ul>
+    </div>
+</nav>
+
+<app-login-modal [(visible)]="showLoginModal">
+    <h1>login</h1>
+    ID : <input><br>
+    PW : <input><br>
+    <button>Login</button>
+    <button (click)="showLoginModal = !showLoginModal">Close</button>
+</app-login-modal>
+
+<app-join-modal [(visible)]="showJoinModal">
+    <h1>Join</h1>
+    ID : <input><br>
+    PW : <input><br>
+    <button>Join</button>
+    <button (click)="showJoinModal = !showJoinModal">Close</button>
+</app-join-modal>
+
