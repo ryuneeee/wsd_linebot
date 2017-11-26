@@ -20,9 +20,9 @@ module.exports = function (sandbox, code){
 
     try {
         // http://programmingsummaries.tistory.com/375
-        domain.once('error', (e) => {
-            printError(e);
-        });
+        // register once
+        if (domain._events.error === undefined) domain.on('error', (e) => { printError(e); });
+
 
         domain.run(function() {
             let sandbox = arguments[0];
