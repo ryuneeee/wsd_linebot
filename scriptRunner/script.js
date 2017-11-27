@@ -1,9 +1,6 @@
 const domain = require('domain').create();
 const vm = require('vm');
 const timeout = 1000;
-const Raven = require('raven');
-Raven.config(process.env.SENTRY).install();
-
 
 module.exports = function (sandbox, code){
     if(sandbox === undefined) throw new Error('Script sandbox must be defined!');
@@ -39,7 +36,6 @@ module.exports = function (sandbox, code){
     }
     function printError(e) {
         Function.prototype.toString = Object.prototype.toString;
-        Raven.captureException(e.stack);
         sandbox.reply(e.message);
     }
 };
