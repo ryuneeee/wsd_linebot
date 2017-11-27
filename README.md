@@ -30,6 +30,11 @@ $ ps ax | grep node
  7669 pts/0    R+     0:00 grep --color=auto node
 ```
 
+### Tests
+You can testing using mocha
+```bash
+$ npm test
+```
 
 ### Webhook URI
 ```
