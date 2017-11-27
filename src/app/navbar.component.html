@@ -13,17 +13,17 @@
 
 <app-login-modal [(visible)]="showLoginModal">
     <h1>login</h1>
-    ID : <input><br>
-    PW : <input><br>
-    <button>Login</button>
+    ID : <input [(ngModel)]="userid"><br>
+    PW : <input [(ngModel)]="userpw"><br>
+    <button (click)="loginHandler()">Login</button>
     <button (click)="showLoginModal = !showLoginModal">Close</button>
 </app-login-modal>
 
 <app-join-modal [(visible)]="showJoinModal">
     <h1>Join</h1>
-    ID : <input><br>
-    PW : <input><br>
-    <button>Join</button>
+    ID : <input [(ngModel)]="userid"><br>
+    PW : <input [(ngModel)]="userpw"><br>
+    <button (click)="joinHandler()">Join</button>
     <button (click)="showJoinModal = !showJoinModal">Close</button>
 </app-join-modal>
 

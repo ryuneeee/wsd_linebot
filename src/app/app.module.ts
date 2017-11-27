@@ -3,12 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
+import { HttpService } from './http.service';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar.component';
 import { LoginModalComponent } from './login.modal.component';
-import { JoinModalComponent } from "./join.modal.component";
+import { JoinModalComponent } from './join.modal.component';
 
 @NgModule({
   declarations: [
@@ -19,9 +21,13 @@ import { JoinModalComponent } from "./join.modal.component";
   ],
   imports: [
       BrowserModule,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      HttpClientModule,
+      FormsModule,
+      ReactiveFormsModule,
+      RouterModule
   ],
-  providers: [],
+  providers: [HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
