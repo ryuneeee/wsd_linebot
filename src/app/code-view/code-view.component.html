@@ -1,3 +1,5 @@
-<p>
-  code-view works!
-</p>
+<h1>{{ code.name }}</h1>
+<pre>{{ code.content }}</pre>
+<button (click)="back()">Back</button>
+<button (click)="edit()">Edit</button>
+<button (click)="delete()">Delete</button>
