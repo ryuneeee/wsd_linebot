@@ -1,6 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 
@@ -11,6 +12,8 @@ import { CodeViewComponent }  from './code-view/code-view.component';
 import { CodeEditComponent }  from './code-edit/code-edit.component';
 
 import { AppRoutingModule } from './app-routing.module';
+
+import { CodeService } from './code.service';
 
 @NgModule({
   declarations: [
@@ -23,10 +26,13 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule,
     AceEditorModule
   ],
-  providers: [],
+  providers: [
+    CodeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
