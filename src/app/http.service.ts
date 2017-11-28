@@ -10,14 +10,12 @@ export class HttpService {
 
 
     doLogin(userid: string, userpw: string) {
-        console.log('login button'); // debug.
-        console.log(userid, userpw);
-
-        return this.http.post('/login.js', {userid: userid, userpw: userpw});
+        const headers = new HttpHeaders();
+        headers.append('Contents-type', 'application/json');
+        return this.http.post('/login.js', {userid: userid, userpw: userpw}, {headers: headers});
     }
 
     doJoin(userid: string, userpw: string) {
-        console.log('join button'); // debug
         const headers = new HttpHeaders();
         headers.append('Contents-type', 'application/json');
         return this.http.post('/join.js', {userid: userid, userpw: userpw}, {headers: headers});
