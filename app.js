@@ -4,15 +4,17 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
-//express
+
+// express
 const express = require('express');
+// session
+const session = require('express-session');
 const app = express();
 
 //express router
-// app.use('/', require('./routes/index'));
-app.use('/bot', require('./routes/bot'));
+app.use('/', require('./routes/index'));
+// app.use('/bot', require('./routes/bot'));
 app.use('/users', require('./routes/users'));
-
 // proxy to Angular
 app.use(express.static(path.join(__dirname, 'dist')));
 app.get('*', (req, res) => {
@@ -24,10 +26,19 @@ app.get('*', (req, res) => {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// set session
+app.use(session({
+    secret: 'jkasmhkn',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 60 * 1000
+    }
+}));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

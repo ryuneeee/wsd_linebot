@@ -15,12 +15,12 @@ export class NavbarComponent {
     constructor(private httpservice: HttpService) {}
 
     loginHandler() {
-        //console.log('loginHandler : ' + this.userid + ':' + this.userpw); // for debug
-        //this.httpservice.doLogin().subscribe(result => console.log(result); //  request to url which process login
+        console.log('loginHandler : ' + this.userid + ':' + this.userpw); // for debug
+        this.httpservice.doLogin(this.userid, this.userpw).subscribe(result => console.log(result)); //  request to url which process login
     }
 
     joinHandler() {
-        //console.log('joinHandler : ' + this.userid + ':' + this.userpw); // for debug
-        //this.httpservice.doJoin().subscribe(result => console.log(result); // request to url which process join
+        console.log('joinHandler : ' + this.userid + ':' + this.userpw); // for debug
+        this.httpservice.doJoin(this.userid, this.userpw).subscribe(result => console.log(result)); // request to url which process join
     }
 }
