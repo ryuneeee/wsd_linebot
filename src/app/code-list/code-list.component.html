@@ -1,3 +1,16 @@
-<p>
-  code-list works!
-</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Script Name</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let code of codes' (click)="view(code)">
+      <td>{{ code.name }}</td>
+      <td>{{ code.date }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button (click)="write()">write</button>

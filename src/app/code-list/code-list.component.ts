@@ -1,15 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CodeService } from '../code.service';
+import { Code } from '../code';
 
 @Component({
   selector: 'app-code-list',
   templateUrl: './code-list.component.html',
-  styleUrls: ['./code-list.component.css']
+  styleUrls: ['./code-list.component.css'],
+  providers:  [ CodeService ]
 })
-export class CodeListComponent implements OnInit {
+export class CodeListComponent implements OnInit, OnDestroy {
+  ctxId: string;
+  codes: Code[];
+  private sub: any;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private service: CodeService) { }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+       this.ctxId = params['id'];
+       this.getCodeList();
+    });
+  }
+
+  getCodeList() {
+    this.service.getCodes(this.ctxId).subscribe((c :Code[]) => {
+      this.codes = c;
+    });
+  }
+
+  view(code: Code) {
+    this.router.navigateByUrl('/view/' + code.id);
+  }
+
+  write() {
+    this.router.navigateByUrl('/write/' + this.ctxId);
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
 }
