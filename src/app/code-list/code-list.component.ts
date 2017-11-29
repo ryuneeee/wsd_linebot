@@ -19,6 +19,7 @@ export class CodeListComponent implements OnInit, OnDestroy {
     private service: CodeService) { }
 
   ngOnInit() {
+    this.codes = null;
     this.service.selectedCode = null;
     this.sub = this.route.params.subscribe(params => {
        this.ctxId = params['id'];
