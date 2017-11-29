@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 mongoose.connect('mongodb://localhost/db');
 const db = mongoose.connection;
+const User = require('./models/user-model');
 
 // check db connection
 db.on('error', (err) => {
@@ -11,15 +12,6 @@ db.on('error', (err) => {
 db.on('connected', () => {
     console.log("Connected successfully to server");
 });
-
-const Schema = mongoose.Schema;
-const userSchema = new Schema({
-    id: String,
-    password: String,
-});
-
-const User = mongoose.model('User', userSchema);
-
 
 router.post('/login.js', (req, res) => {
     let paramId = req.body.userid;
@@ -30,16 +22,22 @@ router.post('/login.js', (req, res) => {
         res.send(JSON.stringify("You are already logged in"));
     } else {
         // no in session
-        User.findOne({ id: paramId, password: paramPassword}, (err, user) => {
-            if(user !== null) {
-                req.session.user = {
-                    id: paramId,
-                    authorized: true
-                };
-                res.send(JSON.stringify("Login success"));
-            } else {
-                res.send(JSON.stringify("ID or password incorrect"));
-            }
+        User.findOne({ id: paramId }, (err, user) => {
+            if (err) res.send(400);
+
+            user.comparePassword(paramPassword, (err, isMatch) => {
+                if(err) throw err;
+
+                if(isMatch) {
+                    req.session.user = {
+                        id: paramId,
+                        authorized: true
+                    };
+                    res.send(JSON.stringify("Login success"));
+                }  else {
+                    res.send(JSON.stringify("ID or password incorrect"));
+                }
+            });
         })
     }
 });
@@ -57,8 +55,8 @@ router.post('/join.js', (req, res) => {
             if (user === null) {
                 let newUser = new User({id: paramId, password: paramPassword});
                 newUser.save((err, data) => {
-                    if (err)
-                        console.log('Data save error');
+                    if (err) throw err;
+                    console.log(data);
                 });
                 res.send(JSON.stringify("Join success"));
             }
@@ -77,7 +75,7 @@ router.post('/logout.js', (req, res) => {
         res.redirect('/');
     })
 
-}
+});
 
 
 module.exports = router;
