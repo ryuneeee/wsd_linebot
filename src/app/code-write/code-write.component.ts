@@ -33,7 +33,7 @@ export class CodeWriteComponent implements OnInit, OnDestroy {
         alert("Done!");
         this.router.navigateByUrl('/list/' + _id);
       }
-    });
+    }, this.service.errorHandler);
   }
 
   ngOnDestroy() {

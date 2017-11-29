@@ -29,7 +29,7 @@ export class CodeListComponent implements OnInit, OnDestroy {
   getCodeList(ctxId) {
     this.service.getCodes(this.ctxId).subscribe((c :Code[]) => {
       this.codes = c;
-    });
+    }, this.service.errorHandler);
   }
 
   view(code: Code) {

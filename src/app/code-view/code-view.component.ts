@@ -20,8 +20,6 @@ export class CodeViewComponent implements OnInit, OnDestroy {
     private service: CodeService) { }
 
   ngOnInit() {
-    console.log('code-view');
-    console.log(this.service.selectedCode);
     if (this.service.selectedCode == null) {
       this.code = new Code();
       this.sub = this.route.params.subscribe(params => {
@@ -31,14 +29,13 @@ export class CodeViewComponent implements OnInit, OnDestroy {
       this.code = this.service.selectedCode;
       this.service.selectedCode = null;
     }
-    console.log(this.service.selectedCode);
   }
 
   getCode(id) {
     this.service.getCode(id).subscribe((c: Code) => {
       this.code = c;
       this.code.id = id;
-    });
+    }, this.service.errorHandler);
   }
 
   list() {
@@ -57,14 +54,13 @@ export class CodeViewComponent implements OnInit, OnDestroy {
         alert('Done!');
         this.router.navigate(['/list', _id]);
       }
-    });
+    }, this.service.errorHandler);
   }
 
   ngOnDestroy() {
     if (typeof(this.sub) != 'undefined') {
       this.sub.unsubscribe();
     }
-
     this.service.selectedCode = this.code;
   }
 

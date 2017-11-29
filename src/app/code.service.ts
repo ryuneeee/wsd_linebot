@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Code } from './code';
 
 @Injectable()
@@ -32,5 +32,10 @@ export class CodeService {
 
   deleteCode(code: Code) {
     return this.http.delete('/code/' + code.id);
+  }
+
+  errorHandler(err: HttpErrorResponse) {
+    let message = err.error;
+    alert(message.error);
   }
 }

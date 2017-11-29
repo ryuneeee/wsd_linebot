@@ -11,6 +11,7 @@ import { Result } from '../result';
 })
 export class CodeEditComponent implements OnInit, OnDestroy {
   code: Code;
+  content: string;
   @Input() test: string;
   private sub: any;
 
@@ -20,8 +21,6 @@ export class CodeEditComponent implements OnInit, OnDestroy {
     private service: CodeService) { }
 
   ngOnInit() {
-    console.log('code-edit');
-    console.log(this.service.selectedCode);
     if (this.service.selectedCode == null) {
       this.code = new Code();
       this.sub = this.route.params.subscribe(params => {
@@ -30,33 +29,34 @@ export class CodeEditComponent implements OnInit, OnDestroy {
     } else {
       this.code = this.service.selectedCode;
       this.service.selectedCode = null;
+
+      this.content = this.code.content;
     }
-    console.log(this.service.selectedCode);
   }
 
   getCode(id) {
     this.service.getCode(id).subscribe((c: Code) => {
       this.code = c;
-    });
+      this.content = this.code.content;
+    }, this.service.errorHandler);
   }
 
   submit() {
     let _id = this.code.id;
+    this.code.content = this.content;
     this.service.updateCode(this.code).subscribe((m: Result) => {
       if (m.result == 'success') {
         alert("Done!");
         this.router.navigateByUrl('/view/' + _id);
       }
-    });
+    }, this.service.errorHandler);
   }
 
   ngOnDestroy() {
     if (typeof(this.sub) != 'undefined') {
       this.sub.unsubscribe();
     }
-
     this.service.selectedCode = this.code;
-
   }
 
 }
