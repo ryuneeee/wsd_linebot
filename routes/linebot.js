@@ -57,6 +57,7 @@ function handleEvent(event) {
 
     if (event.message.text[0] === '*') {
         schedule.scheduleJob(jobId.toString(), '*/1 * * * *', () => { script(event) });
+        //TODO: bug fixes & structure
         lineSandbox(client, event).reply('jobId: ' + jobId++);
     }
 
@@ -64,6 +65,7 @@ function handleEvent(event) {
         let jid = event.message.text.substring(1);
         if(schedule.scheduledJobs[jid] === undefined) return;
         schedule.scheduledJobs[jid].cancel();
+        //TODO: bug fixes & structure
         lineSandbox(client, event).reply('Canceled jobId: ' + jid);
     }
 
