@@ -16,10 +16,64 @@ const Code = mongoose.model('Code', new mongoose.Schema({
   'date': { 'type': Date, 'default': Date.now } // date
 }));
 
+function isLogined(req, res, next) {
+  return next();
+
+  let user = req.session.user || null;
+
+  if (user == null) {
+    res.status(403).json({ 'error': 'not login' }).end();
+  }
+
+  return next();
+}
+
+function verifyCtxId(req, res, next) {
+  let ctxId = req.params.id || null;
+
+  if (ctxId == null)
+    return res.status(400).json({ 'error': 'no context id'}).end();
+
+  if (/[CRU]{1}[0-9a-f]{32}/g.test(ctxId) == false)
+    return res.status(400).json({ 'error': 'illegal context id format'}).end();
+
+  return next();
+}
+
+function verifyCode(req, res, next) {
+  let name = req.body.name || null;
+  let content = req.body.content || null;
+
+  if (name == null)
+    return res.status(400).json({ 'error': 'no code name'}).end();
+
+  if (content == null)
+    return res.status(400).json({ 'error': 'no code content'}).end();
+
+  if (name == '')
+    return res.status(400).json({ 'error': 'empty code name'}).end();
+
+  if (content == '')
+    return res.status(400).json({ 'error': 'empty code content'}).end();
+
+  return next();
+}
+
+function verifyCodeId(req, res, next) {
+  let codeId = req.params.id || null;
+
+  if (codeId == null)
+    return res.status(400).json({ 'error': 'no code id'}).end();
+
+  if (/[0-9a-f]{24}/g.test(codeId) == false)
+    return res.status(400).json({ 'error': 'illegal code id format'}).end();
+
+  return next();
+}
 
 // get code list by context id
-router.get('/codes/:id', (req, res, next) => {
-  Code.find({ctxId: req.params.id}, '_id name date ', (err, result) => {
+router.get('/codes/:id', isLogined, verifyCtxId, (req, res, next) => {
+  Code.find({'ctxId': req.params.id}, '_id name date ', (err, result) => {
     if (err) return res.status(500).json({ 'error': err });
     let ret = [];
     result.forEach((ele, idx, err) =>{
@@ -32,7 +86,7 @@ router.get('/codes/:id', (req, res, next) => {
 });
 
 // get code by code id
-router.get('/code/:id', (req, res, next) => {
+router.get('/code/:id', isLogined, verifyCodeId, (req, res, next) => {
   Code.findOne({ '_id': req.params.id }, (err, result) => {
     if (err) return res.status(500).json({ 'error': err });
     let ret = {
@@ -48,13 +102,15 @@ router.get('/code/:id', (req, res, next) => {
 });
 
 // insert code by context id
-router.post('/code/:id', (req, res, next) => {
+router.post('/code/:id', isLogined, verifyCtxId, verifyCode, (req, res, next) => {
+  // insert one itme
   let c = new Code();
   c.ctxId = req.params.id;
-  //c.userId = req.body.userId; -- this maybe get by session
+  //c.writer = req.session.user; -- this maybe get by session
   c.name = req.body.name;
   c.content = req.body.content;
   //c.date = // default value
+
   c.save((err, result) => {
     if (err) return res.status(500).json({ 'error': err });
     res.json({'result': 'success'}).end();
@@ -62,7 +118,7 @@ router.post('/code/:id', (req, res, next) => {
 });
 
 // update code by code id
-router.put('/code/:id', (req, res, next) => {
+router.put('/code/:id', isLogined, verifyCodeId, verifyCode, (req, res, next) => {
   Code.findOneAndUpdate({ '_id': req.params.id }, {
       //'contextId': // maybe never change?
       //'userid': // maybe?
@@ -77,10 +133,8 @@ router.put('/code/:id', (req, res, next) => {
 });
 
 // delete code by code id
-router.delete('/code/:id', (req, res, next) => {
-  let _id = req.params.id || null;
-  if (_id == null) return res.json({'result': 'fail', 'message': 'no code id'}).end();
-  Code.remove({ '_id': _id }, (err, result) => {
+router.delete('/code/:id', isLogined, verifyCodeId, (req, res, next) => {
+  Code.remove({ '_id': req.params.id }, (err, result) => {
     if (err) return res.status(500).json({ 'error': err });
     res.json({'result': 'success'}).end();
   });
