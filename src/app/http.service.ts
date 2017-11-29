@@ -12,12 +12,20 @@ export class HttpService {
     doLogin(userid: string, userpw: string) {
         const headers = new HttpHeaders();
         headers.append('Contents-type', 'application/json');
-        return this.http.post('/login.js', {userid: userid, userpw: userpw}, {headers: headers});
+        return this.http.post('/login', {userid: userid, userpw: userpw}, {headers: headers});
     }
 
     doJoin(userid: string, userpw: string) {
         const headers = new HttpHeaders();
         headers.append('Contents-type', 'application/json');
-        return this.http.post('/join.js', {userid: userid, userpw: userpw}, {headers: headers});
+        return this.http.post('/join', {userid: userid, userpw: userpw}, {headers: headers});
+    }
+
+    doLogout() {
+        return this.http.post('/logout', { });
+    }
+
+    sessionCheck() {
+        return this.http.post('/checkSess', {});
     }
 }

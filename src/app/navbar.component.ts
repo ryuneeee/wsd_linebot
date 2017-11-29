@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HttpService } from './http.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
@@ -10,6 +10,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class NavbarComponent {
     @Input() userid: string;
     @Input() userpw: string;
+
     loginFailed1: boolean;
     loginFailed2: boolean;
     loginSuccess: boolean;
@@ -22,22 +23,23 @@ export class NavbarComponent {
     showLoginModal = false;
     showJoinModal = false;
 
-
-
     constructor(private httpservice: HttpService) {}
 
     loginHandler() {
-        console.log('loginHandler : ' + this.userid + ':' + this.userpw); // for debug
+        // console.log('loginHandler : ' + this.userid + ':' + this.userpw); // for debug
         this.httpservice.doLogin(this.userid, this.userpw).subscribe(res => {
             this.loginSuccess = true;
-            setTimeout( () => {this.loginSuccess = false; this.showLoginModal = false; }, 1000);
-
+            setTimeout( () => {
+                this.loginSuccess = false;
+                this.showLoginModal = false;
+                window.location.reload();
+                }, 1000);
             }, (err: HttpErrorResponse) => {
             console.log('status ' + err.status)
             if (err.status === 401) {
                 console.log('id or pw incorrect');
                 this.loginFailed1 = true;
-                setTimeout( function() { return this.loginFailed1 = false; }, 5000);
+                setTimeout( () =>  this.loginFailed1 = false , 5000);
             } else if (err.status === 403) {
                 console.log('already logged in');
                 this.loginFailed2 = true;
@@ -53,7 +55,7 @@ export class NavbarComponent {
     }
 
     joinHandler() {
-        console.log('joinHandler : ' + this.userid + ':' + this.userpw); // for debug
+        // console.log('joinHandler : ' + this.userid + ':' + this.userpw); // for debug
         this.httpservice.doJoin(this.userid, this.userpw).subscribe(res => {
             this.joinSuccess = true;
             setTimeout( () => {this.joinSuccess = false; this.showJoinModal = false; }, 1000);

@@ -13,7 +13,7 @@ db.on('connected', () => {
     console.log("Connected successfully to server");
 });
 
-router.post('/login.js', (req, res) => {
+router.post('/login', (req, res) => {
     let paramId = req.body.userid;
     let paramPassword = req.body.userpw;
 
@@ -52,7 +52,7 @@ router.post('/login.js', (req, res) => {
     }
 });
 
-router.post('/join.js', (req, res) => {
+router.post('/join', (req, res) => {
 
     let paramId = req.body.userid;
     let paramPassword= req.body.userpw;
@@ -84,12 +84,19 @@ router.post('/join.js', (req, res) => {
 });
 
 // logout
-router.post('/logout.js', (req, res) => {
+router.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if(err) throw err;
         res.redirect('/');
     });
 });
 
+router.post('/checkSess',(req, res) => {
+    if(req.session.user) {
+        res.status(200).json(req.session.user.id).end(); // TODO : potentially vulnerable
+    } else {
+        res.status(401).end();
+    }
+});
 
 module.exports = router;

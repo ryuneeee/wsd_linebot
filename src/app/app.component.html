@@ -1,1 +1,2 @@
-<app-navbar></app-navbar>
+<app-navbar *ngIf="!isLoggedOn"></app-navbar>
+<app-loggedon *ngIf="isLoggedOn"></app-loggedon>

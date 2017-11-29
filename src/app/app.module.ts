@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar.component';
 import { LoginModalComponent } from './login.modal.component';
 import { JoinModalComponent } from './join.modal.component';
+import { LoggedOnComponent } from './loggedOn.component';
 
 @NgModule({
   declarations: [
     AppComponent,
       LoginModalComponent,
       JoinModalComponent,
-      NavbarComponent
+      NavbarComponent,
+      LoggedOnComponent
   ],
   imports: [
       BrowserModule,
