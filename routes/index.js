@@ -19,23 +19,35 @@ router.post('/login.js', (req, res) => {
 
     if (req.session.user) {
         // already be logged in
-        res.send(JSON.stringify("You are already logged in"));
+        let r = Object();
+        r.result = 1;
+        res.status(403).json(r).end();
     } else {
         // no in session
         User.findOne({ id: paramId }, function (err, user){
             if (err) res.send(400);
-            user.comparePassword(paramPassword, (err, isMatch) => {
-                if(err) throw err;
-                if(isMatch) {
-                    req.session.user = {
-                        id: paramId,
-                        authorized: true
-                    };
-                    res.send(JSON.stringify("Login success"));
-                } else {
-                    res.send(JSON.stringify("ID or password incorrect"));
-                }
-            });
+            if (user !== null) {
+                user.comparePassword(paramPassword, (err, isMatch) => {
+                    if(err) throw err;
+                    if(isMatch) {
+                        req.session.user = {
+                            id: paramId,
+                            authorized: true
+                        };
+                        let r = Object();
+                        r.result = 0;
+                        res.status(200).json(r).end();
+                    } else {
+                        let r = Object();
+                        r.result = 2;
+                        res.status(401).json(r).end();
+                    }
+                });
+            } else {
+                let r = Object();
+                r.result = 2;
+                res.status(401).json(r).end();
+            }
         })
     }
 });
@@ -45,7 +57,9 @@ router.post('/join.js', (req, res) => {
     let paramId = req.body.userid;
     let paramPassword= req.body.userpw;
     if (paramId === "" || paramId === "") {
-        res.send(JSON.stringify("Input ID or password"));
+        let r = new Object();
+        r.result = 1;
+        res.status(400).json(r).end();
     } else {
         User.findOne({id: paramId}, (err, user) => {
             if (err) return handleError(err);
@@ -55,11 +69,15 @@ router.post('/join.js', (req, res) => {
                 newUser.save((err, data) => {
                     if (err) throw err;
                 });
-                res.send(JSON.stringify("Join success"));
+                let r = new Object();
+                r.result = 0;
+                res.status(200).json(r).end();
             }
             else // input id already exists
             {
-                res.send(JSON.stringify("This ID is already in used"));
+                let r = new Object();
+                r.result = 2; // already exist;
+                res.status(405).json(r).end();
             }
         });
     }
@@ -70,8 +88,7 @@ router.post('/logout.js', (req, res) => {
     req.session.destroy((err) => {
         if(err) throw err;
         res.redirect('/');
-    })
-
+    });
 });
 
 
