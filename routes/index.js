@@ -54,9 +54,9 @@ router.post('/login', (req, res) => {
 
 router.post('/join', (req, res) => {
 
-    let paramId = req.body.userid;
-    let paramPassword= req.body.userpw;
-    if (paramId === "" || paramId === "") {
+    let paramId = req.body.userid || null;
+    let paramPassword= req.body.userpw || null;
+    if (paramId === null || paramPassword === null || paramId === '' || paramPassword === '') {
         let r = new Object();
         r.result = 1;
         res.status(400).json(r).end();
