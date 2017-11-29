@@ -22,19 +22,17 @@ router.post('/login.js', (req, res) => {
         res.send(JSON.stringify("You are already logged in"));
     } else {
         // no in session
-        User.findOne({ id: paramId }, (err, user) => {
+        User.findOne({ id: paramId }, function (err, user){
             if (err) res.send(400);
-
             user.comparePassword(paramPassword, (err, isMatch) => {
                 if(err) throw err;
-
                 if(isMatch) {
                     req.session.user = {
                         id: paramId,
                         authorized: true
                     };
                     res.send(JSON.stringify("Login success"));
-                }  else {
+                } else {
                     res.send(JSON.stringify("ID or password incorrect"));
                 }
             });
@@ -56,7 +54,6 @@ router.post('/join.js', (req, res) => {
                 let newUser = new User({id: paramId, password: paramPassword});
                 newUser.save((err, data) => {
                     if (err) throw err;
-                    console.log(data);
                 });
                 res.send(JSON.stringify("Join success"));
             }
