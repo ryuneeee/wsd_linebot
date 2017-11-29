@@ -4,31 +4,33 @@ import { Code } from './code';
 
 @Injectable()
 export class CodeService {
+  public selectedCode: Code = null;
+
   constructor(private http: HttpClient) { }
 
   getCodes(ctxId) {
-    return this.http.get('/api/codes/' + ctxId);
+    return this.http.get('/codes/' + ctxId);
   }
 
   getCode(codeId) {
-    return this.http.get('/api/code/' + codeId);
+    return this.http.get('/code/' + codeId);
   }
 
   createCode(code: Code) {
-    return this.http.post('/api/code/' + code.ctxId, {
+    return this.http.post('/code/' + code.ctxId, {
       'name': code.name,
       'content': code.content
     });
   }
 
   updateCode(code: Code) {
-    return this.http.put('/api/code/' + code.id, {
+    return this.http.put('/code/' + code.id, {
       'name': code.name,
       'content': code.content
     });
   }
 
   deleteCode(code: Code) {
-    return this.http.delete('/api/code/' + code.id);
+    return this.http.delete('/code/' + code.id);
   }
 }
