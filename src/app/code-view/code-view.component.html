@@ -1,5 +1,8 @@
 <h1>{{ code.name }}</h1>
-<pre>{{ code.content }}</pre>
-<button (click)="back()">Back</button>
+<ace-editor #highlight
+            [text]="code.content"
+            mode="javascript"
+            style="min-height: 200px; width:100%; overflow: auto;" [readOnly]="true"></ace-editor>
+<button (click)="list()">List</button>
 <button (click)="edit()">Edit</button>
 <button (click)="delete()">Delete</button>

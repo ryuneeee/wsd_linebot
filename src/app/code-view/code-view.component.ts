@@ -9,23 +9,29 @@ import { Result } from '../result';
   selector: 'app-code-view',
   templateUrl: './code-view.component.html',
   styleUrls: ['./code-view.component.css'],
-  providers:  [ CodeService ]
 })
 export class CodeViewComponent implements OnInit, OnDestroy {
   code: Code;
   private sub: any;
 
   constructor(
-    private location: Location,
     private router: Router,
     private route: ActivatedRoute,
     private service: CodeService) { }
 
   ngOnInit() {
-    this.code = new Code(); // before init...
-    this.sub = this.route.params.subscribe(params => {
-       this.getCode(params['id']);
-    });
+    console.log('code-view');
+    console.log(this.service.selectedCode);
+    if (this.service.selectedCode == null) {
+      this.code = new Code();
+      this.sub = this.route.params.subscribe(params => {
+        this.getCode(params['id']);
+      });
+    } else {
+      this.code = this.service.selectedCode;
+      this.service.selectedCode = null;
+    }
+    console.log(this.service.selectedCode);
   }
 
   getCode(id) {
@@ -35,12 +41,13 @@ export class CodeViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  back() {
-    this.location.back();
+  list() {
+    this.router.navigate(['/list', this.code.ctxId]);
   }
 
   edit() {
-    this.router.navigateByUrl('/edit/' + this.code.id);
+    this.service.selectedCode = this.code;
+    this.router.navigate(['/edit', this.code.id]);
   }
 
   delete() {
@@ -48,13 +55,17 @@ export class CodeViewComponent implements OnInit, OnDestroy {
     this.service.deleteCode(this.code).subscribe((r: Result) => {
       if (r.result == 'success') {
         alert('Done!');
-        this.router.navigateByUrl('/list/' + _id);
+        this.router.navigate(['/list', _id]);
       }
     });
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    if (typeof(this.sub) != 'undefined') {
+      this.sub.unsubscribe();
+    }
+
+    this.service.selectedCode = this.code;
   }
 
 }

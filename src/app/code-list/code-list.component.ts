@@ -7,7 +7,6 @@ import { Code } from '../code';
   selector: 'app-code-list',
   templateUrl: './code-list.component.html',
   styleUrls: ['./code-list.component.css'],
-  providers:  [ CodeService ]
 })
 export class CodeListComponent implements OnInit, OnDestroy {
   ctxId: string;
@@ -20,13 +19,14 @@ export class CodeListComponent implements OnInit, OnDestroy {
     private service: CodeService) { }
 
   ngOnInit() {
+    this.service.selectedCode = null;
     this.sub = this.route.params.subscribe(params => {
        this.ctxId = params['id'];
-       this.getCodeList();
+       this.getCodeList(this.ctxId);
     });
   }
 
-  getCodeList() {
+  getCodeList(ctxId) {
     this.service.getCodes(this.ctxId).subscribe((c :Code[]) => {
       this.codes = c;
     });

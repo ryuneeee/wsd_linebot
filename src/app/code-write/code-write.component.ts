@@ -8,7 +8,6 @@ import { Result } from '../result';
   selector: 'app-code-write',
   templateUrl: './code-write.component.html',
   styleUrls: ['./code-write.component.css'],
-  providers:  [ CodeService ]
 })
 export class CodeWriteComponent implements OnInit, OnDestroy {
   private sub: any;
@@ -20,6 +19,7 @@ export class CodeWriteComponent implements OnInit, OnDestroy {
     private service: CodeService) { }
 
   ngOnInit() {
+    this.service.selectedCode = null;
     this.code = new Code();
     this.sub = this.route.params.subscribe(params => {
        this.code.ctxId = params['id'];

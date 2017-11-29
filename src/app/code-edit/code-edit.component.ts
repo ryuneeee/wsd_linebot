@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CodeService } from '../code.service';
 import { Code } from '../code';
@@ -8,10 +8,10 @@ import { Result } from '../result';
   selector: 'app-code-edit',
   templateUrl: './code-edit.component.html',
   styleUrls: ['./code-edit.component.css'],
-  providers:  [ CodeService ]
 })
 export class CodeEditComponent implements OnInit, OnDestroy {
   code: Code;
+  @Input() test: string;
   private sub: any;
 
   constructor(
@@ -20,16 +20,23 @@ export class CodeEditComponent implements OnInit, OnDestroy {
     private service: CodeService) { }
 
   ngOnInit() {
-    this.code = new Code();
-    this.sub = this.route.params.subscribe(params => {
-      this.getCode(params['id']);
-    });
+    console.log('code-edit');
+    console.log(this.service.selectedCode);
+    if (this.service.selectedCode == null) {
+      this.code = new Code();
+      this.sub = this.route.params.subscribe(params => {
+        this.getCode(params['id']);
+      });
+    } else {
+      this.code = this.service.selectedCode;
+      this.service.selectedCode = null;
+    }
+    console.log(this.service.selectedCode);
   }
 
   getCode(id) {
     this.service.getCode(id).subscribe((c: Code) => {
       this.code = c;
-      this.code.id = id;
     });
   }
 
@@ -44,7 +51,12 @@ export class CodeEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    if (typeof(this.sub) != 'undefined') {
+      this.sub.unsubscribe();
+    }
+
+    this.service.selectedCode = this.code;
+
   }
 
 }
