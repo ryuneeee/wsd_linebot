@@ -37,7 +37,7 @@ export class NavbarComponent {
             if (err.status === 401) {
                 console.log('id or pw incorrect');
                 this.loginFailed1 = true;
-                setTimeout( function() { return this.loginFailed1 = false; }, 5000);
+                setTimeout( () => { return this.loginFailed1 = false; }, 5000);
             } else if (err.status === 403) {
                 console.log('already logged in');
                 this.loginFailed2 = true;
