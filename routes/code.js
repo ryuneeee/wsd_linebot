@@ -34,7 +34,7 @@ function verifyCtxId(req, res, next) {
   if (ctxId == null)
     return res.status(400).json({ 'error': 'no context id'}).end();
 
-  if (/[CRU]{1}[0-9a-f]{32}/g.test(ctxId) == false)
+  if (/^[CRU]{1}[0-9a-f]{32}$/g.test(ctxId) == false)
     return res.status(400).json({ 'error': 'illegal context id format'}).end();
 
   return next();
@@ -65,7 +65,7 @@ function verifyCodeId(req, res, next) {
   if (codeId == null)
     return res.status(400).json({ 'error': 'no code id'}).end();
 
-  if (/[0-9a-f]{24}/g.test(codeId) == false)
+  if (/^[0-9a-f]{24}$/g.test(codeId) == false)
     return res.status(400).json({ 'error': 'illegal code id format'}).end();
 
   return next();
