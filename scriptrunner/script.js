@@ -1,47 +1,74 @@
 const domain = require('domain').create();
+const EventEmitter = require('events');
 const vm = require('vm');
-const timeout = 1000;
-
-module.exports = function (sandbox, code){
-    if(sandbox === undefined) throw new Error('Script sandbox must be defined!');
-    if(sandbox.reply === undefined) throw new Error('Script sandbox must have reply property!');
-
-    sandbox.require = function (moduleName) {
-        let whitelist = ['request', 'cheerio', 'iconv'];
-        if (whitelist.includes(moduleName)) {
-            return require(moduleName);
-        } else {
-            throw new Error("You can't load unauthorized script.");
-        }
-    };
-
-    try {
-        // http://programmingsummaries.tistory.com/375
-        // register once
-        if (domain._events.error === undefined) domain.on('error', (e) => { printError(e); });
-
-
-        domain.run(function() {
-            let sandbox = arguments[0];
-            let code = arguments[1];
-
-            Function.prototype.toString = hiddenFunction;
-            let script = new vm.Script(code, { lineOffset: 1, displayErrors: true});
-            script.runInNewContext(sandbox, {timeout: timeout});
-            Function.prototype.toString = Object.prototype.toString;
-
-        }, sandbox, code);
-    } catch (e) {
-        printError(e);
-    }
-    function printError(e) {
-        Function.prototype.toString = Object.prototype.toString;
-        sandbox.reply(e.message);
-    }
-};
-
 
 function hiddenFunction() {
     // toString overriding for prevent that user can seeing.
     return "You can't see function code."
 }
+
+class ScriptRunner extends EventEmitter {
+    constructor(sandbox) {
+        super();
+        this.requires = [];
+        this.sandbox = sandbox || {};
+        this.timeout = 1000;
+        this.map = new Map();
+        this.contextId = 'default';
+    }
+
+    // whitelist module on scripting.
+    setRequires(requires) {
+        this.requires = requires;
+    }
+
+    setScriptTimeout(timeout){
+        this.timeout = timeout;
+    }
+
+    setContextId(id) {
+        this.contextId = id;
+    }
+
+    run(code, sandbox){
+        sandbox = sandbox || this.sandbox;
+        try {
+            Function.prototype.toString = hiddenFunction;
+            if(sandbox !== undefined && sandbox.require === undefined)
+                sandbox.require = this._require(this.requires);
+            if(sandbox !== undefined && sandbox.ctx === undefined)
+                sandbox.ctx = this._context(this.map, this.contextId);
+            let script = new vm.Script(code, {lineOffset: 1, displayErrors: true});
+
+            // If you want to change 'once' events: https://stackoverflow.com/questions/12150540/javascript-eventemitter-multiple-events-once
+            if (domain._events.error === undefined)
+                domain.on('error', (e) => {
+                    if(this._events.error !== undefined) this.emit('error', e); else console.error(e);
+                });
+            domain.run(()=> {
+                script.runInNewContext(sandbox, {timeout: this.timeout});
+                Function.prototype.toString = Object.prototype.toString;
+            });
+        } catch (e) {
+            if(this._events.error !== undefined) this.emit('error', e); else throw e;
+        } finally {
+            Function.prototype.toString = Object.prototype.toString;
+        }
+    }
+
+    _require(requires){
+        return function(moduleName) {
+            if (requires.includes(moduleName)) return require(moduleName);
+            else throw new Error("You can't load unauthorized script.");
+        };
+    }
+
+    _context(_map, ctxId){
+        if (!_map.has(ctxId)) {
+            _map.set(ctxId, new Map());
+        }
+        return _map.get(ctxId);
+    }
+}
+
+module.exports = ScriptRunner;

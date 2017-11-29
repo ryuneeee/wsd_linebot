@@ -1,6 +1,5 @@
 const express = require('express');
-const runScript = require('../scriptRunner/script');
-const lineSandbox = require('../scriptRunner/lineSandbox');
+const ScriptRunner = require('../scriptRunner/script');
 const schedule = require('node-schedule');
 const router = express.Router();
 let jobId = 0;
@@ -10,11 +9,36 @@ const config = {
     channelSecret: process.env.CHANNEL_SECRET
 };
 
+
 //line bot & vm
 const line = require('@line/bot-sdk');
 const client = new line.Client(config);
+const runner = new ScriptRunner();
+runner.setRequires(['request', 'cheerio', 'iconv']);
 
+const getCtxId = function(e) {
+    if (e.source.type === 'user')  return e.source.userId;
+    if (e.source.type === 'group') return e.source.groupId;
+    if (e.source.type === 'room')  return e.source.roomId;
+};
 
+function script(event) {
+    let code = event.message.text.substring(1);
+    let ctxId = getCtxId(event);
+    let sandbox = {
+        event: event,
+        message: event.message,
+        reply: function (message) {
+            if (!(message instanceof String)) message = String(message);
+            client.pushMessage(ctxId, {type: 'text', 'text': message});
+        }
+    };
+    if (runner._events.error === undefined)
+        runner.on('error', function(e){ sandbox.reply(e.message) });
+
+    runner.setContextId(ctxId);
+    runner.run('(function(){\n' + code + '\n})();', sandbox);
+}
 
 //line bot webhook
 router.post('/', line.middleware(config), (req, res) => {
@@ -25,28 +49,26 @@ router.post('/', line.middleware(config), (req, res) => {
     }
 });
 
-function script(event) {
-    let code = event.message.text.substring(1);
-    let sandbox = lineSandbox(client, event);
-    runScript(sandbox, '(function(){\n' + code + '\n})();');
-}
 
 function handleEvent(event) {
     if (event.type !== 'message' || event.message.type !== 'text') {
         return Promise.resolve(null);
     }
+
     if (event.message.text[0] === '*') {
-        schedule.scheduleJob(jobId.toString(), '*/1 * * * *', function () { script(event); });
+        schedule.scheduleJob(jobId.toString(), '*/1 * * * *', () => { script(event) });
         lineSandbox(client, event).reply('jobId: ' + jobId++);
     }
+
     if (event.message.text[0] === '^'){
         let jid = event.message.text.substring(1);
         if(schedule.scheduledJobs[jid] === undefined) return;
         schedule.scheduledJobs[jid].cancel();
         lineSandbox(client, event).reply('Canceled jobId: ' + jid);
-
     }
-    if (event.message.text[0] === '>') script(event);
+
+    if (event.message.text[0] === '>')
+        script(event);
 }
 
 
