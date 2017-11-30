@@ -1,6 +1,6 @@
 let jobId = 0;
 const express = require('express');
-const Line = require('./line');
+const Line = require('../scriptrunner/line');
 const schedule = require('node-schedule');
 const router = express.Router();
 const line = new Line();

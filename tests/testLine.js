@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const Line = require('../routes/line');
+const Line = require('../scriptrunner/line');
 
 describe('LineBot', function() {
 

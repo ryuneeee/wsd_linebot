@@ -1,5 +1,5 @@
 const sdk = require('@line/bot-sdk');
-const ScriptRunner = require('../scriptrunner/script');
+const ScriptRunner = require('./script');
 const runner = new ScriptRunner();
 runner.setRequires(['request', 'cheerio', 'iconv']);
 
