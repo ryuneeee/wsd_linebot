@@ -4,9 +4,24 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 
-//express
+
+
+// express
 const express = require('express');
+// session
+const session = require('express-session');
 const app = express();
+// set session
+app.use(session({
+    secret: 'jkasmhkn',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 60 * 1000
+    }
+}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parser & view engine setup
 //app.set('views', path.join(__dirname, 'views'));
@@ -18,8 +33,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //express router
-//app.use('/', require('./routes/index'));
-app.use('/bot', require('./routes/linebot'));
+app.use('/', require('./routes/index'));
+app.use('/bot', require('./routes/bot'));
 app.use('/users', require('./routes/users'));
 app.use('/', require('./routes/code'));
 
