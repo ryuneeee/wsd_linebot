@@ -3,7 +3,7 @@ const Line = require('../routes/line');
 
 describe('LineBot', function() {
 
-    let fakeTextMessageEvent = {
+    let fakeEvent = {
         "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
         "type": "message",
         "timestamp": 1462629479859,
@@ -28,7 +28,7 @@ describe('LineBot', function() {
                     assert.equal(message, "1");
                 }
             };
-            line.script(fakeTextMessageEvent);
+            line.script(fakeEvent);
         });
     });
 

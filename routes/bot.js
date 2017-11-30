@@ -14,14 +14,14 @@ function handleEvent(event){
 
     if (event.message.text[0] === '*') {
         schedule.scheduleJob(jobId.toString(), '*/1 * * * *', () => { line.script(event) });
-        line.reply(event)('jobId: ' + jobId++);
+        line.reply('jobId: ' + jobId++, event);
     }
 
     if (event.message.text[0] === '^'){
         let jid = event.message.text.substring(1);
         if(schedule.scheduledJobs[jid] === undefined) return;
         schedule.scheduledJobs[jid].cancel();
-        line.reply(event)('Canceled jobId: ' + jid);
+        line.reply('Canceled jobId: ' + jid, event);
     }
 
     if (event.message.text[0] === '>')

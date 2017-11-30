@@ -23,11 +23,9 @@ class Line{
     };
 
 
-    reply(event){
-        return (message) => {
+    reply(message, event){
             if (!(message instanceof String)) message = String(message);
             this.client.pushMessage(this.getCtxId(event), {type: 'text', 'text': message});
-        }
     };
 
     script(event){
@@ -36,7 +34,7 @@ class Line{
         let sandbox = {
             event: event,
             message: event.message,
-            reply: this.reply(event)
+            reply: (message) => this.reply(message, event)
         };
         if (runner._events.error === undefined)
             runner.on('error', function(e){
@@ -46,8 +44,6 @@ class Line{
         runner.setContextId(ctxId);
         runner.run('(function(){\n' + code + '\n})();', sandbox);
     };
-
-
 
 }
 
