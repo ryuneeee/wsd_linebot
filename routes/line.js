@@ -20,6 +20,7 @@ class Line{
         if (e.source.type === 'user')  return e.source.userId;
         if (e.source.type === 'group') return e.source.groupId;
         if (e.source.type === 'room')  return e.source.roomId;
+        throw new Error('Can\'t find context Id');
     };
 
 
@@ -29,8 +30,8 @@ class Line{
     };
 
     script(event){
-        let code = event.message.text.substring(1);
         let ctxId = this.getCtxId(event);
+        let code = event.message.text.substring(1); //TODO: request get predefined code database query by context Id
         let sandbox = {
             event: event,
             message: event.message,

@@ -94,21 +94,21 @@ describe('ScriptRunner', function() {
             }, SyntaxError);
         });
 
-        // 사실상 직접적으로 테스트 할 방법이 없는걸로...
-        // https://github.com/chaijs/chai/issues/415
-        it('throws in user script callback', function(){
-            assert.doesNotThrow(function(){
-                let runner = new ScriptRunner();
-                runner.setRequires(['request']);
-                let code = `
-                    var request = require("request");
-                    request.get({url:'http://www.myunsay.net/sale'}, function (error, response, body) {
-                        throw new Error("haha");
-                    });
-                `;
-                return runner.run(code);
-            });
-        });
+        // // 사실상 직접적으로 테스트 할 방법이 없는걸로...
+        // // https://github.com/chaijs/chai/issues/415
+        // it('throws in user script callback', function(){
+        //     assert.doesNotThrow(function(){
+        //         let runner = new ScriptRunner();
+        //         runner.setRequires(['request']);
+        //         let code = `
+        //             var request = require("request");
+        //             request.get({url:'http://www.myunsay.net/sale'}, function (error, response, body) {
+        //                 throw new Error("haha");
+        //             });
+        //         `;
+        //         return runner.run(code);
+        //     });
+        // });
     });
 
     describe('Attack', function(){
