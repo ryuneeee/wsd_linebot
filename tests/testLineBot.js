@@ -1,7 +1,5 @@
 const assert = require('chai').assert;
-const line = require('../routes/line');
-const ScriptRunner = require('../scriptrunner/script');
-const util = require("util");
+const Line = require('../routes/line');
 
 describe('LineBot', function() {
 
@@ -16,17 +14,21 @@ describe('LineBot', function() {
         "message": {
             "id": "325708",
             "type": "text",
-            "text": "Hello, world"
+            "text": ">reply('1');"
         }
     };
 
 
     describe('Default', function(){
         it('Basic Event', function(){
-            line.reply = function(message){
-                console.log(message);
+            let line = new Line();
+            line.reply = function(){
+                return function(message){
+                    console.log(message);
+                    assert.equal(message, "1");
+                }
             };
-            line.handleEvent(fakeTextMessageEvent)
+            line.script(fakeTextMessageEvent);
         });
     });
 
