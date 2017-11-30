@@ -6,13 +6,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 
-import { AppComponent }       from './app.component';
+import { AppComponent } from './app.component';
 
-import { NavbarComponent } from './navbar.component';
-import { LoginModalComponent } from './login.modal.component';
-import { JoinModalComponent } from './join.modal.component';
-import { LoggedOnComponent } from './loggedOn.component';
+// login
+import { NavbarComponent }     from './navbar/navbar.component';
+import { LoginModalComponent } from './login-modal/login.modal.component';
+import { JoinModalComponent }  from './join-modal/join.modal.component';
+import { LoggedOnComponent }   from './logged-on/loggedOn.component';
 
+// code
 import { CodeListComponent }  from './code-list/code-list.component';
 import { CodeWriteComponent } from './code-write/code-write.component';
 import { CodeViewComponent }  from './code-view/code-view.component';
@@ -21,7 +23,7 @@ import { CodeEditComponent }  from './code-edit/code-edit.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { CodeService } from './code.service';
-import { HttpService } from './http.service';
+import { UserService } from './user.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,7 @@ import { HttpService } from './http.service';
     AceEditorModule
   ],
   providers: [
-    HttpService,
+    UserService,
     CodeService
   ],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { HttpService } from './http.service';
+import { UserService } from '../user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
@@ -23,7 +23,7 @@ export class NavbarComponent {
     showLoginModal = false;
     showJoinModal = false;
 
-    constructor(private httpservice: HttpService) {}
+    constructor(private httpservice: UserService) {}
 
     loginHandler() {
         // console.log('loginHandler : ' + this.userid + ':' + this.userpw); // for debug

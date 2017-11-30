@@ -33,10 +33,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //express router
-app.use('/', require('./routes/index'));
-app.use('/bot', require('./routes/linebot'));
-app.use('/users', require('./routes/users'));
+app.use('/', require('./routes/user'));
 app.use('/', require('./routes/code'));
+app.use('/bot', require('./routes/linebot'));
+//app.use('/users', require('./routes/users'));
+
 
 // proxy to Angular
 app.use(express.static(path.join(__dirname, 'dist')));

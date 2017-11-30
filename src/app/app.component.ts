@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
-import {HttpService} from './http.service';
+import { UserService } from './user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-    providers: [ HttpService ]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
     userObject: any;
     userid: string;
     isLoggedOn: boolean;
-    constructor(private httpservice: HttpService) {
-      this.httpservice.sessionCheck().subscribe((res) => {
+    constructor(private service: UserService) {
+      this.service.sessionCheck().subscribe((res) => {
           this.userObject = res;
           this.userid = this.userObject;
           this.isLoggedOn = true;

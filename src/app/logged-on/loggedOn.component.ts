@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
-import { HttpService } from './http.service';
+import { UserService } from '../user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -10,10 +10,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 export class LoggedOnComponent {
 
-    constructor(private httpservice: HttpService) {}
+    constructor(private service: UserService) {}
 
     logoutHandler() {
-        this.httpservice.doLogout().subscribe();
+        this.service.doLogout().subscribe();
         window.location.reload();
     }
 }
