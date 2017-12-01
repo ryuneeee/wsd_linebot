@@ -35,7 +35,7 @@ app.use(cookieParser());
 //express router
 app.use('/', require('./routes/user'));
 app.use('/', require('./routes/code'));
-app.use('/bot', require('./routes/linebot'));
+app.use('/bot', require('./routes/bot'));
 
 // proxy to Angular
 app.use(express.static(path.join(__dirname, 'dist')));
