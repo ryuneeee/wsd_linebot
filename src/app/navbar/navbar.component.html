@@ -1,0 +1,61 @@
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">line-bot</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li (click)="loginModalControl()"><a>Login</a></li>
+            <li (click) = "joinModelControl()"><a>Join</a></li>
+        </ul>
+    </div>
+</nav>
+
+<app-login-modal [(visible)]="showLoginModal">
+    <h1>login</h1>
+    ID : <input [(ngModel)]="userid"><br>
+    PW : <input type="password" [(ngModel)]="userpw"><br>
+    <button (click)="loginHandler()">Login</button>
+    <button (click)="showLoginModal = !showLoginModal">Close</button>
+    <div class="alert alert-danger" *ngIf="loginFailed1">
+        <strong>id or pw incorrect</strong>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="loginFailed2">
+        <strong>already logged in</strong>
+    </div>
+
+    <div class="alert alert-success" *ngIf="loginSuccess">
+        <strong>Login Success</strong>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="unknownError">
+        <strong>Error occurred</strong>
+    </div>
+
+</app-login-modal>
+
+<app-join-modal [(visible)]="showJoinModal">
+    <h1>Join</h1>
+    ID : <input [(ngModel)]="userid"><br>
+    PW : <input type="password" [(ngModel)]="userpw"><br>
+    <button (click)="joinHandler()">Join</button>
+    <button (click)="showJoinModal = !showJoinModal">Close</button>
+
+    <div class="alert alert-danger" *ngIf="joinFailed1">
+        <strong>id or pw is blank</strong>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="joinFailed2">
+        <strong>already exist</strong>
+    </div>
+
+    <div class="alert alert-success" *ngIf="joinSuccess">
+        <strong>Join Success</strong>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="unknownError">
+        <strong>Error occurred</strong>
+    </div>
+
+</app-join-modal>
