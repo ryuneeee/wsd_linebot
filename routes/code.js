@@ -2,6 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 
+const BadRequest = require('../errors/error.400');
+const Forbidden  = require('../errors/error.403');
+const InternalSE = require('../errors/error.500');
+
 mongoose.connect('mongodb://localhost/codes');
 const db = mongoose.connection;
 db.on('error', (e) => { console.log('db error: ' + e); });
@@ -13,9 +17,8 @@ const Code = require('./models/code-model');
 function isLogined(req, res, next) {
   let user = req.session.user || null;
 
-  if (user == null) {
-    return res.status(403).json({ 'error': 'not login' }).end(); // TODO: make exception
-  }
+  if (user === null)
+    throw new Forbidden('not login');
 
   next();
 }
@@ -23,11 +26,11 @@ function isLogined(req, res, next) {
 function verifyCtxId(req, res, next) {
   let ctxId = req.params.id || null;
 
-  if (ctxId == null)
-    return res.status(400).json({ 'error': 'no context id'}).end(); // TODO: make exception
+  if (ctxId === null)
+    throw new BadRequest('no context id');
 
   if (/^[CRU]{1}[0-9a-f]{32}$/g.test(ctxId) == false)
-    return res.status(400).json({ 'error': 'illegal context id format'}).end(); // TODO: make exception
+    throw new BadRequest('illegal context id format');
 
   next();
 }
@@ -36,17 +39,17 @@ function verifyCode(req, res, next) {
   let name = req.body.name || null;
   let content = req.body.content || null;
 
-  if (name == null)
-    return res.status(400).json({ 'error': 'no code name'}).end(); // TODO: make exception
+  if (name === null)
+    throw new BadRequest('no code name');
 
-  if (content == null)
-    return res.status(400).json({ 'error': 'no code content'}).end(); // TODO: make exception
+  if (content === null)
+    throw new BadRequest('no code content');
 
-  if (name == '')
-    return res.status(400).json({ 'error': 'empty code name'}).end(); // TODO: make exception
+  if (name === '')
+    throw new BadRequest('empty code name');
 
-  if (content == '')
-    return res.status(400).json({ 'error': 'empty code content'}).end(); // TODO: make exception
+  if (content === '')
+    throw new BadRequest('empty code content');
 
   next();
 }
@@ -54,19 +57,20 @@ function verifyCode(req, res, next) {
 function verifyCodeId(req, res, next) {
   let codeId = req.params.id || null;
 
-  if (codeId == null)
-    return res.status(400).json({ 'error': 'no code id'}).end(); // TODO: make exception
+  if (codeId === null)
+    throw new BadRequest('no code id');
 
-  if (/^[0-9a-f]{24}$/g.test(codeId) == false)
-    return res.status(400).json({ 'error': 'illegal code id format'}).end(); // TODO: make exception
+  if (/^[0-9a-f]{24}$/g.test(codeId) === false)
+    throw new BadRequest('illegal code id format');
 
   next();
 }
 
+
 // get code list by context id
 router.get('/codes/:id', isLogined, verifyCtxId, (req, res, next) => {
   Code.find({'ctxId': req.params.id}, '_id name date ', (err, result) => {
-    if (err) return res.status(500).json({ 'error': err }); // TODO: make exception
+    if (err) throw new InternalSE(err);
     let ret = [];
     result.forEach((ele, idx, err) =>{
       ret.push({'id': ele['_id'],
@@ -80,7 +84,7 @@ router.get('/codes/:id', isLogined, verifyCtxId, (req, res, next) => {
 // get code by code id
 router.get('/code/:id', isLogined, verifyCodeId, (req, res, next) => {
   Code.findOne({ '_id': req.params.id }, (err, result) => {
-    if (err) return res.status(500).json({ 'error': err }); // TODO: make exception
+    if (err) throw new InternalSE(err);
     let ret = {
       'id': result._id,
       'ctxId': result.ctxId,
@@ -98,13 +102,13 @@ router.post('/code/:id', isLogined, verifyCtxId, verifyCode, (req, res, next) =>
   // insert one itme
   let c = new Code();
   c.ctxId = req.params.id;
-  //c.writer = req.session.user; -- this maybe get by session
+  //c.writer = req.session.user;
   c.name = req.body.name;
   c.content = req.body.content;
   //c.date = // default value
 
   c.save((err, result) => {
-    if (err) return res.status(500).json({ 'error': err }); // TODO: make exception
+    if (err) throw new InternalSE(err);
     res.json({'result': 'success'}).end();
   });
 });
@@ -118,7 +122,7 @@ router.put('/code/:id', isLogined, verifyCodeId, verifyCode, (req, res, next) =>
       'content': req.body.content,
       'date': Date.now() // this is right?
     }, (err, result) => {
-      if (err) return res.status(500).json({ 'error': err }); // TODO: make exception
+      if (err) throw new InternalSE(err);
       res.json({'result': 'success'}).end();
     }
   );
@@ -127,7 +131,7 @@ router.put('/code/:id', isLogined, verifyCodeId, verifyCode, (req, res, next) =>
 // delete code by code id
 router.delete('/code/:id', isLogined, verifyCodeId, (req, res, next) => {
   Code.remove({ '_id': req.params.id }, (err, result) => {
-    if (err) return res.status(500).json({ 'error': err }); // TODO: make exception
+    if (err) throw new InternalSE(err);
     res.json({'result': 'success'}).end();
   });
 });

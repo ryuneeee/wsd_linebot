@@ -38,24 +38,10 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-// error handler
 app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    let message = err.message;
-    let error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
-    res.status(err.status || 500);
-    //res.render('error');
-    res.send(
-      '<h1>' + message + '</h1>\n' +
-      //'<h2>' + err.status + '</h2>\n' +
-      '<pre>' + err.stack + '</pre>');
-    //res.send();
-    res.send({});
-    //console.log(err);
-    res.end();
-
+  let messag = err.message;
+  let status = err.status;
+  res.status(status).json({ 'error': messag }).end();
 });
 
 module.exports = app;
