@@ -2,6 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 
+const BadRequest = require('../errors/error.400');
+const Unauthorized  = require('../errors/error.401');
+const Forbidden  = require('../errors/error.403');
+const InternalServerError = require('../errors/error.500');
+
 mongoose.connect('mongodb://localhost/db');
 const db = mongoose.connection;
 db.on('error', (e) => { console.log('db error: ' + e); });
@@ -12,8 +17,9 @@ const User = require('./models/user-model');
 // middleware
 function isNotLogined(req, res, next) {
   if (req.session.user) {
-    return res.status(403).end(); // TODO: make exception
+    throw new Forbidden('already loggined');
   }
+
   next();
 }
 
@@ -24,19 +30,20 @@ function varifyUserCred(req, res, next) {
       paramPassword === null ||
       paramId === '' ||
       paramPassword === '') {
-      return res.status(400).end(); // TODO: make exception
+      throw new BadRequest('bad userid or userpw');
   }
 
   next();
 }
 
-router.post('/login', isNotLogined, varifyUserCred, (req, res) => {
+router.post('/login', isNotLogined, varifyUserCred, (req, res, next) => {
     let paramId = req.body.userid;
     let paramPassword = req.body.userpw;
 
     // no in session
     User.findOne({ id: paramId }, function (err, user){
-        if (err) res.send(400);
+        //if (err) throw new InternalServerError(err);
+        if (err) next(new InternalServerError(err));
         if (user !== null) {
             user.comparePassword(paramPassword, (err, isMatch) => {
                 if (err) throw err;
@@ -47,23 +54,25 @@ router.post('/login', isNotLogined, varifyUserCred, (req, res) => {
                     };
                     res.status(200).end();
                 } else {
-                    res.status(401).end();
+                    //throw new Unauthorized('Illegal password.');
+                    next(new Unauthorized('Illegal password.'));
                 }
             });
         } else {
-            res.status(401).end();
+            //throw new Unauthorized('no such user');
+            next(new Unauthorized('no such user'));
         }
     });
 
 });
 
-router.post('/join', isNotLogined, varifyUserCred, (req, res) => {
+router.post('/join', isNotLogined, varifyUserCred, (req, res, next) => {
 
     let paramId = req.body.userid;
-    let paramPassword= req.body.userpw;
+    let paramPassword = req.body.userpw;
 
     User.findOne({id: paramId}, (err, user) => {
-        if (err) return handleError(err);
+        if (err) next(new InternalServerError(err));
 
         // There is no same input id
         if (user === null) {
@@ -72,32 +81,40 @@ router.post('/join', isNotLogined, varifyUserCred, (req, res) => {
               password: paramPassword
             });
             newUser.save((err, data) => {
-                if (err) throw err;
+                //if (err) throw new InternalServerError(err);
+                if (err) next(new InternalServerError(err));
             });
             res.status(200).end();
         }
         else // input id already exists
         {
             // already exist;
-            res.status(405).end();
+            //throw new BadRequest('userid is already exist');
+            /*next({
+              'message': 'userid is already exist',
+              'status': 400
+            });
+            */
+            next(new BadRequest('userid is already exist'));
         }
     });
 
 });
 
 // logout
-router.post('/logout', (req, res) => {
+router.post('/logout', (req, res, next) => {
     req.session.destroy((err) => {
-        if(err) throw err;
+        //if(err) throw new InternalServerError(err);
+        if (err) next(new InternalServerError(err));
         res.status(200).end();
     });
 });
 
-router.post('/checkSess',(req, res) => {
+router.post('/checkSess',(req, res, next) => {
     if(req.session.user) {
         res.status(200).json(req.session.user.id).end(); // TODO : potentially vulnerable
     } else {
-        res.status(401).end();
+        throw new Unauthorized('not login');
     }
 });
 

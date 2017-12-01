@@ -70,7 +70,8 @@ function verifyCodeId(req, res, next) {
 // get code list by context id
 router.get('/codes/:id', isLogined, verifyCtxId, (req, res, next) => {
   Code.find({'ctxId': req.params.id}, '_id name date ', (err, result) => {
-    if (err) throw new InternalSE(err);
+    //if (err) throw new InternalSE(err);
+    if (err) next(new InternalSE(err));
     let ret = [];
     result.forEach((ele, idx, err) =>{
       ret.push({'id': ele['_id'],
@@ -84,7 +85,8 @@ router.get('/codes/:id', isLogined, verifyCtxId, (req, res, next) => {
 // get code by code id
 router.get('/code/:id', isLogined, verifyCodeId, (req, res, next) => {
   Code.findOne({ '_id': req.params.id }, (err, result) => {
-    if (err) throw new InternalSE(err);
+    //if (err) throw new InternalSE(err);
+    if (err) next(new InternalSE(err));
     let ret = {
       'id': result._id,
       'ctxId': result.ctxId,
@@ -108,7 +110,8 @@ router.post('/code/:id', isLogined, verifyCtxId, verifyCode, (req, res, next) =>
   //c.date = // default value
 
   c.save((err, result) => {
-    if (err) throw new InternalSE(err);
+    //if (err) throw new InternalSE(err);
+    if (err) next(new InternalSE(err));
     res.json({'result': 'success'}).end();
   });
 });
@@ -122,7 +125,8 @@ router.put('/code/:id', isLogined, verifyCodeId, verifyCode, (req, res, next) =>
       'content': req.body.content,
       'date': Date.now() // this is right?
     }, (err, result) => {
-      if (err) throw new InternalSE(err);
+      //if (err) throw new InternalSE(err);
+      if (err) next(new InternalSE(err));
       res.json({'result': 'success'}).end();
     }
   );
@@ -131,7 +135,8 @@ router.put('/code/:id', isLogined, verifyCodeId, verifyCode, (req, res, next) =>
 // delete code by code id
 router.delete('/code/:id', isLogined, verifyCodeId, (req, res, next) => {
   Code.remove({ '_id': req.params.id }, (err, result) => {
-    if (err) throw new InternalSE(err);
+    //if (err) throw new InternalSE(err);
+    if (err) next(new InternalSE(err));
     res.json({'result': 'success'}).end();
   });
 });

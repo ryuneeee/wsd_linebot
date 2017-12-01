@@ -16,7 +16,7 @@ app.use(session({
 }));
 
 //Don't move bot router below body parser
-//app.use('/bot', require('./routes/bot'));
+app.use('/bot', require('./routes/bot'));
 app.set('env', 'development');
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -39,8 +39,10 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
+  if (req.app.get('env') === 'development')
+    console.log(err);
   let messag = err.message;
-  let status = err.status;
+  let status = err.status || 500;
   res.status(status).json({ 'error': messag }).end();
 });
 

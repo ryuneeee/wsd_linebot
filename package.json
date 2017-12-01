@@ -30,6 +30,7 @@
     "mongoose": "^4.13.5",
     "morgan": "^1.9.0",
     "ng2-ace-editor": "^0.3.3",
+    "node-gyp": "^3.6.2",
     "node-schedule": "^1.2.5",
     "nodemon": "^1.12.1",
     "request": "^2.83.0",

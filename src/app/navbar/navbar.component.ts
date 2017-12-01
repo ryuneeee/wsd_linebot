@@ -56,9 +56,7 @@ export class NavbarComponent {
             this.alert(1, 'Join Success', 1000);
         }, (err: HttpErrorResponse) => {
             if (err.status === 400) {
-                this.alert(2, 'ID or PW is blank', 5000);
-            } else if (err.status === 405) {
-                this.alert(2, 'already exist', 5000);
+                this.alert(2, err.error.error, 5000);
             } else {
                 this.alert(2, 'unknown error', 5000);
             }
