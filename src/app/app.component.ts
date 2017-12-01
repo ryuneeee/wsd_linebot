@@ -16,7 +16,6 @@ export class AppComponent {
           this.userObject = res;
           this.userid = this.userObject;
           this.isLoggedOn = true;
-          console.log(this.userid);
       }, (err: HttpErrorResponse) => {
           if (err.status === 401) {
               this.isLoggedOn = false;
