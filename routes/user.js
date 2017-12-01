@@ -89,7 +89,7 @@ router.post('/join', isNotLogined, varifyUserCred, (req, res) => {
 router.post('/logout', (req, res) => {
     req.session.destroy((err) => {
         if(err) throw err;
-        res.redirect('/');
+        res.status(200).end();
     });
 });
 

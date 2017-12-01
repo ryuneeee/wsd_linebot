@@ -17,22 +17,10 @@
     PW : <input type="password" [(ngModel)]="userpw"><br>
     <button (click)="loginHandler()">Login</button>
     <button (click)="showLoginModal = !showLoginModal">Close</button>
-    <div class="alert alert-danger" *ngIf="loginFailed1">
-        <strong>id or pw incorrect</strong>
-    </div>
 
-    <div class="alert alert-danger" *ngIf="loginFailed2">
-        <strong>already logged in</strong>
+    <div class={{alertType}} *ngIf="alertFlag">
+        <strong>{{alertMessage}}</strong>
     </div>
-
-    <div class="alert alert-success" *ngIf="loginSuccess">
-        <strong>Login Success</strong>
-    </div>
-
-    <div class="alert alert-danger" *ngIf="unknownError">
-        <strong>Error occurred</strong>
-    </div>
-
 </app-login-modal>
 
 <app-join-modal [(visible)]="showJoinModal">
@@ -42,20 +30,7 @@
     <button (click)="joinHandler()">Join</button>
     <button (click)="showJoinModal = !showJoinModal">Close</button>
 
-    <div class="alert alert-danger" *ngIf="joinFailed1">
-        <strong>id or pw is blank</strong>
+    <div class={{alertType}} *ngIf="alertFlag">
+        <strong>{{alertMessage}}</strong>
     </div>
-
-    <div class="alert alert-danger" *ngIf="joinFailed2">
-        <strong>already exist</strong>
-    </div>
-
-    <div class="alert alert-success" *ngIf="joinSuccess">
-        <strong>Join Success</strong>
-    </div>
-
-    <div class="alert alert-danger" *ngIf="unknownError">
-        <strong>Error occurred</strong>
-    </div>
-
 </app-join-modal>

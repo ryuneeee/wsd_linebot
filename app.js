@@ -16,7 +16,7 @@ app.use(session({
 }));
 
 //Don't move bot router below body parser
-app.use('/bot', require('./routes/bot'));
+//app.use('/bot', require('./routes/bot'));
 app.set('env', 'development');
 app.use(logger('dev'));
 app.use(bodyParser.json());

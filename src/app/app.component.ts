@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from './user.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +11,14 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class AppComponent {
     userObject: any;
     userid: string;
-    isLoggedOn: boolean;
-    constructor(private service: UserService) {
+    constructor(private service: UserService, private router: Router) {
       this.service.sessionCheck().subscribe((res) => {
           this.userObject = res;
           this.userid = this.userObject;
-          this.isLoggedOn = true;
+          router.navigate(['menu']);
       }, (err: HttpErrorResponse) => {
           if (err.status === 401) {
-              this.isLoggedOn = false;
+              router.navigate(['main']);
           } else {
               // TODO : error handling
           }
