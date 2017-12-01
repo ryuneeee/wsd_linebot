@@ -12,11 +12,8 @@ const User = require('./models/user-model');
 // middleware
 function isNotLogined(req, res, next) {
   if (req.session.user) {
-    let r = Object();
-    r.result = 1;
-    return res.status(403).json(r).end(); // TODO: make exception
+    return res.status(403).end(); // TODO: make exception
   }
-
   next();
 }
 
@@ -27,9 +24,7 @@ function varifyUserCred(req, res, next) {
       paramPassword === null ||
       paramId === '' ||
       paramPassword === '') {
-      let r = new Object();
-      r.result = 1;
-      return res.status(400).json(r).end(); // TODO: make exception
+      return res.status(400).end(); // TODO: make exception
   }
 
   next();
@@ -50,19 +45,13 @@ router.post('/login', isNotLogined, varifyUserCred, (req, res) => {
                         id: paramId,
                         authorized: true
                     };
-                    let r = Object();
-                    r.result = 0;
-                    res.status(200).json(r).end();
+                    res.status(200).end();
                 } else {
-                    let r = Object();
-                    r.result = 2;
-                    res.status(401).json(r).end();
+                    res.status(401).end();
                 }
             });
         } else {
-            let r = Object();
-            r.result = 2;
-            res.status(401).json(r).end();
+            res.status(401).end();
         }
     });
 
@@ -85,16 +74,12 @@ router.post('/join', isNotLogined, varifyUserCred, (req, res) => {
             newUser.save((err, data) => {
                 if (err) throw err;
             });
-
-            let r = new Object();
-            r.result = 0;
-            res.status(200).json(r).end();
+            res.status(200).end();
         }
         else // input id already exists
         {
-            let r = new Object();
-            r.result = 2; // already exist;
-            res.status(405).json(r).end();
+            // already exist;
+            res.status(405).end();
         }
     });
 
