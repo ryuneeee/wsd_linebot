@@ -1,0 +1,12 @@
+.container-fluid{
+    height: 100%;
+    padding: 0;
+}
+
+.col-md-8{
+    height: inherit;
+    display:block;
+    overflow:auto;
+    border-left: solid #C1C5CE 1px;
+}
+

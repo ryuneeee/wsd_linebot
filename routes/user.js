@@ -12,7 +12,7 @@ const db = mongoose.connection;
 db.on('error', (e) => { console.log('db error: ' + e); });
 db.on('connected', () => { console.log('Connected successfully to server'); });
 
-const User = require('./models/user-model');
+const User = require('../models/user-model');
 
 // middleware
 function isNotLogined(req, res, next) {
@@ -52,7 +52,7 @@ router.post('/login', isNotLogined, varifyUserCred, (req, res, next) => {
                         id: paramId,
                         authorized: true
                     };
-                    res.status(200).end();
+                    res.status(200).json({}).end();
                 } else {
                     //throw new Unauthorized('Illegal password.');
                     next(new Unauthorized('Illegal password.'));
@@ -84,7 +84,7 @@ router.post('/join', isNotLogined, varifyUserCred, (req, res, next) => {
                 //if (err) throw new InternalServerError(err);
                 if (err) next(new InternalServerError(err));
             });
-            res.status(200).end();
+            res.status(200).json({}).end();
         }
         else // input id already exists
         {
@@ -106,7 +106,7 @@ router.post('/logout', (req, res, next) => {
     req.session.destroy((err) => {
         //if(err) throw new InternalServerError(err);
         if (err) next(new InternalServerError(err));
-        res.status(200).end();
+        res.status(200).json({}).end();
     });
 });
 

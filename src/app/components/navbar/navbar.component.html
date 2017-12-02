@@ -1,14 +1,11 @@
-
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid">
+<nav class="navbar navbar-static-top">
         <div class="navbar-header">
             <a class="navbar-brand">line-bot</a>
         </div>
         <ul class="nav navbar-nav">
             <li (click)="loginModalControl()"><a>Login</a></li>
-            <li (click) = "joinModelControl()"><a>Join</a></li>
+            <li (click)="joinModelControl()"><a>Join</a></li>
         </ul>
-    </div>
 </nav>
 
 <app-login-modal [(visible)]="showLoginModal">

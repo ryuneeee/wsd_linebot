@@ -32,11 +32,8 @@ class Line{
     script(event){
         let ctxId = this.getCtxId(event);
         let code = event.message.text.substring(1); //TODO: request get predefined code database query by context Id
-        let sandbox = {
-            event: event,
-            message: event.message,
-            reply: (message) => this.reply(message, event)
-        };
+        let sandbox = this.createSandbox(event);
+
         if (runner._events.error === undefined)
             runner.on('error', function(e){
                 sandbox.reply(e.message)
@@ -46,6 +43,13 @@ class Line{
         runner.run('(function(){\n' + code + '\n})();', sandbox);
     };
 
+    createSandbox(event) {
+        return {
+            event: event,
+            message: event.message,
+            reply: (message) => this.reply(message, event)
+        };
+    }
 }
 
 

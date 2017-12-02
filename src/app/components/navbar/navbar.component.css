@@ -1,0 +1,12 @@
+a {
+    color: #C1C5CE;
+}
+
+.navbar-brand, .navbar-nav>li>a{
+    text-shadow: none;
+}
+
+.navbar {
+    border-bottom: solid #00B7FF 1px;
+    margin: 0px;
+}

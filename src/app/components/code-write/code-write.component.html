@@ -1,0 +1,82 @@
+<div class="editor">
+
+  <div class="row">
+    <input type="text" [(ngModel)]="code.name" />
+    <button class="write-button" (click)="submit()">Write</button>
+  </div>
+
+  <div class="row">
+    <ace-editor [(text)]="code.content" mode="javascript" style="min-height: 500px; height: 100%; width:100%; overflow: auto;"></ace-editor>
+  </div>
+
+  <!--<div class="row">-->
+    <!--<h3>reply([MESSAGE])</h3>-->
+    <!--<table>-->
+      <!--<thead>-->
+      <!--<tr>-->
+        <!--<th>Argument Name</th>-->
+        <!--<th>Description</th>-->
+      <!--</tr>-->
+      <!--</thead>-->
+      <!--<tbody>-->
+      <!--<tr>-->
+        <!--<td>MESSAGE</td>-->
+        <!--<td>Only String</td>-->
+      <!--</tr>-->
+      <!--</tbody>-->
+    <!--</table>-->
+    <!--<hr />-->
+    <!--<h3>setValue(KEY, VALUE)</h3>-->
+    <!--<table>-->
+      <!--<thead>-->
+      <!--<tr>-->
+        <!--<th>Argument Name</th>-->
+        <!--<th>Description</th>-->
+      <!--</tr>-->
+      <!--</thead>-->
+      <!--<tbody>-->
+      <!--<tr>-->
+        <!--<td>KEY</td>-->
+        <!--<td>Only String</td>-->
+      <!--</tr>-->
+      <!--<tr>-->
+        <!--<td>VALUE</td>-->
+        <!--<td>Only String</td>-->
+      <!--</tr>-->
+      <!--</tbody>-->
+    <!--</table>-->
+    <!--<hr />-->
+    <!--<h3>getValue(KEY)</h3>-->
+    <!--<table>-->
+      <!--<thead>-->
+      <!--<tr>-->
+        <!--<th>Argument Name</th>-->
+        <!--<th>Description</th>-->
+      <!--</tr>-->
+      <!--</thead>-->
+      <!--<tbody>-->
+      <!--<tr>-->
+        <!--<td>KEY</td>-->
+        <!--<td>Only String</td>-->
+      <!--</tr>-->
+      <!--</tbody>-->
+    <!--</table>-->
+    <!--<hr />-->
+    <!--<h3>delValue(KEY)</h3>-->
+    <!--<table>-->
+      <!--<thead>-->
+      <!--<tr>-->
+        <!--<th>Argument Name</th>-->
+        <!--<th>Description</th>-->
+      <!--</tr>-->
+      <!--</thead>-->
+      <!--<tbody>-->
+      <!--<tr>-->
+        <!--<td>KEY</td>-->
+        <!--<td>Only String</td>-->
+      <!--</tr>-->
+      <!--</tbody>-->
+    <!--</table>-->
+
+  <!--</div>-->
+</div>

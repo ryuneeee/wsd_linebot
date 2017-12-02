@@ -1,1 +1,9 @@
+html {
+    height: calc(100% - 26px);
+}
+body {
+    height: inherit;
+    color: #C1C5CE;
+    background: #2C303A;
+}
 /* You can add global styles to this file, and also import other style files */

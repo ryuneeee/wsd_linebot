@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CodeService } from '../code.service';
-import { Code } from '../code';
+import { CodeService } from '../../services/code.service';
+import { Code } from '../../models/code';
 
 @Component({
   selector: 'app-code-list',
@@ -22,13 +22,13 @@ export class CodeListComponent implements OnInit, OnDestroy {
     this.codes = null;
     this.service.selectedCode = null;
     this.sub = this.route.params.subscribe(params => {
-       this.ctxId = params['id'];
+       this.ctxId = params['ctxId'];
        this.getCodeList(this.ctxId);
     });
   }
 
   getCodeList(ctxId) {
-    this.service.getCodes(this.ctxId).subscribe((c :Code[]) => {
+    this.service.getCodes(this.ctxId).subscribe((c: Code[]) => {
       this.codes = c;
     }, this.service.errorHandler);
   }

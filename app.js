@@ -12,7 +12,7 @@ app.use(session({
     secret: 'jkasmhkn',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 60 * 1000 }
+    cookie: { maxAge: 3600 * 1000 }
 }));
 
 //Don't move bot router below body parser

@@ -11,7 +11,7 @@ const db = mongoose.connection;
 db.on('error', (e) => { console.log('db error: ' + e); });
 db.on('connected', () => { console.log('Connected successfully to server'); });
 
-const Code = require('./models/code-model');
+const Code = require('../models/code-model');
 
 // middleware
 function isLogined(req, res, next) {

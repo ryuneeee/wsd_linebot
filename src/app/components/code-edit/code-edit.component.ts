@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CodeService } from '../code.service';
-import { Code } from '../code';
-import { Result } from '../result';
+import { CodeService } from '../../services/code.service';
+import { Code } from '../../models/code';
+import { Result } from '../../models/result';
 
 @Component({
   selector: 'app-code-edit',
@@ -23,9 +23,9 @@ export class CodeEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.service.selectedCode == null) {
       this.code = new Code();
-      this.sub = this.route.params.subscribe(params => {
-        this.getCode(params['id']);
-      });
+      // this.sub = this.route.params.subscribe(params => {
+      //   this.getCode(params['id']);
+      // });
     } else {
       this.code = this.service.selectedCode;
       this.service.selectedCode = null;

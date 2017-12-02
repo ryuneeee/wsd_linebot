@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CodeService } from '../code.service';
-import { Code } from '../code';
-import { Result } from '../result';
+import { CodeService } from '../../services/code.service';
+import { Code } from '../../models/code';
+import { Result } from '../../models/result';
 
 @Component({
   selector: 'app-code-write',

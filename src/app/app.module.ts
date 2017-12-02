@@ -6,24 +6,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AceEditorModule } from 'ng2-ace-editor';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './components/app.component';
 
 // login
-import { NavbarComponent }     from './navbar/navbar.component';
-import { LoginModalComponent } from './login-modal/login.modal.component';
-import { JoinModalComponent }  from './join-modal/join.modal.component';
-import { LoggedOnComponent }   from './logged-on/loggedOn.component';
+import { NavbarComponent }     from './components/navbar/navbar.component';
+import { LoginModalComponent } from './components/login-modal/login.modal.component';
+import { JoinModalComponent }  from './components/join-modal/join.modal.component';
+import { LoggedOnComponent }   from './components/logged-on/loggedOn.component';
 
 // code
-import { CodeListComponent }  from './code-list/code-list.component';
-import { CodeWriteComponent } from './code-write/code-write.component';
-import { CodeViewComponent }  from './code-view/code-view.component';
-import { CodeEditComponent }  from './code-edit/code-edit.component';
+import { CodeListComponent } from './components/code-list/code-list.component';
+import { CodeWriteComponent } from './components/code-write/code-write.component';
+import { CodeViewComponent } from './components/code-view/code-view.component';
+import { CodeEditComponent } from './components/code-edit/code-edit.component';
+import { CodeWrapperComponent } from './components/code-wrapper/code-wrapper.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { CodeService } from './code.service';
-import { UserService } from './user.service';
+import { CodeService } from './services/code.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { UserService } from './user.service';
     CodeWriteComponent,
     CodeViewComponent,
     CodeEditComponent,
+    CodeWrapperComponent,
     LoginModalComponent,
     JoinModalComponent,
     NavbarComponent,
