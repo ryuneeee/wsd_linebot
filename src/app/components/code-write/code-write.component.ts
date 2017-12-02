@@ -12,6 +12,7 @@ import { Result } from '../../models/result';
 export class CodeWriteComponent implements OnInit, OnDestroy {
   private sub: any;
   code: Code;
+  options: any = {};
 
   constructor(
     private router: Router,
@@ -27,10 +28,10 @@ export class CodeWriteComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    let _id = this.code.ctxId;
+    const _id = this.code.ctxId;
     this.service.createCode(this.code).subscribe((m: Result) => {
-      if (m.result == 'success') {
-        alert("Done!");
+      if (m.result === 'success') {
+        alert('Done!');
         this.router.navigateByUrl('/list/' + _id);
       }
     }, this.service.errorHandler);

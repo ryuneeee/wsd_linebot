@@ -1,82 +1,315 @@
-<div class="editor">
 
-  <div class="row">
-    <input type="text" [(ngModel)]="code.name" />
-    <button class="write-button" (click)="submit()">Write</button>
+
+<div class="col-md-9 editor">
+  <ace-editor [(text)]="code.content" mode="javascript" [options]="options"></ace-editor>
+  <div class="tester">
+    <div class="col-md-4">
+      <div class="tester-info">Received Event</div>
+    <textarea> {
+  "events": [
+      {
+        "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+        "type": "message",
+        "timestamp": 1462629479859,
+        "source": {
+             "type": "user",
+             "userId": "U9b01f7ca011a06989203b170bf928374"
+         },
+         "message": {
+             "id": "325708",
+             "type": "text",
+             "text": "Hello, world"
+          }
+      }
+  ]
+}</textarea>
+    </div>
+    <div class="col-md-8">
+      <div class="tester-info">User Receive</div>
+    </div>
   </div>
-
-  <div class="row">
-    <ace-editor [(text)]="code.content" mode="javascript" style="min-height: 500px; height: 100%; width:100%; overflow: auto;"></ace-editor>
+</div>
+<div class="col-md-3 config">
+  <div class="save">
+    <div class="col-md-10">
+      <input type="text" class="form-control" [(ngModel)]="code.name" placeholder="basic_reply" />
+    </div>
+    <div class="col-md-2">
+      <button class="btn write-button" (click)="submit()">Write</button>
+    </div>
   </div>
-
+  <div class="doc">
+    <h3>reply([MESSAGE])</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>MESSAGE</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>setValue(KEY, VALUE)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      <tr>
+        <td>VALUE</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>getValue(KEY)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>delValue(KEY)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <h3>reply([MESSAGE])</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>MESSAGE</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>setValue(KEY, VALUE)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      <tr>
+        <td>VALUE</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>getValue(KEY)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>delValue(KEY)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <h3>reply([MESSAGE])</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>MESSAGE</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>setValue(KEY, VALUE)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      <tr>
+        <td>VALUE</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>getValue(KEY)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>delValue(KEY)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <h3>reply([MESSAGE])</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>MESSAGE</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>setValue(KEY, VALUE)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      <tr>
+        <td>VALUE</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>getValue(KEY)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h3>delValue(KEY)</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Argument Name</th>
+        <th>Description</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>KEY</td>
+        <td>Only String</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
   <!--<div class="row">-->
-    <!--<h3>reply([MESSAGE])</h3>-->
-    <!--<table>-->
-      <!--<thead>-->
-      <!--<tr>-->
-        <!--<th>Argument Name</th>-->
-        <!--<th>Description</th>-->
-      <!--</tr>-->
-      <!--</thead>-->
-      <!--<tbody>-->
-      <!--<tr>-->
-        <!--<td>MESSAGE</td>-->
-        <!--<td>Only String</td>-->
-      <!--</tr>-->
-      <!--</tbody>-->
-    <!--</table>-->
-    <!--<hr />-->
-    <!--<h3>setValue(KEY, VALUE)</h3>-->
-    <!--<table>-->
-      <!--<thead>-->
-      <!--<tr>-->
-        <!--<th>Argument Name</th>-->
-        <!--<th>Description</th>-->
-      <!--</tr>-->
-      <!--</thead>-->
-      <!--<tbody>-->
-      <!--<tr>-->
-        <!--<td>KEY</td>-->
-        <!--<td>Only String</td>-->
-      <!--</tr>-->
-      <!--<tr>-->
-        <!--<td>VALUE</td>-->
-        <!--<td>Only String</td>-->
-      <!--</tr>-->
-      <!--</tbody>-->
-    <!--</table>-->
-    <!--<hr />-->
-    <!--<h3>getValue(KEY)</h3>-->
-    <!--<table>-->
-      <!--<thead>-->
-      <!--<tr>-->
-        <!--<th>Argument Name</th>-->
-        <!--<th>Description</th>-->
-      <!--</tr>-->
-      <!--</thead>-->
-      <!--<tbody>-->
-      <!--<tr>-->
-        <!--<td>KEY</td>-->
-        <!--<td>Only String</td>-->
-      <!--</tr>-->
-      <!--</tbody>-->
-    <!--</table>-->
-    <!--<hr />-->
-    <!--<h3>delValue(KEY)</h3>-->
-    <!--<table>-->
-      <!--<thead>-->
-      <!--<tr>-->
-        <!--<th>Argument Name</th>-->
-        <!--<th>Description</th>-->
-      <!--</tr>-->
-      <!--</thead>-->
-      <!--<tbody>-->
-      <!--<tr>-->
-        <!--<td>KEY</td>-->
-        <!--<td>Only String</td>-->
-      <!--</tr>-->
-      <!--</tbody>-->
-    <!--</table>-->
+
 
   <!--</div>-->
-</div>

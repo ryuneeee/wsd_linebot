@@ -6,4 +6,13 @@ body {
     color: #C1C5CE;
     background: #2C303A;
 }
+
+@media (max-width: 1000px) {
+    html, body {min-width:1000px;}
+}
+
+.ace_gutter, .ace_gutter-active-line {
+    background: none !important;
+}
+
 /* You can add global styles to this file, and also import other style files */

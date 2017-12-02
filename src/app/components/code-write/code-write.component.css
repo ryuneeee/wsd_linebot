@@ -1,55 +1,94 @@
-/*.aceEditorDirective {*/
-/*margin-top: 50px;*/
-/*height: 100%;*/
-/*width: 100%;*/
-/*overflow: auto;*/
-/*}*/
-
-/*.container {*/
-/*display: -webkit-flex;*/
-/*display: flex;*/
-/*-webkit-flex-flow: row wrap;*/
-/*flex-flow: row wrap;*/
-/*height: 100%;*/
-/*}*/
-
-/*.left {*/
-/*width: 100%;*/
-/*}*/
-
-/*.right {*/
-/*display: none;*/
-/*}*/
-
-/*.right {*/
-/*background-color: #eee;*/
-/*}*/
-
-/*@media (min-width: 640px) {*/
-/*.left {*/
-/*width: 70%;*/
-/*-webkit-order: 1;*/
-/*order: 1;*/
-/*}*/
-
-/*.right {*/
-/*display: block;*/
-/*width: 30%;*/
-/*-webkit-order: 2;*/
-/*order: 2;*/
-/*}*/
-/*}*/
-
-
 .write-button{
   float: right;
 }
 
 .editor{
-  /*padding: 10px;*/
+  padding: 10px 0 0 0;
   height: 100%;
 }
 
-ace-editor{
-  background: none;
+.tester{
+  height: 30%;
+  width: 100%;
+  float: left;
+  background: #222;
+  border-top: solid #007AAC 1px;
 }
+
+.tester > div {
+  padding: 5px;
+  height: 100%;
+}
+
+.tester-info {
+  position: absolute;
+  float: right;
+  right: 20px;
+  top: 10px;
+  padding: 3px;
+  color: #2d2d2d;
+  /*z-index: -1;*/
+  background: #555555;
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+textarea{
+  height: 100%;
+  width: 100%;
+  background: inherit;
+  resize: none;
+  overflow: hidden;
+  border: none;
+  border-right: solid #555 1px;
+}
+
+
+.save {
+  padding-bottom: 30px;
+}
+
+
+.doc {
+  height: 100%;
+  padding: 20px;
+}
+
+ace-editor{
+  height: 70%;
+  background: none;
+  overflow: hidden;
+}
+
+.config {
+  padding: 10px;
+  height: 100%;
+  overflow: scroll;
+  border-left: solid #007AAC 1px;
+}
+
+.config > div{
+  padding: 0;
+}
+
+.btn{
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  background: #404040;
+}
+
+input {
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  background: #2d2d2d;
+  color: #C1C5CE;
+}
+
+::-webkit-input-placeholder { color: #555; } /* Chrome/Opera/Safari */
+::-moz-placeholder { color: #555; } /* Firefox 19+ */
+:-ms-input-placeholder { color: #555; } /* IE 10+ */
+:-moz-placeholder { color: #555; }/* Firefox 18- */

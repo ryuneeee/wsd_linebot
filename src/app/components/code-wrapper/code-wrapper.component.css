@@ -3,10 +3,9 @@
     padding: 0;
 }
 
-.col-md-8{
+.editor-wrapper{
+    padding: 0;
     height: inherit;
-    display:block;
-    overflow:auto;
-    border-left: solid #C1C5CE 1px;
+    overflow: hidden;
+    border-left: solid #007AAC 1px;
 }
-
