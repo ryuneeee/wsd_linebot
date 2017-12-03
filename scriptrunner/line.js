@@ -14,6 +14,7 @@ class Line{
         this.config = cfg || config;
         this.client = new sdk.Client(this.config);
         this.middleware = sdk.middleware(config);
+        this.code = ''
     }
 
     getCtxId(e) {
@@ -31,16 +32,14 @@ class Line{
 
     script(event){
         let ctxId = this.getCtxId(event);
-        let code = event.message.text.substring(1); //TODO: request get predefined code database query by context Id
         let sandbox = this.createSandbox(event);
-
         if (runner._events.error === undefined)
             runner.on('error', function(e){
                 sandbox.reply(e.message)
             });
 
         runner.setContextId(ctxId);
-        runner.run('(function(){\n' + code + '\n})();', sandbox);
+        runner.run(this.createCode(event.message.text.substring(1)), sandbox); //TODO: request get predefined code database query by context Id
     };
 
     createSandbox(event) {
@@ -49,6 +48,10 @@ class Line{
             message: event.message,
             reply: (message) => this.reply(message, event)
         };
+    }
+
+    createCode(code){
+        return '(function(){\n' + code + '\n})();'
     }
 }
 

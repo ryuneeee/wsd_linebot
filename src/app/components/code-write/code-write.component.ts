@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CodeService } from '../../services/code.service';
 import { Code } from '../../models/code';
 import { Result } from '../../models/result';
+import {Chat} from '../../models/chat';
 
 @Component({
   selector: 'app-code-write',
@@ -12,6 +13,8 @@ import { Result } from '../../models/result';
 export class CodeWriteComponent implements OnInit, OnDestroy {
   private sub: any;
   code: Code;
+  input = '';
+  chats: Chat[] = [];
   options: any = {};
 
   constructor(

@@ -35,7 +35,14 @@ export class CodeService {
   }
 
   errorHandler(err: HttpErrorResponse) {
-    let message = err.error;
+    const message = err.error;
     alert(message.error);
+  }
+
+  runCode(code: Code, input: string) {
+    return this.http.post('/codes/test', {
+      'code': '>' + code.content,
+      'input': input
+    });
   }
 }

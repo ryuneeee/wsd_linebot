@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const Line = require('../scriptrunner/line');
 
 const BadRequest = require('../errors/error.400');
 const Forbidden  = require('../errors/error.403');
@@ -12,6 +13,8 @@ db.on('error', (e) => { console.log('db error: ' + e); });
 db.on('connected', () => { console.log('Connected successfully to server'); });
 
 const Code = require('../models/code-model');
+
+const line = new Line();
 
 // middleware
 function isLogined(req, res, next) {
@@ -65,6 +68,32 @@ function verifyCodeId(req, res, next) {
 
   next();
 }
+
+router.post('/codes/test', (req, res, next) => {
+  let result = [];
+  let event = {
+    "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",
+    "type": "message",
+    "timestamp": 1462629479859,
+    "source": {
+        "type": "user",
+        "userId": "U9b01f7ca__sample__3b170bf928374"
+    },
+    "message": {
+        "id": "325708",
+        "type": "text",
+        "text": req.body.code
+    }
+  };
+
+  line.reply = message => { result.push(message);};
+  line.script(event);
+
+  //Wating for script execution time. Because script execution is asynchronous.
+  setTimeout(function () {
+      res.status(200).json({"message": result}).end();
+  }, 1000);
+});
 
 
 // get code list by context id
