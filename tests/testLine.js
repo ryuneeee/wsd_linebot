@@ -26,6 +26,15 @@ describe('LineBot', function() {
             line.script(event);
         });
 
+        it('Reply with variable', () => {
+            let line = new Line();
+            let result = '';
+            line.reply = message => { result = message; };
+            event.message.text = '>reply("Hello World")';
+            line.script(event);
+            assert.equal(result, "Hello World");
+        });
+
         it('Reply with userId', () => {
             let line = new Line();
             line.reply = message => { assert.equal(message, event.source.userId) };

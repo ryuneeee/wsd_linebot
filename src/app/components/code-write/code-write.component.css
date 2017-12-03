@@ -108,6 +108,7 @@ ul li{
   display:inline-block;
   clear: both;
   margin: 5px;
+  max-width: 60%;
   padding: 10px;
   border-radius: 30px;
 }
@@ -115,7 +116,7 @@ ul li{
 .him{
   background: #eee;
   float: left;
-  border-bottom-left-radius: 5px !important;
+  border-top-left-radius: 5px !important;
   color: #2d2d2d;
 }
 
@@ -137,6 +138,14 @@ ul li{
 
 .doc > div{
   padding: 0;
+}
+
+h4 {
+  padding: 5px;
+}
+tr > th,
+tr > td{
+  padding:5px;
 }
 
 .btn{
