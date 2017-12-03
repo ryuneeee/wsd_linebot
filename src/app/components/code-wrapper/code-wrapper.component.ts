@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
-    selector: 'app-wrapper-edit',
+    selector: 'app-code-wrapper',
     templateUrl: './code-wrapper.component.html',
     styleUrls: ['./code-wrapper.component.css'],
 })

@@ -17,8 +17,8 @@ import { LoggedOnComponent }   from './components/logged-on/loggedOn.component';
 // code
 import { CodeListComponent } from './components/code-list/code-list.component';
 import { CodeWriteComponent } from './components/code-write/code-write.component';
-import { CodeViewComponent } from './components/code-view/code-view.component';
-import { CodeEditComponent } from './components/code-edit/code-edit.component';
+import { CodeTesterComponent } from './components/code-tester/code-tester.component';
+import { CodeReferenceComponent } from './components/code-reference/code-reference.component';
 import { CodeWrapperComponent } from './components/code-wrapper/code-wrapper.component';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,8 +31,8 @@ import { UserService } from './services/user.service';
     AppComponent,
     CodeListComponent,
     CodeWriteComponent,
-    CodeViewComponent,
-    CodeEditComponent,
+    CodeTesterComponent,
+    CodeReferenceComponent,
     CodeWrapperComponent,
     LoginModalComponent,
     JoinModalComponent,

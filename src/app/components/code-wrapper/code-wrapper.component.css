@@ -9,3 +9,16 @@
     overflow: hidden;
     border-left: solid #007AAC 1px;
 }
+
+
+.doc {
+  padding: 10px;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border-left: solid #007AAC 1px;
+}
+
+.doc > div{
+  padding: 0;
+}

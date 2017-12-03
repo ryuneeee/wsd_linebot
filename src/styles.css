@@ -15,4 +15,24 @@ body {
     background: none !important;
 }
 
+.btn{
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  background: #404040;
+}
+
+input {
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  background: #2d2d2d !important;
+  color: #C1C5CE !important;
+}
+
+.no-border {
+  border: 0;
+  box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+}
+
 /* You can add global styles to this file, and also import other style files */

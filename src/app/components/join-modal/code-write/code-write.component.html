@@ -1,0 +1,29 @@
+<div class="col-md-12 editor">
+  <div class="save">
+    <div class="col-md-9">
+      <div class="input-group">
+        <span class="input-group-addon no-border">스크립트 이름</span>
+        <input type="text" class="form-control no-border" placeholder="에코봇">
+      </div>
+    </div>
+    <div class="col-md-2">
+      <select class="schedule form-control no-border">
+        <option>반복 안함</option>
+        <option>1분 마다</option>
+        <option>5분 마다</option>
+        <option>10분 마다</option>
+        <option>30분 마다</option>
+        <option>1시간 마다</option>
+        <option>3시간 마다</option>
+        <option>6시간 마다</option>
+        <option>12시간 마다</option>
+        <option>24시간 마다</option>
+      </select>
+    </div>
+    <div class="col-md-1">
+      <button class="btn">저장</button>
+    </div>
+  </div>
+  <ace-editor [(text)]="code.content" mode="javascript" [options]="options"></ace-editor>
+  <app-code-tester></app-code-tester>
+</div>
