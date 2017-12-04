@@ -39,20 +39,18 @@ function verifyCtxId(req, res, next) {
 }
 
 function verifyCode(req, res, next) {
+  console.log(req.body);
   let name = req.body.name || null;
+  let interval = req.body.interval || null;
   let content = req.body.content || null;
 
-  if (name === null)
-    throw new BadRequest('no code name');
+  if (name === null)      throw new BadRequest('no code name');
+  //if (interval === null)  throw new BadRequest('no interval');
+  if (content === null)   throw new BadRequest('no code content');
 
-  if (content === null)
-    throw new BadRequest('no code content');
-
-  if (name === '')
-    throw new BadRequest('empty code name');
-
-  if (content === '')
-    throw new BadRequest('empty code content');
+  if (name === '')            throw new BadRequest('empty code name');
+  if (/^\d+$/.test(interval)) throw new BadRequest('bad interval');
+  if (content === '')         throw new BadRequest('empty code content');
 
   next();
 }
@@ -121,6 +119,7 @@ router.get('/code/:id', isLogined, verifyCodeId, (req, res, next) => {
       'ctxId': result.ctxId,
       'writer': result.writer,
       'name': result.name,
+      'interval': result.interval,
       'content': result.content,
       'date': result.date
     };
@@ -135,6 +134,7 @@ router.post('/code/:id', isLogined, verifyCtxId, verifyCode, (req, res, next) =>
   c.ctxId = req.params.id;
   //c.writer = req.session.user;
   c.name = req.body.name;
+  c.interval = req.body.interval;
   c.content = req.body.content;
   //c.date = // default value
 
@@ -151,6 +151,7 @@ router.put('/code/:id', isLogined, verifyCodeId, verifyCode, (req, res, next) =>
       //'contextId': // maybe never change?
       //'userid': // maybe?
       'name': req.body.name,
+      'interval': req.body.interval,
       'content': req.body.content,
       'date': Date.now() // this is right?
     }, (err, result) => {

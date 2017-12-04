@@ -18,15 +18,17 @@ export class CodeService {
 
   createCode(code: Code) {
     return this.http.post('/code/' + code.ctxId, {
-      'name': code.name,
-      'content': code.content
+      'name':     code.name,
+      'interval': code.interval,
+      'content':  code.content
     });
   }
 
   updateCode(code: Code) {
     return this.http.put('/code/' + code.id, {
-      'name': code.name,
-      'content': code.content
+      'name':     code.name,
+      'interval': code.interval,
+      'content':  code.content
     });
   }
 
