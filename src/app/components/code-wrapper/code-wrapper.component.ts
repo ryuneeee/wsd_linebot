@@ -31,12 +31,12 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
 
       this.sub = this.route.params.subscribe(params => {
          this.ctxId = params['ctxId'];
-         this.getCodeList(this.ctxId);
+         this.getCodeList();
       });
 
     }
 
-    getCodeList(ctxId) {
+    getCodeList() {
       this.service.getCodes(this.ctxId).subscribe((c: Code[]) => {
         this.codes = c;
       }, this.service.errorHandler);
@@ -45,6 +45,7 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
     selectCode(code: Code) {
       console.log(code);
       code.ctxId = code.ctxId || this.ctxId;
+      code.content = "";
       this.selectedCode = code;
     }
 

@@ -17,9 +17,10 @@ export class CodeService {
   }
 
   createCode(code: Code) {
+    console.log(code);
     return this.http.post('/code/' + code.ctxId, {
       'name':     code.name,
-      'interval': code.interval,
+      'interval': +code.interval,
       'content':  code.content
     });
   }
@@ -27,7 +28,7 @@ export class CodeService {
   updateCode(code: Code) {
     return this.http.put('/code/' + code.id, {
       'name':     code.name,
-      'interval': code.interval,
+      'interval': +code.interval,
       'content':  code.content
     });
   }

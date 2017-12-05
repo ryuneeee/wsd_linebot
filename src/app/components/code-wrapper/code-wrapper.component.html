@@ -3,7 +3,7 @@
         <app-code-list [codes]="codes" (notify)="selectCode($event)"></app-code-list>
     </div>
     <div class="col-md-7 editor-wrapper">
-        <app-code-write [code]="selectedCode"></app-code-write>
+        <app-code-write [code]="selectedCode" (notify)="getCodeList()"></app-code-write>
     </div>
     <div class="col-md-3 doc">
         <app-code-reference></app-code-reference>

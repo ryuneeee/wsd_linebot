@@ -24,6 +24,6 @@
       <button class="btn" [attr.disabled]="code?null:''" (click)="submit()">저장</button>
     </div>
   </div>
-  <ace-editor [(text)]="code==null?null:code.content" mode="javascript" [options]="options"></ace-editor>
+  <ace-editor [(text)]="code==null?null:code.content" mode="javascript" [readOnly]="code?false:true" [options]="options"></ace-editor>
   <app-code-tester [code]="code"></app-code-tester>
 </div>

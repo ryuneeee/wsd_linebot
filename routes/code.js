@@ -39,9 +39,8 @@ function verifyCtxId(req, res, next) {
 }
 
 function verifyCode(req, res, next) {
-  console.log(req.body);
   let name = req.body.name || null;
-  let interval = req.body.interval || null;
+  let interval = req.body.interval;
   let content = req.body.content || null;
 
   if (name === null)      throw new BadRequest('no code name');
@@ -49,7 +48,7 @@ function verifyCode(req, res, next) {
   if (content === null)   throw new BadRequest('no code content');
 
   if (name === '')            throw new BadRequest('empty code name');
-  if (/^\d+$/.test(interval)) throw new BadRequest('bad interval');
+  if (/^\d+$/.test(interval) === false) throw new BadRequest('bad interval');
   if (content === '')         throw new BadRequest('empty code content');
 
   next();
