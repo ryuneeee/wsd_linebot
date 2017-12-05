@@ -140,7 +140,7 @@ router.post('/code/:id', isLogined, verifyCtxId, verifyCode, (req, res, next) =>
   c.save((err, result) => {
     //if (err) throw new InternalSE(err);
     if (err) next(new InternalSE(err));
-    res.json({'result': 'success'}).end();
+    res.json({'result': 'success', 'message': [result.id]}).end();
   });
 });
 
