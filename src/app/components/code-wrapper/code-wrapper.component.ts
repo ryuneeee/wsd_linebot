@@ -43,9 +43,10 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
     }
 
     selectCode(code: Code) {
-      console.log(code);
-      code.ctxId = code.ctxId || this.ctxId;
-      code.content = "";
+      if (code !== null) {
+        code.ctxId = code.ctxId || this.ctxId;
+        code.content = "";
+      }
       this.selectedCode = code;
     }
 

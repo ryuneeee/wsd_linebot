@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CodeService } from '../../services/code.service';
 import { Code } from '../../models/code';
@@ -11,19 +11,13 @@ import { Chat } from '../../models/chat';
   styleUrls: ['./code-tester.component.css'],
 })
 
-export class CodeTesterComponent implements OnInit, OnDestroy {
-  private sub: any;
+export class CodeTesterComponent {
   @Input() code: Code;
   input = '';
   chats: Chat[] = [];
   options: any = {};
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private service: CodeService) { }
-
-    ngOnInit() { }
+  constructor(private service: CodeService) { }
 
     run() {
       if (this.input !== '') {
@@ -43,9 +37,4 @@ export class CodeTesterComponent implements OnInit, OnDestroy {
         }
       });
     }
-
-    ngOnDestroy() {
-      this.sub.unsubscribe();
-    }
-
   }

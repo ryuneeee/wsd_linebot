@@ -17,7 +17,6 @@ export class CodeService {
   }
 
   createCode(code: Code) {
-    console.log(code);
     return this.http.post('/code/' + code.ctxId, {
       'name':     code.name,
       'interval': +code.interval,
