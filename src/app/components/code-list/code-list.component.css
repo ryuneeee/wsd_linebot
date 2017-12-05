@@ -1,3 +1,10 @@
+
+
+tbody > tr > td{
+    border: none;
+    line-height: 30px;
+}
+
 .new-code {
     float: right;
     margin-top: 10px;
@@ -14,4 +21,8 @@ table {
 
 .delete-box {
     width: 40px;
+}
+
+.code-date {
+    text-align: right;
 }

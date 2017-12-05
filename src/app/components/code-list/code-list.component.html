@@ -2,16 +2,16 @@
 <table class="table">
   <thead>
     <tr>
-      <th class="delete-box" scope="col"></th>
-      <th scope="col">Script Name</th>
-      <th scope="col">Date</th>
+      <th class="col-md-1 delete-box" scope="col"></th>
+      <th class="col-md-8" scope="col">Script Name</th>
+      <th class="col-md-4 code-date" scope="col">Date</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor='let code of codes'>
-      <td class="delete-box"><input (change)="checkedCode($event.srcElement, code)" type="checkbox"></td>
-      <td (click)="selectCode(code)">{{ code.name }}</td>
-      <td (click)="selectCode(code)">{{ code.date }}</td>
+      <td class="col-md-1 delete-box"><input (change)="checkedCode($event.srcElement, code)" type="checkbox"></td>
+      <td class="col-md-8"(click)="selectCode(code)">{{ code.name }}</td>
+      <td class="col-md-4 code-date" (click)="selectCode(code)">{{ code.date.substring(0,10)}}</td>
     </tr>
   </tbody>
 </table>
