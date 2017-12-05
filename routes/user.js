@@ -15,7 +15,7 @@ db.on('connected', () => { console.log('Connected successfully to server'); });
 const User = require('../models/user-model');
 
 // middleware
-function isNotLogined(req, res, next) {
+function isNotLoggedIn(req, res, next) {
   if (req.session.user) {
     throw new Forbidden('already loggined');
   }
@@ -23,7 +23,7 @@ function isNotLogined(req, res, next) {
   next();
 }
 
-function varifyUserCred(req, res, next) {
+function verifyUserCred(req, res, next) {
   let paramId = req.body.userid || null;
   let paramPassword= req.body.userpw || null;
   if (paramId === null ||
@@ -36,7 +36,8 @@ function varifyUserCred(req, res, next) {
   next();
 }
 
-router.post('/login', isNotLogined, varifyUserCred, (req, res, next) => {
+router.post('/login', isNotLoggedIn, verifyUserCred, (req, res, next) => {
+    //req.session.cookie.expires = new Date(Date.now() + hour)
     let paramId = req.body.userid;
     let paramPassword = req.body.userpw;
 
@@ -49,8 +50,7 @@ router.post('/login', isNotLogined, varifyUserCred, (req, res, next) => {
                 if (err) throw err;
                 if (isMatch) {
                     req.session.user = {
-                        id: paramId,
-                        authorized: true
+                        id: paramId
                     };
                     res.status(200).json({}).end();
                 } else {
@@ -66,7 +66,8 @@ router.post('/login', isNotLogined, varifyUserCred, (req, res, next) => {
 
 });
 
-router.post('/join', isNotLogined, varifyUserCred, (req, res, next) => {
+router.post('/join', isNotLoggedIn, verifyUserCred, (req, res, next) => {
+    //req.session.cookie.expires = new Date(Date.now() + hour)
 
     let paramId = req.body.userid;
     let paramPassword = req.body.userpw;
@@ -103,6 +104,7 @@ router.post('/join', isNotLogined, varifyUserCred, (req, res, next) => {
 
 // logout
 router.post('/logout', (req, res, next) => {
+    //req.session.cookie.expires = new Date(Date.now() + hour)
     req.session.destroy((err) => {
         //if(err) throw new InternalServerError(err);
         if (err) next(new InternalServerError(err));
@@ -111,6 +113,7 @@ router.post('/logout', (req, res, next) => {
 });
 
 router.post('/checkSess',(req, res, next) => {
+   // req.session.cookie.expires = new Date(Date.now() + hour)
     if(req.session.user) {
         res.status(200).json(req.session.user.id).end(); // TODO : potentially vulnerable
     } else {

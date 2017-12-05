@@ -10,8 +10,9 @@ const app = express();
 // set session
 app.use(session({
     secret: 'jkasmhkn',
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
+    rolling: true,
     cookie: { maxAge: 3600 * 1000 }
 }));
 
