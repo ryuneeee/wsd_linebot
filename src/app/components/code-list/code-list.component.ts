@@ -10,6 +10,7 @@ import { Code } from '../../models/code';
 export class CodeListComponent implements OnInit {
   @Input() codes: Code[];
   @Output() notify: EventEmitter<Code> = new EventEmitter<Code>();
+  delList: Code[] = [];
 
   constructor(private router: Router) { }
 
@@ -23,4 +24,18 @@ export class CodeListComponent implements OnInit {
     this.notify.emit(selectedCode);
   }
 
+  deleteCode() {
+    if (this.delList.length === 0){
+      alert("삭제 할 리스트가 없습니다!");
+    }
+  }
+
+  checkedCode(el, code) {
+    const idx = this.delList.indexOf(code);
+    if (el.checked) {
+      if (idx === -1) { this.delList.push(code); }
+    }else {
+      if (idx !== -1) { this.delList.splice(idx, 1); }
+    }
+  }
 }

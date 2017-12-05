@@ -20,6 +20,11 @@ body {
   -webkit-border-radius: 0 !important;
   -moz-border-radius: 0 !important;
   background: #404040;
+    color: #C1C5CE;
+}
+
+.btn:hover {
+    color: #6bbdff;
 }
 
 input {

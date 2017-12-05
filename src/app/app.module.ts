@@ -15,6 +15,7 @@ import { JoinModalComponent }  from './components/join-modal/join.modal.componen
 import { LoggedOnComponent }   from './components/logged-on/loggedOn.component';
 
 // code
+import {CodeHelloComponent} from './components/code-hello/code-hello.component';
 import { CodeListComponent } from './components/code-list/code-list.component';
 import { CodeWriteComponent } from './components/code-write/code-write.component';
 import { CodeTesterComponent } from './components/code-tester/code-tester.component';
@@ -29,6 +30,7 @@ import { UserService } from './services/user.service';
 @NgModule({
   declarations: [
     AppComponent,
+    CodeHelloComponent,
     CodeListComponent,
     CodeWriteComponent,
     CodeTesterComponent,
