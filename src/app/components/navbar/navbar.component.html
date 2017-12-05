@@ -10,9 +10,9 @@
 
 <app-login-modal [(visible)]="showLoginModal">
 
-    <h1>login</h1>
-    <label>ID : </label><input class = "form-control" [(ngModel)]="userid"><br>
-    <label>PW : </label><input class = "form-control" type="password" [(ngModel)]="userpw"><br>
+    <h1>Login</h1>
+    <label>ID : </label><input class = "form-control" placeholder="ID" [(ngModel)]="userid"><br>
+    <label>PW : </label><input class = "form-control" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
     <button class = "btn btn-default" (click)="loginHandler()">Login</button>
 
     <div class={{alertType}} *ngIf="alertFlag">
