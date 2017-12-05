@@ -35,7 +35,7 @@ export class CodeWriteComponent implements OnInit, OnChanges {
   }
   options: any = {};
 
-  @Output() notify: EventEmitter<Code> = new EventEmitter<Code>();
+  @Output() notify: EventEmitter<Object> = new EventEmitter<Object>();
 
   constructor(
     private router: Router,
@@ -44,16 +44,22 @@ export class CodeWriteComponent implements OnInit, OnChanges {
   ngOnInit() { }
 
   submit() {
-    let evnt = (m: Result) => {
-      if (m.result === 'success') {
-        alert('Done!');
-        this.notify.emit();
-      }
-    };
+    let self = this;
     if (this.code.id == undefined) {
-      this.service.createCode(this.code).subscribe(evnt, this.service.errorHandler);
+      this.service.createCode(this.code).subscribe((m: Result) => {
+        if (m.result === 'success') {
+          alert('Done!');
+          self.code.id = m.message[0];
+          self.notify.emit();
+        }
+      }, this.service.errorHandler);
     } else {
-      this.service.updateCode(this.code).subscribe(evnt, this.service.errorHandler);
+      this.service.updateCode(this.code).subscribe((m: Result) => {
+        if (m.result === 'success') {
+          alert('Done!');
+          self.notify.emit();
+        }
+      }, this.service.errorHandler);
     }
 
   }
