@@ -2,12 +2,13 @@
   background: #333;
   padding: 0;
   height: 100%;
+  display: table;
 }
 
-#hello-hero{
-  margin-top: 50%;
+.editor > div {
+    display:table-cell;
+    vertical-align:middle;
 }
-
 h3, p{
   padding: 10px;
   text-align: center;
