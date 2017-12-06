@@ -1,33 +1,35 @@
 <nav class="navbar navbar-static-top">
-        <div class="navbar-header">
-            <a class="navbar-brand">line-bot</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li (click)="loginModalControl()"><a>Login</a></li>
-            <li (click)="joinModelControl()"><a>Join</a></li>
-        </ul>
+    <div class="navbar-header">
+        <a class="navbar-brand">line-bot</a>
+    </div>
+    <ul class="nav navbar-nav">
+        <li *ngIf="!isLoggedOn" (click)="loginModalControl()"><a>Login</a></li>
+        <li *ngIf="!isLoggedOn" (click)="joinModelControl()"><a>Join</a></li>
+        <li *ngIf="isLoggedOn" (click)="logoutHandler()"><a>Logout</a></li>
+    </ul>
 </nav>
 
 <app-login-modal [(visible)]="showLoginModal">
-    <h1>login</h1>
-    ID : <input [(ngModel)]="userid"><br>
-    PW : <input type="password" [(ngModel)]="userpw"><br>
-    <button (click)="loginHandler()">Login</button>
-    <button (click)="showLoginModal = !showLoginModal">Close</button>
+
+    <h1>Login</h1>
+    <label>ID : </label><input class = "form-control" placeholder="ID" [(ngModel)]="userid"><br>
+    <label>PW : </label><input class = "form-control" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
+    <button class = "btn btn-default" (click)="loginHandler()">Login</button>
 
     <div class={{alertType}} *ngIf="alertFlag">
         <strong>{{alertMessage}}</strong>
     </div>
+
 </app-login-modal>
 
 <app-join-modal [(visible)]="showJoinModal">
     <h1>Join</h1>
-    ID : <input [(ngModel)]="userid"><br>
-    PW : <input type="password" [(ngModel)]="userpw"><br>
-    <button (click)="joinHandler()">Join</button>
-    <button (click)="showJoinModal = !showJoinModal">Close</button>
+    <label>ID : </label><input class = "form-control" placeholder="ID" [(ngModel)]="userid"><br>
+    <label>PW : </label><input class = "form-control" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
+    <button class = "btn btn-default" (click)="joinHandler()">Join</button>
 
     <div class={{alertType}} *ngIf="alertFlag">
         <strong>{{alertMessage}}</strong>
     </div>
+
 </app-join-modal>
