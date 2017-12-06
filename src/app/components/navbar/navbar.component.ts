@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import { UserService } from '../../services/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,6 +11,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class NavbarComponent {
     @Input() userid: string;
     @Input() userpw: string;
+    @Input() isLoggedOn: boolean;
+    @Output() notify: EventEmitter<Object> = new EventEmitter<Object>();
 
     showLoginModal = false;
     showJoinModal = false;
@@ -37,7 +39,10 @@ export class NavbarComponent {
     loginHandler() {
         this.httpservice.doLogin(this.userid, this.userpw).subscribe(res => {
             this.alert(1, 'Login Success', 1000);
-            this.router.navigate(['menu']);
+            this.showLoginModal = !this.showLoginModal;
+            this.notify.emit();
+            this.router.navigate(['main']);
+
         }, (err: HttpErrorResponse) => {
             if (err.status === 401) {
                 this.alert(2, 'ID or PW Error', 5000);
@@ -63,6 +68,13 @@ export class NavbarComponent {
         }); // request to url which process join
         this.userid = '';
         this.userpw = '';
+    }
+
+    logoutHandler() {
+        this.httpservice.doLogout().subscribe(res => {
+            this.router.navigate(['main']);
+            this.notify.emit();
+        });
     }
 
     loginModalControl() {

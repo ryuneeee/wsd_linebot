@@ -5,8 +5,9 @@ import { AppComponent } from './components/app.component';
 import {CodeWrapperComponent} from './components/code-wrapper/code-wrapper.component';
 
 const routes: Routes = [
-  { path: ':ctxId',  component: CodeWrapperComponent},
-  { path: 'main', component: AppComponent}
+    { path: ':ctxId',  component: CodeWrapperComponent},
+    { path: 'main', component: AppComponent},
+
 ];
 
 @NgModule({
