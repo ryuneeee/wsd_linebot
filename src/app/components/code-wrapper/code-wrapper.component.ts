@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CodeWrapperComponent implements OnInit, OnDestroy {
     private sub: any;
+    private sub2: any;
 
     isLogin: boolean;
 
@@ -24,7 +25,7 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
     constructor(
       private router: Router,
       private route: ActivatedRoute,
-      private service: CodeService
+      private service: CodeService,
       private sessService: SessionService) { }
 
     ngOnInit() {

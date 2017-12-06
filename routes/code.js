@@ -70,7 +70,6 @@ function verifyWriter(req, res, next) {
 
   /* double check.... (1) */
 
-  /*
   let codeId = req.params.id || null;
 
   if (codeId === null)
@@ -78,26 +77,21 @@ function verifyWriter(req, res, next) {
 
   if (/^[0-9a-f]{24}$/g.test(codeId) === false)
     throw new BadRequest('illegal code id format');
-    */
 
   /* double check.... (2) */
-  /*
+
   if (req.session.user === undefined)
     throw new Forbidden('not login');
 
-    */
-/*
   Code.find({'_id': req.params.id}, 'writer', (err, result) => {
     if (err) next(new InternalSE(err));
-    console.log(result.writer, req.session.user.id);
-    if (result.writer === req.session.user.id) {
+    if (result[0].writer === req.session.user.id) {
       next();
     } else {
       next(new Forbidden('you are not writer of this code.'));
     }
   });
-  */
-  next();
+
 }
 
 
