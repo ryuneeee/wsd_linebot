@@ -12,8 +12,8 @@
 <app-login-modal [(visible)]="showLoginModal">
 
     <h1>Login</h1>
-    <label>ID : </label><input class = "form-control" placeholder="ID" [(ngModel)]="userid"><br>
-    <label>PW : </label><input class = "form-control" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
+    <label>ID : </label><input class="form-control white" placeholder="ID" [(ngModel)]="userid"><br>
+    <label>PW : </label><input class="form-control white" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
     <button class = "btn btn-default" (click)="loginHandler()">Login</button>
 
     <div class={{alertType}} *ngIf="alertFlag">
@@ -24,8 +24,8 @@
 
 <app-join-modal [(visible)]="showJoinModal">
     <h1>Join</h1>
-    <label>ID : </label><input class = "form-control" placeholder="ID" [(ngModel)]="userid"><br>
-    <label>PW : </label><input class = "form-control" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
+    <label>ID : </label><input class="form-control white" placeholder="ID" [(ngModel)]="userid"><br>
+    <label>PW : </label><input class="form-control white" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
     <button class = "btn btn-default" (click)="joinHandler()">Join</button>
 
     <div class={{alertType}} *ngIf="alertFlag">
