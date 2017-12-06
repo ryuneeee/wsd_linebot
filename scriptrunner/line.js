@@ -1,5 +1,7 @@
 const sdk = require('@line/bot-sdk');
 const ScriptRunner = require('./script');
+const Code = require('../models/code-model');
+const mongoose = require("mongoose");
 const runner = new ScriptRunner();
 runner.setRequires(['request', 'cheerio', 'iconv']);
 
@@ -8,6 +10,11 @@ const config = {
     channelSecret: process.env.CHANNEL_SECRET
 };
 
+
+mongoose.connect('mongodb://localhost/codes');
+const db = mongoose.connection;
+db.on('error', (e) => { console.log('db error: ' + e); });
+db.on('connected', () => { console.log('Connected successfully to server'); });
 
 class Line{
     constructor(cfg) {
@@ -37,9 +44,13 @@ class Line{
             runner.on('error', function(e){
                 sandbox.reply(e.message)
             });
+        this.getCodeByCtxId(ctxId, (codes) => {
+            for (let i in codes){
+                runner.setContextId(ctxId);
+                runner.run(this.createCode(codes[i].content), sandbox); //TODO: request get predefined code database query by context Id
+            }
+        });
 
-        runner.setContextId(ctxId);
-        runner.run(this.createCode(event.message.text.substring(1)), sandbox); //TODO: request get predefined code database query by context Id
     };
 
     createSandbox(event) {
@@ -52,6 +63,12 @@ class Line{
 
     createCode(code){
         return '(function(){\n' + code + '\n})();'
+    }
+
+    getCodeByCtxId(ctxId, f) {
+        return Code.find({'ctxId': ctxId}, (err, result) => {
+            f(result);
+        });
     }
 }
 

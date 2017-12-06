@@ -22,6 +22,7 @@
     "cheerio": "^1.0.0-rc.2",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.4.1",
+    "deasync": "^0.1.11",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "^4.15.5",

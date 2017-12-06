@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const Line = require('../scriptrunner/line');
+const Code = require('../models/code-model');
 
 const BadRequest = require('../errors/error.400');
 const Forbidden  = require('../errors/error.403');
@@ -12,7 +13,6 @@ const db = mongoose.connection;
 db.on('error', (e) => { console.log('db error: ' + e); });
 db.on('connected', () => { console.log('Connected successfully to server'); });
 
-const Code = require('../models/code-model');
 
 const line = new Line();
 
@@ -79,8 +79,20 @@ router.post('/codes/test', (req, res, next) => {
     "message": {
         "id": "325708",
         "type": "text",
-        "text": req.body.code
+        "text": req.body.input
     }
+  };
+
+  Line.reply = function(){
+
+  }
+
+  line.getCodeByCtxId = (ctxId, f) => {
+      let code = new Code();
+      code.content = req.body.code;
+      let codes = [];
+      codes.push(code);
+      f(codes);
   };
 
   line.reply = message => { result.push(message);};

@@ -43,7 +43,7 @@ export class CodeService {
 
   runCode(code: Code, input: string) {
     return this.http.post('/codes/test', {
-      'code': '>' + code.content,
+      'code': code.content,
       'input': input
     });
   }
