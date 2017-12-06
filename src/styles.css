@@ -31,6 +31,14 @@ input {
   border-radius: 0 !important;
   -webkit-border-radius: 0 !important;
   -moz-border-radius: 0 !important;
+}
+
+input.white {
+    background: #ffffff !important;
+    color: #222222 !important;
+}
+
+input.dark {
   background: #2d2d2d !important;
   color: #C1C5CE !important;
 }

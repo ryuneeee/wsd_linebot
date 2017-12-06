@@ -19,22 +19,29 @@ export class CodeTesterComponent {
 
   constructor(private service: CodeService) { }
 
-    run() {
-      if (this.input !== '') {
-        console.log(this.input);
-        const chat = new Chat();
-        chat.type = 'me';
-        chat.message = this.input;
-        this.chats.push(chat);
-        this.input = '';
+  run() {
+    if (this.input !== '') {
+      this.pushMessage('me', this.input);
+      this.input = '';
+    }
+
+    this.service.runCode(this.code, this.input).subscribe((m: Result) => {
+      for (const msg of m.message){
+        this.pushMessage('him', msg);
       }
-      this.service.runCode(this.code, this.input).subscribe((m: Result) => {
-        for (const msg of m.message){
-          const chat = new Chat();
-          chat.type = 'him';
-          chat.message = msg;
-          this.chats.push(chat);
-        }
-      });
+    });
+  }
+
+  pushMessage(type, message) {
+    let chat = new Chat();
+    chat.type = type;
+    chat.message = message;
+    this.chats.push(chat);
+  }
+
+  onKey(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.run();
     }
   }
+}

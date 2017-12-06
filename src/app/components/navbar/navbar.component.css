@@ -10,3 +10,31 @@ a {
     border-bottom: solid #007AAC 1px;
     margin: 0px;
 }
+
+.btn:hover {
+    float: right;
+    display: block;
+}
+
+.btn {
+    float: right;
+    display: block;
+    margin-left: 5px;
+}
+
+label {
+    color: #222222;
+}
+
+h1 {
+    color: #222222;
+}
+
+.alert {
+    float: left;
+    display: block;
+}
+
+nav > ul {
+    float: right;
+}
