@@ -49,7 +49,8 @@ export class NavbarComponent implements OnInit {
             this.alert(1, 'Login Success', 1000);
             this.showLoginModal = !this.showLoginModal;
             this.notify.emit();
-            this.router.navigate(['main']);
+            //this.router.navigate(['main']);
+            this.router.navigateByUrl(this.router.url.replace('?notlogin=1', ''));
 
         }, (err: HttpErrorResponse) => {
             if (err.status === 401) {

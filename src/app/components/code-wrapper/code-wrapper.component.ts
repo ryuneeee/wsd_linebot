@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CodeService } from '../../services/code.service';
 import { Code } from '../../models/code';
 
+import { HttpErrorResponse } from '@angular/common/http';
+
 @Component({
     selector: 'app-code-wrapper',
     templateUrl: './code-wrapper.component.html',
@@ -11,6 +13,7 @@ import { Code } from '../../models/code';
 export class CodeWrapperComponent implements OnInit, OnDestroy {
     private sub: any;
 
+    //@Input() isLogin: boolean;
     isLogin: boolean;
 
     ctxId: string;
@@ -24,7 +27,7 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
       private service: CodeService) { }
 
     ngOnInit() {
-      this.isLogin = true;
+      this.isLogin = false;
 
       this.codes = null;
       this.selectedCode = null;
@@ -39,7 +42,9 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
     getCodeList() {
       this.service.getCodes(this.ctxId).subscribe((c: Code[]) => {
         this.codes = c;
-      }, this.service.errorHandler);
+      }, (err: HttpErrorResponse) => {
+        this.router.navigateByUrl(this.router.url + '?notlogin=1');
+      });
     }
 
     selectCode(code: Code) {
