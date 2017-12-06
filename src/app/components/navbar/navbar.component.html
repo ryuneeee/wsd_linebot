@@ -3,9 +3,11 @@
         <a class="navbar-brand">line-bot</a>
     </div>
     <ul class="nav navbar-nav">
-        <li *ngIf="!isLoggedOn" (click)="loginModalControl()"><a>Login</a></li>
-        <li *ngIf="!isLoggedOn" (click)="joinModelControl()"><a>Join</a></li>
-        <li *ngIf="isLoggedOn" (click)="logoutHandler()"><a>Logout</a></li>
+        <li *ngIf="isLoggedOn; else notLoggedOn" (click)="logoutHandler()"><a>Logout</a></li>
+        <ng-template #notLoggedOn>
+          <li (click)="loginModalControl()"><a>Login</a></li>
+          <li (click)="joinModelControl()"><a>Join</a></li>
+        </ng-template>
     </ul>
 </nav>
 
