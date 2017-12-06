@@ -1,7 +1,7 @@
 <div class="tester" data-title="Test">
   <div class="tester-chat" #autoScroll [scrollTop]="autoScroll.scrollHeight">
     <ul *ngFor='let chat of chats'>
-      <li class="{{ chat.type }}">{{ chat.message }}</li>
+      <li class="{{ chat.type }}"><pre>{{ chat.message }}</pre></li>
     </ul>
   </div>
   <div class="tester-input">
