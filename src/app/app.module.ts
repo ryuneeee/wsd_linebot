@@ -11,7 +11,6 @@ import { AppComponent } from './components/app.component';
 // login
 import { NavbarComponent }     from './components/navbar/navbar.component';
 import { LoginModalComponent } from './components/login-modal/login.modal.component';
-import { JoinModalComponent }  from './components/join-modal/join.modal.component';
 
 // code
 import {CodeHelloComponent} from './components/code-hello/code-hello.component';
@@ -37,7 +36,6 @@ import {SessionService} from './services/session.service';
     CodeReferenceComponent,
     CodeWrapperComponent,
     LoginModalComponent,
-    JoinModalComponent,
     NavbarComponent,
   ],
   imports: [

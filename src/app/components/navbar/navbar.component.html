@@ -4,7 +4,6 @@
     </div>
     <ul class="nav navbar-nav">
         <li *ngIf="!isLoggedOn" (click)="loginModalControl()"><a>Login</a></li>
-        <li *ngIf="!isLoggedOn" (click)="joinModelControl()"><a>Join</a></li>
         <li *ngIf="isLoggedOn" (click)="logoutHandler()"><a>Logout</a></li>
     </ul>
 </nav>
@@ -15,21 +14,10 @@
     <label>ID : </label><input class="form-control white" placeholder="ID" [(ngModel)]="userid"><br>
     <label>PW : </label><input class="form-control white" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
     <button class = "btn btn-default" (click)="loginHandler()">Login</button>
-
-    <div class={{alertType}} *ngIf="alertFlag">
-        <strong>{{alertMessage}}</strong>
-    </div>
-
-</app-login-modal>
-
-<app-join-modal [(visible)]="showJoinModal">
-    <h1>Join</h1>
-    <label>ID : </label><input class="form-control white" placeholder="ID" [(ngModel)]="userid"><br>
-    <label>PW : </label><input class="form-control white" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
     <button class = "btn btn-default" (click)="joinHandler()">Join</button>
 
     <div class={{alertType}} *ngIf="alertFlag">
         <strong>{{alertMessage}}</strong>
     </div>
 
-</app-join-modal>
+</app-login-modal>

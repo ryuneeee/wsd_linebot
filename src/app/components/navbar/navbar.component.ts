@@ -1,14 +1,14 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
     @Input() userid: string;
     @Input() userpw: string;
     @Input() isLoggedOn: boolean;
@@ -21,7 +21,15 @@ export class NavbarComponent {
     alertMessage: string;
     alertFlag: boolean;
 
-    constructor(private httpservice: UserService, private router: Router) {}
+    constructor(private httpservice: UserService, private router: Router, private activatedRoute: ActivatedRoute) {}
+
+    ngOnInit() {
+        this.activatedRoute.queryParams.subscribe((params: Params) => {
+            if (params.hasOwnProperty('notlogin')) {
+                this.showLoginModal = true;
+            }
+        });
+    }
 
     alert(type: number, message: string, ms: number) {
         if (type === 1) {
@@ -72,7 +80,7 @@ export class NavbarComponent {
 
     logoutHandler() {
         this.httpservice.doLogout().subscribe(res => {
-            this.router.navigate(['main']);
+            // this.router.navigate(['main']);
             this.notify.emit();
         });
     }
@@ -80,12 +88,6 @@ export class NavbarComponent {
     loginModalControl() {
         if (this.showJoinModal !== true) {
             this.showLoginModal = !this.showLoginModal;
-        }
-    }
-
-    joinModelControl() {
-        if (this.showLoginModal !== true) {
-            this.showJoinModal = !this.showJoinModal;
         }
     }
 

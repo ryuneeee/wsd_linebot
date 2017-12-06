@@ -19,7 +19,7 @@ a {
 .btn {
     float: right;
     display: block;
-
+    margin-left: 5px;
 }
 
 label {
