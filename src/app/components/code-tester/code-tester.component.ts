@@ -22,7 +22,6 @@ export class CodeTesterComponent {
   run() {
     if (this.input !== '') {
       this.pushMessage('me', this.input);
-      this.input = '';
     }
 
     this.service.runCode(this.code, this.input).subscribe((m: Result) => {
@@ -30,6 +29,8 @@ export class CodeTesterComponent {
         this.pushMessage('him', msg);
       }
     });
+
+    this.input = '';
   }
 
   pushMessage(type, message) {
