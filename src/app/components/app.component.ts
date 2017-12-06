@@ -24,11 +24,13 @@ export class AppComponent implements OnInit {
             this.userObject = res;
             this.userId = this.userObject;
             this.isLoggedOn = true;
+            this.sessService.emitLoginStatus(true);
         }, (err: HttpErrorResponse) => {
             if (err.status === 401) {
-                this.isLoggedOn = false;
+              this.isLoggedOn = false;
+              this.sessService.emitLoginStatus(false);
             } else {
-                // TODO: error handling
+              // TODO: error handling
             }
         });
     }

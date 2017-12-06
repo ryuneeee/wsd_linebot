@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CodeService } from '../../services/code.service';
+import {SessionService} from '../../services/session.service';
 import { Code } from '../../models/code';
 
 import { HttpErrorResponse } from '@angular/common/http';
@@ -13,7 +14,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class CodeWrapperComponent implements OnInit, OnDestroy {
     private sub: any;
 
-    //@Input() isLogin: boolean;
     isLogin: boolean;
 
     ctxId: string;
@@ -24,17 +24,24 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
     constructor(
       private router: Router,
       private route: ActivatedRoute,
-      private service: CodeService) { }
+      private service: CodeService
+      private sessService: SessionService) { }
 
     ngOnInit() {
-      this.isLogin = false;
-
       this.codes = null;
       this.selectedCode = null;
 
       this.sub = this.route.params.subscribe(params => {
          this.ctxId = params['ctxId'];
-         this.getCodeList();
+      });
+
+      this.sub2 = this.sessService.isLoggedOn$.subscribe((isLoggedOn: boolean) => {
+        this.isLogin = isLoggedOn;
+        if (this.isLogin) {
+          this.getCodeList();
+        } else {
+          this.router.navigateByUrl(this.router.url + '?notlogin=1');
+        }
       });
 
     }
@@ -43,7 +50,7 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
       this.service.getCodes(this.ctxId).subscribe((c: Code[]) => {
         this.codes = c;
       }, (err: HttpErrorResponse) => {
-        this.router.navigateByUrl(this.router.url + '?notlogin=1');
+
       });
     }
 
@@ -57,6 +64,7 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
       this.sub.unsubscribe();
+      this.sub2.unsubscribe();
     }
 
 }

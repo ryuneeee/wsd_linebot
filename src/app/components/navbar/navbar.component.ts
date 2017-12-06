@@ -21,7 +21,10 @@ export class NavbarComponent implements OnInit {
     alertMessage: string;
     alertFlag: boolean;
 
-    constructor(private httpservice: UserService, private router: Router, private activatedRoute: ActivatedRoute) {}
+    constructor(
+      private httpservice: UserService,
+      private router: Router,
+      private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe((params: Params) => {
@@ -49,9 +52,8 @@ export class NavbarComponent implements OnInit {
             this.alert(1, 'Login Success', 1000);
             this.showLoginModal = !this.showLoginModal;
             this.notify.emit();
-            //this.router.navigate(['main']);
+            //this.sessService.emitLoginStatus(true);
             this.router.navigateByUrl(this.router.url.replace('?notlogin=1', ''));
-
         }, (err: HttpErrorResponse) => {
             if (err.status === 401) {
                 this.alert(2, 'ID or PW Error', 5000);
@@ -83,6 +85,7 @@ export class NavbarComponent implements OnInit {
         this.httpservice.doLogout().subscribe(res => {
             // this.router.navigate(['main']);
             this.notify.emit();
+            //this.sessService.emitLoginStatus(false);
         });
     }
 
