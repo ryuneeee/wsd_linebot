@@ -1,20 +1,22 @@
 <nav class="navbar navbar-static-top">
     <div class="navbar-header">
-        <a class="navbar-brand">line-bot</a>
+        <a class="navbar-brand"> <i class="fa fa-user-circle" aria-hidden="true"></i></a>
     </div>
     <ul class="nav navbar-nav">
         <li *ngIf="!isLoggedOn" (click)="loginModalControl()"><a>Login</a></li>
-        <li *ngIf="isLoggedOn" (click)="logoutHandler()"><a>Logout</a></li>
+        <li *ngIf="isLoggedOn" (click)="logoutHandler()"><a><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a></li>
     </ul>
 </nav>
 
 <app-login-modal [(visible)]="showLoginModal">
 
-    <i class="fa fa-user-circle fa-5x" aria-hidden="true"> Line bot</i><br>
+    <div class="login-title">
+        <i class="fa fa-user-circle fa-5x" aria-hidden="true"> Line bot</i><br>
+    </div>
     <input class="form-control white" placeholder="ID" [(ngModel)]="userid">
     <input class="form-control white" placeholder="Password" type="password" [(ngModel)]="userpw">
-    <button id="join-btn" class="btn no-border" (click)="joinHandler()">Join</button>
-    <button id="login-btn" class="btn no-border" (click)="loginHandler()">Login</button>
+    <button id="join-btn" class="btn no-border" (click)="joinHandler()"><i class="fa fa-user-plus" aria-hidden="true"></i> New</button>
+    <button id="login-btn" class="btn no-border" (click)="loginHandler()"><i class="fa fa-sign-in" aria-hidden="true"></i> Sign In</button>
 
 
 
