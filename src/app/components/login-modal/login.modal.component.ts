@@ -14,7 +14,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 
 export class LoginModalComponent implements OnInit {
-    @Input() closable = true;
+    @Input() closable = false;
     @Input() visible: boolean;
     @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
