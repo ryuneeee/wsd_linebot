@@ -27,7 +27,7 @@ function handleEvent(event){
         line.script(event);
 
     if (event.message.text === '!script'){
-        line.reply("https://bot.ryuneeee.com/" + line.getCtxId(event), event);
+        line.reply("https://local.ryuneeee.com/" + line.getCtxId(event), event);
     }
 };
 

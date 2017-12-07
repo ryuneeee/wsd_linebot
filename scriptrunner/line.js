@@ -12,9 +12,6 @@ const config = {
 
 
 mongoose.connect('mongodb://localhost/codes');
-const db = mongoose.connection;
-db.on('error', (e) => { console.log('db error: ' + e); });
-db.on('connected', () => { console.log('Connected successfully to server'); });
 
 class Line{
     constructor(cfg) {

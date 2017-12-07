@@ -9,9 +9,6 @@ const Forbidden  = require('../errors/error.403');
 const InternalSE = require('../errors/error.500');
 
 mongoose.connect('mongodb://localhost/codes');
-const db = mongoose.connection;
-db.on('error', (e) => { console.log('db error: ' + e); });
-db.on('connected', () => { console.log('Connected successfully to server'); });
 
 
 const line = new Line();
@@ -95,7 +92,7 @@ function verifyWriter(req, res, next) {
 }
 
 
-router.post('/codes/test', (req, res, next) => {
+router.post('/codes/test', isLogined, (req, res, next) => {
   let result = [];
   let event = {
     "replyToken": "nHuyWiB7yP5Zw52FIkcQobQuGDXCTA",

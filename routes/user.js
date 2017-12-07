@@ -9,8 +9,6 @@ const InternalServerError = require('../errors/error.500');
 
 mongoose.connect('mongodb://localhost/db');
 const db = mongoose.connection;
-db.on('error', (e) => { console.log('db error: ' + e); });
-db.on('connected', () => { console.log('Connected successfully to server'); });
 
 const User = require('../models/user-model');
 
