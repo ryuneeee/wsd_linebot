@@ -27,7 +27,7 @@ function handleEvent(event){
         line.script(event);
 
     if (event.message.text === '!script'){
-        line.reply("https://local.ryuneeee.com/" + line.getCtxId(event), event);
+        line.reply("https://" + process.env.LINE_BOT_ADDR + "/" + line.getCtxId(event), event);
     }
 };
 
