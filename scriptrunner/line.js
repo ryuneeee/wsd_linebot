@@ -1,7 +1,6 @@
 const sdk = require('@line/bot-sdk');
 const ScriptRunner = require('./script');
 const Code = require('../models/code-model');
-const mongoose = require("mongoose");
 const runner = new ScriptRunner();
 runner.setRequires(['request', 'cheerio', 'iconv']);
 
@@ -9,9 +8,6 @@ const config = {
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
     channelSecret: process.env.CHANNEL_SECRET
 };
-
-
-mongoose.connect('mongodb://localhost/codes');
 
 class Line{
     constructor(cfg) {

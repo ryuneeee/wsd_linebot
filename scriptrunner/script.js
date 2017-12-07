@@ -31,7 +31,6 @@ class ScriptRunner extends EventEmitter {
     }
 
     run(code, sandbox){
-        sandbox = sandbox || this.sandbox;
         try {
             Function.prototype.toString = hiddenFunction;
             if(sandbox !== undefined && sandbox.require === undefined)
@@ -40,10 +39,11 @@ class ScriptRunner extends EventEmitter {
                 sandbox.ctx = this._context(this.map, this.contextId);
             let script = new vm.Script(code, {lineOffset: 1, displayErrors: true});
 
+            this.sandbox = sandbox;
             // If you want to change 'once' events: https://stackoverflow.com/questions/12150540/javascript-eventemitter-multiple-events-once
             if (domain._events.error === undefined)
                 domain.on('error', (error) => {
-                    if(this._events.error !== undefined) this.emit('error', sandbox, error); else console.error(error);
+                    if(this._events.error !== undefined) this.emit('error', this.sandbox, error); else console.error(error);
                 });
             domain.run(()=> {
                 script.runInNewContext(sandbox, {timeout: this.timeout});

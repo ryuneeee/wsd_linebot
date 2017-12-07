@@ -1,14 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const router = express.Router();
-
 const BadRequest = require('../errors/error.400');
 const Unauthorized  = require('../errors/error.401');
 const Forbidden  = require('../errors/error.403');
 const InternalServerError = require('../errors/error.500');
-
-mongoose.connect('mongodb://localhost/db');
-const db = mongoose.connection;
 
 const User = require('../models/user-model');
 

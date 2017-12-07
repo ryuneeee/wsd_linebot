@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const router = express.Router();
 const Line = require('../scriptrunner/line');
 const Code = require('../models/code-model');
@@ -7,9 +6,6 @@ const Code = require('../models/code-model');
 const BadRequest = require('../errors/error.400');
 const Forbidden  = require('../errors/error.403');
 const InternalSE = require('../errors/error.500');
-
-mongoose.connect('mongodb://localhost/codes');
-
 
 const line = new Line();
 
