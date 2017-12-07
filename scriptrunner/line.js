@@ -42,9 +42,7 @@ class Line{
         let ctxId = this.getCtxId(event);
         let sandbox = this.createSandbox(event);
         if (runner._events.error === undefined)
-            runner.on('error', (box, error) => {
-                box.reply(error.message);
-            });
+            runner.on('error', (box, error) => { box.reply(error.message); });
         this.getCodeByCtxId(ctxId, (codes) => {
             for (let i in codes){
                 runner.setContextId(ctxId);
