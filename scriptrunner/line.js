@@ -40,9 +40,10 @@ class Line{
     script(event){
         let ctxId = this.getCtxId(event);
         let sandbox = this.createSandbox(event);
+        sandbox.client = this.client;
         if (runner._events.error === undefined)
-            runner.on('error', function(e){
-                sandbox.reply(e.message)
+            runner.on('error', (e) => {
+                this.reply(e.message);
             });
         this.getCodeByCtxId(ctxId, (codes) => {
             for (let i in codes){
