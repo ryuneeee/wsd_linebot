@@ -30,14 +30,17 @@ class Line{
 
 
     reply(message, event){
-            if (!(message instanceof String)) message = String(message);
-            this.client.pushMessage(this.getCtxId(event), {type: 'text', 'text': message});
+        if (!(message instanceof String)) message = String(message);
+        this.client.pushMessage(this.getCtxId(event), {type: 'text', 'text': message});
+    };
+
+    pushMessage(message, event){
+        this.client.pushMessage(this.getCtxId(event), message);
     };
 
     script(event){
         let ctxId = this.getCtxId(event);
         let sandbox = this.createSandbox(event);
-        sandbox.client = this.client;
         if (runner._events.error === undefined)
             runner.on('error', (e) => {
                 this.reply(e.message);
@@ -55,7 +58,8 @@ class Line{
         return {
             event: event,
             message: event.message,
-            reply: (message) => this.reply(message, event)
+            reply: (message) => this.reply(message, event),
+            this: (message) => this.pushMessage(message, event)
         };
     }
 
