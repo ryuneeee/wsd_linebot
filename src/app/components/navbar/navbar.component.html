@@ -10,11 +10,13 @@
 
 <app-login-modal [(visible)]="showLoginModal">
 
-    <h1>Login</h1>
-    <label>ID : </label><input class="form-control white" placeholder="ID" [(ngModel)]="userid"><br>
-    <label>PW : </label><input class="form-control white" placeholder="Password" type="password" [(ngModel)]="userpw"><br>
-    <button class = "btn btn-default" (click)="loginHandler()">Login</button>
-    <button class = "btn btn-default" (click)="joinHandler()">Join</button>
+    <i class="fa fa-user-circle fa-5x" aria-hidden="true"> Line bot</i><br>
+    <input class="form-control white" placeholder="ID" [(ngModel)]="userid">
+    <input class="form-control white" placeholder="Password" type="password" [(ngModel)]="userpw">
+    <button id="join-btn" class="btn no-border" (click)="joinHandler()">Join</button>
+    <button id="login-btn" class="btn no-border" (click)="loginHandler()">Login</button>
+
+
 
     <div class={{alertType}} *ngIf="alertFlag">
         <strong>{{alertMessage}}</strong>

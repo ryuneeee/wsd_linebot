@@ -37,5 +37,9 @@
     position: absolute;
     top: 8px;
     right: 8px;
-    font-size: 1.2em;
+    /*font-size: 1.2em;*/
+}
+
+i {
+    padding: 5px;
 }
