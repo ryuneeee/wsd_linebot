@@ -5,13 +5,13 @@ import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class SessionService {
-  private isLoggedOnSource = new Subject<boolean>();
-  isLoggedOn$ = this.isLoggedOnSource.asObservable();
+  private usernameSource = new Subject<String>();
+  username$ = this.usernameSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
-  emitLoginStatus(isLoggedOn: boolean) {
-    this.isLoggedOnSource.next(isLoggedOn);
+  emitUsername(username: String) {
+    this.usernameSource.next(username);
   }
 
   sessionCheck() {

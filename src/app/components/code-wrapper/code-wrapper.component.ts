@@ -36,8 +36,8 @@ export class CodeWrapperComponent implements OnInit, OnDestroy {
          this.ctxId = params['ctxId'];
       });
 
-      this.sub2 = this.sessService.isLoggedOn$.subscribe((isLoggedOn: boolean) => {
-        this.isLogin = isLoggedOn;
+      this.sub2 = this.sessService.username$.subscribe((username: String) => {
+        this.isLogin = (username !== null);
         if (this.isLogin) {
           this.getCodeList();
         } else {

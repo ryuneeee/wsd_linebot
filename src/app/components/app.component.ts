@@ -8,9 +8,7 @@ import {HttpErrorResponse} from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
-    userObject: any;
-    userId: string;
+    userId: String;
     isLoggedOn: boolean;
 
     constructor(private sessService: SessionService) {}
@@ -20,19 +18,21 @@ export class AppComponent implements OnInit {
     }
 
     checkSession() {
-        this.sessService.sessionCheck().subscribe(res => {
-            this.userObject = res;
-            this.userId = this.userObject;
-            this.isLoggedOn = true;
-            this.sessService.emitLoginStatus(true);
+        this.sessService.sessionCheck().subscribe((res: String) => {
+            this.setUserId(res);
         }, (err: HttpErrorResponse) => {
             if (err.status === 401) {
-              this.isLoggedOn = false;
-              this.sessService.emitLoginStatus(false);
+              this.setUserId(null);
             } else {
               // TODO: error handling
             }
         });
+    }
+
+    setUserId(userId: String) {
+      this.userId = userId;
+      this.isLoggedOn = (userId !== null);
+      this.sessService.emitUsername(userId);
     }
 
 
