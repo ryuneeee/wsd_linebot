@@ -47,7 +47,7 @@ nav > ul {
     float: right;
 }
 
-i {
+.login-title {
     margin: 20px;
     padding-left: 40px;
     color: #2C303A;
