@@ -25,7 +25,5 @@ export class UserService {
         return this.http.post('/logout', { });
     }
 
-    sessionCheck() {
-        return this.http.post('/checkSess', {});
-    }
+
 }

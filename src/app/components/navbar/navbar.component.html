@@ -1,6 +1,6 @@
 <nav class="navbar navbar-static-top">
     <div class="navbar-header">
-        <a class="navbar-brand"> <i class="fa fa-user-circle" aria-hidden="true"></i></a>
+        <a class="navbar-brand"> <i class="fa fa-user-circle" aria-hidden="true"></i> {{navTitle}}</a>
     </div>
     <ul class="nav navbar-nav">
         <li *ngIf="!isLoggedOn" (click)="loginModalControl()"><a>Login</a></li>

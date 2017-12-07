@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
     showLoginModal = false;
     showJoinModal = false;
 
+    @Input() navTitle = '';
     alertType: string;
     alertMessage: string;
     alertFlag: boolean;
@@ -94,5 +95,4 @@ export class NavbarComponent implements OnInit {
             this.showLoginModal = !this.showLoginModal;
         }
     }
-
 }
