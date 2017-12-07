@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CodeWriteComponent } from './code-write.component';
+import { CodeHelloComponent } from './code-hello.component';
 
 describe('CodeHelloComponent', () => {
-  let component: CodeWriteComponent;
-  let fixture: ComponentFixture<CodeWriteComponent>;
+  let component: CodeHelloComponent;
+  let fixture: ComponentFixture<CodeHelloComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CodeWriteComponent ]
+      declarations: [ CodeHelloComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CodeWriteComponent);
+    fixture = TestBed.createComponent(CodeHelloComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

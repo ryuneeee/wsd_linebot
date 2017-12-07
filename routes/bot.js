@@ -24,11 +24,10 @@ function handleEvent(event){
         line.reply('Canceled jobId: ' + jid, event);
     }
 
-    if (event.message.text[0] === '>')
         line.script(event);
 
     if (event.message.text === '!script'){
-        line.reply("https://bot.ryuneeee.com/" + line.getCtxId(event), event);
+        line.reply("https://" + process.env.LINE_BOT_ADDR + "/" + line.getCtxId(event), event);
     }
 };
 

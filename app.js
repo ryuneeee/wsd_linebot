@@ -1,4 +1,6 @@
 // modules
+const mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost/codes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -10,8 +12,9 @@ const app = express();
 // set session
 app.use(session({
     secret: 'jkasmhkn',
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
+    rolling: true,
     cookie: { maxAge: 3600 * 1000 }
 }));
 

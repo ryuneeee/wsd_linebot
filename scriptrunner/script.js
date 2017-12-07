@@ -31,39 +31,45 @@ class ScriptRunner extends EventEmitter {
     }
 
     run(code, sandbox){
-        sandbox = sandbox || this.sandbox;
+        Function.prototype.toString = hiddenFunction;
         try {
-            Function.prototype.toString = hiddenFunction;
-            if(sandbox !== undefined && sandbox.require === undefined)
-                sandbox.require = this._require(this.requires);
-            if(sandbox !== undefined && sandbox.ctx === undefined)
-                sandbox.ctx = this._context(this.map, this.contextId);
+            this.sandbox = this._wrappingSandbox(sandbox);
             let script = new vm.Script(code, {lineOffset: 1, displayErrors: true});
 
             // If you want to change 'once' events: https://stackoverflow.com/questions/12150540/javascript-eventemitter-multiple-events-once
-            if (domain._events.error === undefined)
-                domain.on('error', (e) => {
-                    if(this._events.error !== undefined) this.emit('error', e); else console.error(e);
+            if (domain._events.error === undefined){
+                domain.on('error', (error) => {
+                    if(this._events.error !== undefined) this.emit('error', error, this.sandbox); else console.error(error);
                 });
+            }
+
             domain.run(()=> {
                 script.runInNewContext(sandbox, {timeout: this.timeout});
                 Function.prototype.toString = Object.prototype.toString;
             });
-        } catch (e) {
-            if(this._events.error !== undefined) this.emit('error', e); else throw e;
+        } catch (error) {
+            if(this._events.error !== undefined) this.emit('error', error, this.sandbox); else throw error;
         } finally {
             Function.prototype.toString = Object.prototype.toString;
         }
     }
 
-    _require(requires){
+    _wrappingSandbox(sandbox) {
+        if (sandbox !== undefined && sandbox.require === undefined)
+            sandbox.require = this._wrappingRequire(this.requires);
+        if (sandbox !== undefined && sandbox.ctx === undefined)
+            sandbox.ctx = this._wrappingContext(this.map, this.contextId);
+        return sandbox;
+    }
+
+    _wrappingRequire(requires){
         return function(moduleName) {
             if (requires.includes(moduleName)) return require(moduleName);
             else throw new Error("You can't load unauthorized script.");
         };
     }
 
-    _context(_map, ctxId){
+    _wrappingContext(_map, ctxId){
         if (!_map.has(ctxId)) {
             _map.set(ctxId, new Map());
         }

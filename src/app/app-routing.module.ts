@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './components/app.component';
 import {CodeWrapperComponent} from './components/code-wrapper/code-wrapper.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 const routes: Routes = [
-  { path: ':ctxId',  component: CodeWrapperComponent},
-  { path: 'main', component: AppComponent}
+    { path: ':ctxId',  component: CodeWrapperComponent},
 ];
 
 @NgModule({

@@ -1,12 +1,12 @@
 <div class="tester" data-title="Test">
-  <div class="tester-chat">
+  <div class="tester-chat" #autoScroll [scrollTop]="autoScroll.scrollHeight">
     <ul *ngFor='let chat of chats'>
-      <li class="{{ chat.type }}">{{ chat.message }}</li>
+      <li class="{{ chat.type }}"><pre>{{ chat.message }}</pre></li>
     </ul>
   </div>
   <div class="tester-input">
     <div class="col-md-11">
-      <input type="text" class="form-control no-border" [(ngModel)]="input" placeholder="유저의 메시지를 입력하세요. 입력시 유저의 메시지가 같이 들어가며, 없으면 스크립트만 실행됩니다.">
+      <input type="text" class="form-control no-border dark" [(ngModel)]="input" placeholder="유저의 메시지를 입력하세요. 입력시 유저의 메시지가 같이 들어가며, 없으면 스크립트만 실행됩니다." (keyup)="onKey($event)" />
     </div>
     <div class="col-md-1">
       <button class="btn" (click)="run()">실행</button>
