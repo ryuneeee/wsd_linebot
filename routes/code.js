@@ -109,10 +109,6 @@ router.post('/codes/test', isLogined, (req, res, next) => {
     }
   };
 
-  Line.reply = function(){
-
-  }
-
   line.getCodeByCtxId = (ctxId, f) => {
       let code = new Code();
       code.content = req.body.code;
@@ -127,7 +123,7 @@ router.post('/codes/test', isLogined, (req, res, next) => {
   //Wating for script execution time. Because script execution is asynchronous.
   setTimeout(function () {
       res.status(200).json({"message": result}).end();
-  }, 1000);
+  }, 1500);
 });
 
 

@@ -42,15 +42,15 @@ class ScriptRunner extends EventEmitter {
 
             // If you want to change 'once' events: https://stackoverflow.com/questions/12150540/javascript-eventemitter-multiple-events-once
             if (domain._events.error === undefined)
-                domain.on('error', (e) => {
-                    if(this._events.error !== undefined) this.emit('error', e); else console.error(e);
+                domain.on('error', (error) => {
+                    if(this._events.error !== undefined) this.emit('error', sandbox, error); else console.error(error);
                 });
             domain.run(()=> {
                 script.runInNewContext(sandbox, {timeout: this.timeout});
                 Function.prototype.toString = Object.prototype.toString;
             });
-        } catch (e) {
-            if(this._events.error !== undefined) this.emit('error', e); else throw e;
+        } catch (error) {
+            if(this._events.error !== undefined) this.emit('error', sandbox, error); else throw error;
         } finally {
             Function.prototype.toString = Object.prototype.toString;
         }

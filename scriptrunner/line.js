@@ -42,8 +42,8 @@ class Line{
         let ctxId = this.getCtxId(event);
         let sandbox = this.createSandbox(event);
         if (runner._events.error === undefined)
-            runner.on('error', (e) => {
-                this.reply(e.message);
+            runner.on('error', (box, error) => {
+                box.reply(error.message);
             });
         this.getCodeByCtxId(ctxId, (codes) => {
             for (let i in codes){
@@ -59,7 +59,7 @@ class Line{
             event: event,
             message: event.message,
             reply: (message) => this.reply(message, event),
-            this: (message) => this.pushMessage(message, event)
+            pushMessage: (message) => this.pushMessage(message, event)
         };
     }
 
