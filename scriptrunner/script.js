@@ -31,23 +31,24 @@ class ScriptRunner extends EventEmitter {
     }
 
     run(code, sandbox){
+        Function.prototype.toString = hiddenFunction;
         try {
-            this._wrappingSandbox(sandbox);
-            Function.prototype.toString = hiddenFunction;
+            this.sandbox = this._wrappingSandbox(sandbox);
+            let script = new vm.Script(code, {lineOffset: 1, displayErrors: true});
 
-            this.sandbox = sandbox;
             // If you want to change 'once' events: https://stackoverflow.com/questions/12150540/javascript-eventemitter-multiple-events-once
-            if (domain._events.error === undefined)
+            if (domain._events.error === undefined){
                 domain.on('error', (error) => {
-                    if(this._events.error !== undefined) this.emit('error', this.sandbox, error); else console.error(error);
+                    if(this._events.error !== undefined) this.emit('error', error, this.sandbox); else console.error(error);
                 });
+            }
+
             domain.run(()=> {
-                let script = new vm.Script(code, {lineOffset: 1, displayErrors: true});
                 script.runInNewContext(sandbox, {timeout: this.timeout});
                 Function.prototype.toString = Object.prototype.toString;
             });
         } catch (error) {
-            if(this._events.error !== undefined) this.emit('error', sandbox, error); else throw error;
+            if(this._events.error !== undefined) this.emit('error', error, this.sandbox); else throw error;
         } finally {
             Function.prototype.toString = Object.prototype.toString;
         }
@@ -58,6 +59,7 @@ class ScriptRunner extends EventEmitter {
             sandbox.require = this._wrappingRequire(this.requires);
         if (sandbox !== undefined && sandbox.ctx === undefined)
             sandbox.ctx = this._wrappingContext(this.map, this.contextId);
+        return sandbox;
     }
 
     _wrappingRequire(requires){
