@@ -41,6 +41,7 @@ class Line{
 
         this.getCodeByCtxId(ctxId, (codes) => {
             for (let i in codes){
+                if(codes[i].interval === null) continue;
                 runner.setContextId(ctxId);
                 runner.run(this.createCode(codes[i].content), sandbox);
             }
@@ -49,7 +50,7 @@ class Line{
     };
 
     scriptJob(code){
-        if(code.interval === null || code.interval.trim() === '') return;
+        if(code.interval === null) return;
         this.cancelJob(code.id);
 
         runner.addJob(code.id, code.interval, ()=> {
