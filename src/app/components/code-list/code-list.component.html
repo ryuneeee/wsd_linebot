@@ -1,0 +1,25 @@
+<div class="list-wrapper" *ngIf="codes; else elseBlock">
+<table class="table">
+  <thead>
+    <tr>
+      <th class="col-md-1 delete-box" scope="col"></th>
+      <th class="col-md-8" scope="col">Script Name</th>
+      <th class="col-md-4 code-writer" scope="col">Author</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let code of codes'>
+      <td class="col-md-1 delete-box"><input (change)="checkedCode($event.srcElement, code)" type="checkbox"></td>
+      <td class="col-md-8"(click)="selectCode(code)">{{ code.name }}</td>
+      <td class="col-md-4 code-writer" (click)="selectCode(code)">{{ code.writer}}</td>
+    </tr>
+  </tbody>
+</table>
+
+  <button class="btn delete-btn" (click)="deleteCode()">삭제</button>
+  <button class="btn new-code" (click)="newCode()">새 스크립트 작성</button>
+</div>
+<ng-template #elseBlock>
+  <div style="text-align: center;">
+    <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+  </div></ng-template>

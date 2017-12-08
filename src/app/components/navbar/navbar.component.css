@@ -1,0 +1,61 @@
+a {
+    /*color: #C1C5CE;*/
+}
+
+.navbar-brand, .navbar-nav>li>a{
+    text-shadow: none;
+}
+
+.navbar {
+    border-bottom: solid #007AAC 1px;
+    margin: 0;
+    -webkit-box-shadow: 0 8px 6px -6px #000;
+    -moz-box-shadow: 0 8px 6px -6px #000;
+    box-shadow: 0 8px 6px -6px #000;
+}
+
+.btn {
+    display: block;
+    font-size: 1.2em;
+    color: #C1C5CE;
+    padding: 15px;
+    width: 100px;
+}
+
+.btn:hover {
+    color: #007AAC;
+}
+
+
+input {
+    height: 50px;
+    margin: 20px 0px;
+    font-size: 1.4em;
+}
+
+#join-btn{
+    float: left;
+}
+#login-btn{
+    float: right;
+}
+
+.alert {
+    /*float: left;*/
+    margin: 90px auto 10px auto;
+    display: block;
+}
+
+nav > ul {
+    float: right;
+}
+
+.login-title {
+    margin: 20px;
+    padding-left: 40px;
+    color: #2C303A;
+}
+
+.fa-sign-out{
+    font-size: 1.3em;
+}

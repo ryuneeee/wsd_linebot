@@ -1,33 +1,45 @@
 // modules
+const mongoose = require("mongoose");
+mongoose.connect('mongodb://localhost/codes');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-
-//express
 const express = require('express');
+const session = require('express-session');
+const Line = require('./scriptrunner/line');
+const line = new Line();
+line.loadJob();
+
 const app = express();
+module.exports = app;
+app.line = line;
 
-//express router
-// app.use('/', require('./routes/index'));
-app.use('/bot', require('./routes/linebot'));
-app.use('/users', require('./routes/users'));
+// set session
+app.use(session({
+    secret: 'jkasmhkn',
+    resave: true,
+    saveUninitialized: false,
+    rolling: true,
+    cookie: { maxAge: 3600 * 1000 }
+}));
 
-// proxy to Angular
-app.use(express.static(path.join(__dirname, 'dist')));
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
-});
+//Don't move bot router below body parser
 
-
-// parser & view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.use('/bot', require('./routes/bot'));
+app.set('env', 'development');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+//express router
+app.use('/', require('./routes/user'));
+app.use('/', require('./routes/code'));
+
+// proxy to Angular
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('*', (req, res) => { res.sendFile(path.join(__dirname, 'dist/index.html')); });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -36,15 +48,11 @@ app.use(function(req, res, next) {
     next(err);
 });
 
-// error handler
 app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
+  if (req.app.get('env') === 'development')
+    console.log(err);
+  let messag = err.message;
+  let status = err.status || 500;
+  res.status(status).json({ 'error': messag }).end();
 });
 
-module.exports = app;

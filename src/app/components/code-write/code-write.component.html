@@ -1,0 +1,25 @@
+<div class="col-md-12 editor">
+  <div class="save">
+    <div class="col-md-7">
+      <div class="input-group">
+        <span class="input-group-addon no-border">스크립트 이름</span>
+        <input type="text" class="form-control no-border dark" [(ngModel)]="code==null?null:code.name" [attr.disabled]="code?null:''" placeholder="에코봇">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <div class="col-md-7">
+          <span class="input-group-addon no-border">반복 (Cron Style)</span>
+        </div>
+        <div class="col-md-5">
+        <input type="text" class="form-control no-border dark" [(ngModel)]="code==null?null:code.interval" [attr.disabled]="code?null:''" placeholder="*/10 * * *">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <button class="btn" [attr.disabled]="code?null:''" (click)="submit()">저장</button>
+    </div>
+  </div>
+  <ace-editor [(text)]="code==null?null:code.content" mode="javascript" [readOnly]="code?false:true" [options]="options"></ace-editor>
+  <app-code-tester [code]="code"></app-code-tester>
+</div>

@@ -1,0 +1,20 @@
+<div *ngIf="isLogin; else elseBlock" class="container-fluid">
+    <div class="col-md-3">
+        <app-code-list [codes]="codes" [selectedCode]="selectedCode" (notify)="selectCode($event)" (notify2)="getCodeList()"></app-code-list>
+    </div>
+    <div class="col-md-6 editor-wrapper">
+        <app-code-write *ngIf="selectedCode; else codeNotSelected" [code]="selectedCode" (notify)="getCodeList()"></app-code-write>
+        <ng-template #codeNotSelected>
+            <app-code-hello (notify)="selectCode($event)"></app-code-hello>
+        </ng-template>
+    </div>
+    <div class="col-md-3 doc">
+        <app-code-reference></app-code-reference>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+    <div style="text-align: center;">
+        <i class="fa fa-spinner fa-6" aria-hidden="true"></i>
+    </div>
+</ng-template>

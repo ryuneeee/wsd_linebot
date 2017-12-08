@@ -1,0 +1,73 @@
+.write-button{
+  float: right;
+}
+
+.save{
+  height: 40px;
+}
+
+.save >  div {
+  padding: 0;
+  height: 100%;
+}
+
+.input-group {
+  height: 40px;
+  font-size: 1.2em;
+}
+
+.input-group-addon{
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  background: #393939;
+  color: #C1C5CE;
+  height: inherit;
+}
+
+.input-group > div {
+  padding: 0;
+  margin: 0;
+  height: inherit;
+
+}
+
+.input-group input {
+  height: inherit;
+}
+
+.save > div > button {
+  width: 100%;
+  height: 100%;
+  font-size: 1.2em;
+}
+
+.schedule {
+  border: 0;
+  outline: 2px solid #393939;
+  outline-offset: -2px;
+  text-align-last: center;
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  background: #393939;
+  color: #C1C5CE;
+  height: 100%;
+}
+
+ace-editor{
+  margin-top: 10px;
+  height: calc(70% - 50px);
+  background: none;
+  overflow: hidden;
+}
+
+.editor{
+  padding: 0;
+  height: 100%;
+}
+
+::-webkit-input-placeholder { color: #555; } /* Chrome/Opera/Safari */
+::-moz-placeholder { color: #555; } /* Firefox 19+ */
+:-ms-input-placeholder { color: #555; } /* IE 10+ */
+:-moz-placeholder { color: #555; }/* Firefox 18- */

@@ -1,1 +1,51 @@
+html {
+    height: calc(100% - 26px);
+}
+body {
+    height: inherit;
+    color: #C1C5CE;
+    background: #2C303A;
+}
+
+@media (max-width: 1000px) {
+    html, body {min-width:1000px;}
+}
+
+.ace_gutter, .ace_gutter-active-line {
+    background: none !important;
+}
+
+.btn{
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  background: #404040;
+    color: #C1C5CE;
+}
+
+.btn:hover {
+    color: #6bbdff;
+}
+
+input {
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+}
+
+input.white {
+    background: #ffffff !important;
+    color: #222222 !important;
+}
+
+input.dark {
+  background: #2d2d2d !important;
+  color: #C1C5CE !important;
+}
+
+.no-border {
+  border: 0;
+  box-shadow: none; /* You may want to include this as bootstrap applies these styles too */
+}
+
 /* You can add global styles to this file, and also import other style files */
