@@ -41,10 +41,7 @@ class Line{
             runner.on('error', (error, box) => { box.reply(error.message); });
         this.getCodeByCtxId(ctxId, (codes) => {
             for (let i in codes){
-<<<<<<< Updated upstream
-=======
                 if(codes[i].interval !== null) continue;
->>>>>>> Stashed changes
                 runner.setContextId(ctxId);
                 runner.run(this.createCode(codes[i].content), sandbox); //TODO: request get predefined code database query by context Id
             }
