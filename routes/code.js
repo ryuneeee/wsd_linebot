@@ -207,7 +207,6 @@ router.delete('/code/:id', isLogined, verifyCodeId, verifyWriter, (req, res, nex
     Code.findOne({'_id': req.params.id}, (err, result) => {
         if (err) next(new InternalSE(err));
         line.cancelJob(result.id);
-        console.log('removed: ' + result.id);
         result.remove();
         res.json({'result': 'success'}).end();
     });
