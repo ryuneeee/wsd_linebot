@@ -1,6 +1,8 @@
 const domain = require('domain').create();
 const EventEmitter = require('events');
 const vm = require('vm');
+const schedule = require('node-schedule');
+
 
 function hiddenFunction() {
     // toString overriding for prevent that user can seeing.
@@ -30,6 +32,20 @@ class ScriptRunner extends EventEmitter {
         this.contextId = id;
     }
 
+    addJob(jobId, interval, func){
+        schedule.scheduleJob(jobId, interval, func);
+    }
+
+    isRunningJob(jobId){
+        return (schedule.scheduledJobs[jobId] !== undefined);
+    }
+
+    cancelJob(jobId){
+        if(this.isRunningJob(jobId)) {
+            schedule.scheduledJobs[jobId].cancel();
+        }
+    }
+
     run(code, sandbox){
         Function.prototype.toString = hiddenFunction;
         try {
@@ -39,7 +55,7 @@ class ScriptRunner extends EventEmitter {
             // If you want to change 'once' events: https://stackoverflow.com/questions/12150540/javascript-eventemitter-multiple-events-once
             if (domain._events.error === undefined){
                 domain.on('error', (error) => {
-                    if(this._events.error !== undefined) this.emit('error', error, this.sandbox); else console.error(error);
+                    (this._events.error !== undefined) ? this.emit('error', error, this.sandbox) : console.error(error);
                 });
             }
 

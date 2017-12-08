@@ -7,7 +7,13 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
+const Line = require('./scriptrunner/line');
+const line = new Line();
+line.loadJob();
+
 const app = express();
+module.exports = app;
+app.line = line;
 
 // set session
 app.use(session({
@@ -19,6 +25,7 @@ app.use(session({
 }));
 
 //Don't move bot router below body parser
+
 app.use('/bot', require('./routes/bot'));
 app.set('env', 'development');
 app.use(logger('dev'));
@@ -49,4 +56,3 @@ app.use(function(err, req, res, next) {
   res.status(status).json({ 'error': messag }).end();
 });
 
-module.exports = app;

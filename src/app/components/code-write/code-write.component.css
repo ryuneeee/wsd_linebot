@@ -12,7 +12,8 @@
 }
 
 .input-group {
-  height: 100%;
+  height: 40px;
+  font-size: 1.2em;
 }
 
 .input-group-addon{
@@ -21,15 +22,24 @@
   -moz-border-radius: 0 !important;
   background: #393939;
   color: #C1C5CE;
+  height: inherit;
 }
 
-.input-group > input {
-  height: 100%;
+.input-group > div {
+  padding: 0;
+  margin: 0;
+  height: inherit;
+
+}
+
+.input-group input {
+  height: inherit;
 }
 
 .save > div > button {
   width: 100%;
   height: 100%;
+  font-size: 1.2em;
 }
 
 .schedule {
