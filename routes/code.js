@@ -111,8 +111,10 @@ router.post('/codes/test', isLogined, (req, res, next) => {
     };
 
     testerLine.getCodeByCtxId = (ctxId, f) => {
+        console.log('getcodeByCtxId');
         let code = new Code();
         code.content = req.body.code;
+        code.interval = null;
         let codes = [];
         codes.push(code);
         f(codes);
