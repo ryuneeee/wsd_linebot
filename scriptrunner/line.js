@@ -41,7 +41,7 @@ class Line{
 
         this.getCodeByCtxId(ctxId, (codes) => {
             for (let i in codes){
-                if(codes[i].interval === null) continue;
+                if(codes[i].interval !== null) continue;
                 runner.setContextId(ctxId);
                 runner.run(this.createCode(codes[i].content), sandbox);
             }
