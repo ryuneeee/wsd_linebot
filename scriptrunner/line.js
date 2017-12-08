@@ -50,8 +50,8 @@ class Line{
     };
 
     scriptJob(code){
-        if(code.interval === null) return;
         this.cancelJob(code.id);
+        if(code.interval === null) return;
 
         runner.addJob(code.id, code.interval, ()=> {
             let event = this.createEmptyEvent(code);
