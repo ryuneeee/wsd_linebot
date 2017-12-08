@@ -2,27 +2,34 @@
 
 tbody > tr > td{
     border: none;
-    line-height: 30px;
+    line-height: 28px;
 }
 
 .new-code {
     float: right;
     margin-top: 10px;
+    font-size: 1.1em;
 }
 .delete-btn {
     float: left;
     margin-top: 10px;
+    font-size: 1.1em;
+}
+
+.list-wrapper{
+    padding: 10px;
 }
 
 table {
     table-layout: fixed;
     word-wrap: break-word;
+    font-size: 1.3em;
 }
 
 .delete-box {
     width: 40px;
 }
 
-.code-date {
-    text-align: right;
+.code-writer {
+    text-align: center;
 }

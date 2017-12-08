@@ -1,15 +1,26 @@
-.editor{
-  background: #333;
-  padding: 0;
-  height: 100%;
-  display: table;
+.editor {
+    background: #333;
+    padding: 0;
+    height: 100%;
+    display: table;
 }
 
 .editor > div {
-    display:table-cell;
-    vertical-align:middle;
+    display: table-cell;
+    vertical-align: middle;
 }
-h3, p{
-  padding: 10px;
-  text-align: center;
+
+h2, p {
+    padding: 20px;
+    text-align: center;
+}
+
+p {
+    font-size: 1.3em;
+}
+
+.new-code {
+    height: 60px;
+    width: 200px;
+    font-size: 1.1em;
 }

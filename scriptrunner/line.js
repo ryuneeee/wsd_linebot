@@ -3,6 +3,7 @@ const ScriptRunner = require('./script');
 const Code = require('../models/code-model');
 const runner = new ScriptRunner();
 runner.setRequires(['request', 'cheerio', 'iconv']);
+runner.on('error', (error, box) => { box.reply(error.message); });
 
 const config = {
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
@@ -37,25 +38,33 @@ class Line{
     script(event){
         let ctxId = this.getCtxId(event);
         let sandbox = this.createSandbox(event);
-        if (runner._events.error === undefined)
-            runner.on('error', (error, box) => { box.reply(error.message); });
+
         this.getCodeByCtxId(ctxId, (codes) => {
             for (let i in codes){
                 if(codes[i].interval !== null) continue;
                 runner.setContextId(ctxId);
-                runner.run(this.createCode(codes[i].content), sandbox); //TODO: request get predefined code database query by context Id
+                runner.run(this.createCode(codes[i].content), sandbox);
             }
         });
 
     };
 
-    createSandbox(event) {
-        return {
-            event: event,
-            message: event.message,
-            reply: (message) => this.reply(message, event),
-            pushMessage: (message) => this.pushMessage(message, event)
-        };
+    scriptJob(code){
+        if(code.interval === null) return;
+        this.cancelJob(code.id);
+
+        runner.addJob(code.id, code.interval, ()=> {
+            let event = this.createEmptyEvent(code);
+            let sandbox = this.createSandbox(event);
+            runner.setContextId(code.ctxId);
+            runner.run(this.createCode(code.content), sandbox);
+        });
+    }
+
+    cancelJob(jobId){
+        if(runner.isRunningJob(jobId)) {
+            runner.cancelJob(jobId);
+        }
     }
 
     createCode(code){
@@ -67,8 +76,33 @@ class Line{
             f(result);
         });
     }
-}
 
+    createSandbox(event) {
+        return {
+            event: event,
+            message: event.message,
+            reply: (message) => this.reply(message, event),
+            pushMessage: (message) => this.pushMessage(message, event)
+        };
+    }
+
+    createEmptyEvent(code) {
+        let event = {};
+        let ctxPrefix = code.ctxId.substr(0,1);
+        if(ctxPrefix === 'U') event.source = {"type": "user", "userId": code.ctxId};
+        if(ctxPrefix === 'C') event.source = {"type": "group", "groupId": code.ctxId};
+        if(ctxPrefix === 'R') event.source = {"type": "room", "roomId": code.ctxId};
+        return event;
+    }
+
+    loadJob() {
+        Code.find({}, (err, codes) => {
+            console.info("Loading " + codes.length + " script ...");
+            for (let i in codes) if(codes[i].interval) this.scriptJob(codes[i]);
+            console.info("Done!");
+        });
+    }
+}
 
 
 module.exports = Line;

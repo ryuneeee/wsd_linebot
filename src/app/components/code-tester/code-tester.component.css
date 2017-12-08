@@ -33,11 +33,13 @@
 
 .tester-input > div > input {
   height: 100%;
+  font-size: 1.2em;
 }
 
 .tester-input > div > button {
   width: 100%;
   height: 100%;
+  font-size:1.2em;
 }
 
 .him{

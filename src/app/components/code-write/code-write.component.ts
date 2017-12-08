@@ -23,7 +23,7 @@ export class CodeWriteComponent implements OnInit, OnChanges {
     if (c == null) return;
     if (c.id == undefined) {
       c.name = c.name || '';
-      c.interval = c.interval || 0;
+      c.interval = c.interval || '';
       c.content = c.content || '';
       this.code = c;
     } else {

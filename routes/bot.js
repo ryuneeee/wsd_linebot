@@ -1,35 +1,20 @@
-let jobId = 0;
 const express = require('express');
-const Line = require('../scriptrunner/line');
-const schedule = require('node-schedule');
+const app = require('../app');
+const line = app.line;
 const router = express.Router();
-const line = new Line();
 
 
-
-function handleEvent(event){
+function handleEvent(event) {
     if (event.type !== 'message' || event.message.type !== 'text') {
         return Promise.resolve(null);
     }
 
-    if (event.message.text[0] === '*') {
-        schedule.scheduleJob(jobId.toString(), '*/1 * * * *', () => { line.script(event) });
-        line.reply('jobId: ' + jobId++, event);
-    }
-
-    if (event.message.text[0] === '^'){
-        let jid = event.message.text.substring(1);
-        if(schedule.scheduledJobs[jid] === undefined) return;
-        schedule.scheduledJobs[jid].cancel();
-        line.reply('Canceled jobId: ' + jid, event);
-    }
-
+    if (event.message.text === '!script')
+        line.reply("https://" + process.env.LINE_BOT_ADDR + "/" + line.getCtxId(event), event);
+    else
         line.script(event);
 
-    if (event.message.text === '!script'){
-        line.reply("https://" + process.env.LINE_BOT_ADDR + "/" + line.getCtxId(event), event);
-    }
-};
+}
 
 //line bot webhook
 router.post('/', line.middleware, (req, res) => {

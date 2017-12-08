@@ -1,24 +1,20 @@
 <div class="col-md-12 editor">
   <div class="save">
-    <div class="col-md-9">
+    <div class="col-md-7">
       <div class="input-group">
         <span class="input-group-addon no-border">스크립트 이름</span>
         <input type="text" class="form-control no-border dark" [(ngModel)]="code==null?null:code.name" [attr.disabled]="code?null:''" placeholder="에코봇">
       </div>
     </div>
-    <div class="col-md-2">
-      <select class="schedule form-control no-border" [(ngModel)]="code==null?0:code.interval" [attr.disabled]="code?null:''">
-        <option value="0">반복 안함</option>
-        <option value="1">1분 마다</option>
-        <option value="5">5분 마다</option>
-        <option value="10">10분 마다</option>
-        <option value="30">30분 마다</option>
-        <option value="60">1시간 마다</option>
-        <option value="180">3시간 마다</option>
-        <option value="360">6시간 마다</option>
-        <option value="720">12시간 마다</option>
-        <option value="1440">24시간 마다</option>
-      </select>
+    <div class="col-md-4">
+      <div class="input-group">
+        <div class="col-md-7">
+          <span class="input-group-addon no-border">반복 (Cron Style)</span>
+        </div>
+        <div class="col-md-5">
+        <input type="text" class="form-control no-border dark" [(ngModel)]="code==null?null:code.interval" [attr.disabled]="code?null:''" placeholder="*/10 * * *">
+        </div>
+      </div>
     </div>
     <div class="col-md-1">
       <button class="btn" [attr.disabled]="code?null:''" (click)="submit()">저장</button>
