@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Code } from '../models/code';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class CodeService {
   public selectedCode: Code = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
   getCodes(ctxId) {
     return this.http.get('/codes/' + ctxId);
@@ -39,6 +41,10 @@ export class CodeService {
   errorHandler(err: HttpErrorResponse) {
     const message = err.error;
     alert(message.error);
+    console.log(err.status);
+      if (err.status === 403) {
+          window.location.reload();
+      }
   }
 
   runCode(code: Code, input: string) {

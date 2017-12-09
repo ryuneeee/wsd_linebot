@@ -59,6 +59,9 @@ export class CodeListComponent implements OnInit {
       }, (err: HttpErrorResponse) => {
         const message = err.error;
         alert(message.error);
+        if (err.status === 403) {
+            window.location.reload();
+        }
       });
     })(this);
 
