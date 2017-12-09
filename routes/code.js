@@ -36,11 +36,14 @@ function verifyCtxId(req, res, next) {
 
 function verifyCode(req, res, next) {
     let name = req.body.name || null;
-    try {
-        cronParser.parseExpression(req.body.interval);
-        if(req.body.interval.trim() === '') req.body.interval = null;
-    } catch (error) {
-        throw new BadRequest('invalid interval structure');
+    if(req.body.interval === null || req.body.interval.trim() === '') {
+        req.body.interval = null;
+    }else{
+        try {
+            cronParser.parseExpression(req.body.interval);
+        } catch (error) {
+            throw new BadRequest('invalid interval structure');
+        }
     }
     let content = req.body.content || null;
     if (name === null) throw new BadRequest('no code name');
