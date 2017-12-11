@@ -1,68 +1,149 @@
+<div class="mume markdown-preview   ">
+<h1 class="mume-header" id="sandbox">Sandbox</h1>
 
-    <h4>reply([MESSAGE])</h4>
-    <table>
-      <thead>
-      <tr>
-        <th>Argument Name</th>
-        <th>Description</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>MESSAGE</td>
-        <td>Only String</td>
-      </tr>
-      </tbody>
-    </table>
-    <hr />
-    <h4>setValue(KEY, VALUE)</h4>
-    <table>
-      <thead>
-      <tr>
-        <th>Argument Name</th>
-        <th>Description</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>KEY</td>
-        <td>Only String</td>
-      </tr>
-      <tr>
-        <td>VALUE</td>
-        <td>Only String</td>
-      </tr>
-      </tbody>
-    </table>
-    <hr />
-    <h4>getValue(KEY)</h4>
-    <table>
-      <thead>
-      <tr>
-        <th>Argument Name</th>
-        <th>Description</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>KEY</td>
-        <td>Only String</td>
-      </tr>
-      </tbody>
-    </table>
-    <hr />
-    <h4>delValue(KEY)</h4>
-    <table>
-      <thead>
-      <tr>
-        <th>Argument Name</th>
-        <th>Description</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>KEY</td>
-        <td>Only String</td>
-      </tr>
-      </tbody>
-    </table>
+<h4 class="mume-header" id="independency">Independency</h4>
+
+<p>스크립트는 각각 독립적으로 실행됩니다. 즉, 첫번재 스크립트가 실행될 때와, 두번째 스크립트가 실행될 때 서로 상태를 공유하지 않습니다. 이는 스크립트를 실행할때 매번 초기화된 Sandbox를 구성하기 때문에 그렇습니다. 마치 UnitTest에서 각각의 테스트가 서로의 영역을 침범하지 않는것 처럼 말이죠.</p>
+<p>이러한 이유 때문에, 각각의 스크립트가 서로 독립적으로 작동 되는것을 보장 받습니다.</p>
+<h4 class="mume-header" id="nodejs-runtime">Node.js Runtime</h4>
+
+<p>Sandbox에는 제한적으로 Node.js의 Runtime 환경이 구성되어 있습니다. 그냥 평범한 JavaScript로 봇을 만들기에는 심심하니까요. 그래서, Node.js의 <code>require()</code>를 바인딩하여 허용된 모듈을 통해 여러가지 재미난 봇을 만들 수 있습니다. 현재는 다음과 같이 크롤링에 사용되는 모듈 위주로 구성되어 있습니다.</p>
+<blockquote>
+<p><em>request</em> <a href="https://github.com/request/request">https://github.com/request/request</a><br>
+<em>cheerio</em> <a href="http://cheerio.js.org">http://cheerio.js.org</a><br>
+<em>iconv</em> <a href="https://github.com/bnoordhuis/node-iconv">https://github.com/bnoordhuis/node-iconv</a></p>
+</blockquote>
+<p><strong>예를 들어 볼까요?</strong></p>
+<pre class="language-JavaScript"><span class="token keyword">if</span><span class="token punctuation">(</span>message<span class="token punctuation">.</span>text<span class="token operator">===</span><span class="token string">'100달러'</span><span class="token punctuation">)</span><span class="token punctuation">{{ '{' }}</span>
+<span class="token keyword">let</span> request <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'request'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> cheerio <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'cheerio'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> value <span class="token operator">=</span> message<span class="token punctuation">.</span>text<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex">/,/gi</span><span class="token punctuation">,</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> currency <span class="token operator">=</span> message<span class="token punctuation">.</span>text<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+request<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token punctuation">{{ '{' }}</span>url<span class="token punctuation">:</span><span class="token template-string"><span class="token string">`https://ko.exchange-rates.org/converter/USD/KRW/100`</span></span><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>error<span class="token punctuation">,</span> response<span class="token punctuation">,</span> body<span class="token punctuation">)</span> <span class="token punctuation">{{ '{' }}</span>
+<span class="token keyword">try</span><span class="token punctuation">{{ '{' }}</span>
+  <span class="token keyword">let</span> $ <span class="token operator">=</span> cheerio<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#ctl00_M_lblToAmount"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token string">''</span><span class="token punctuation">)</span><span class="token punctuation">{{ '{' }}</span>
+      <span class="token function">reply</span><span class="token punctuation">(</span><span class="token function">$</span><span class="token punctuation">(</span><span class="token string">"#ctl00_M_lblToAmount"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">text</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span><span class="token string">'.'</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">'원'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token keyword">catch</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span><span class="token punctuation">{{ '{' }}</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</pre>
+<p>유저가 <code>100달러</code> 라고 채팅창에 쓰면 해당 되는 가격인 <code>108,685원</code>을 돌려주는 예제입니다. 이렇게 간단하게 봇을 만들 수 있습니다. <strong>아 참 에러메시지는 채팅방에 전송되니, 복잡한 스크립트 들은 꼭 try~catch로 에러처리 하는 습관을 잊지 마세요!</strong></p>
+<h4 class="mume-header" id="%EB%B0%98%EB%B3%B5-job">반복 Job</h4>
+
+<p>코드 편집 창 오른쪽 위에를 보면 반복을 정의할 수 있는 입력 칸이 있습니다. Unix 시스템의 cron 형태로 지원되며,</p>
+<p><strong>1. 아무것도 입력하지 않으면 일반 메시지처럼 유저의 메시지에만 반응합니다.</strong><br>
+2. 반복 기능을 사용하면 유저의 메시지에 반응하지 않습니다.<br>
+따라서, 스크립트에서 메시지 Event나 Message를 참조할 수 없습니다.</p>
+<pre class="language-">*    *    *    *    *
+&#x252C;    &#x252C;    &#x252C;    &#x252C;    &#x252C;
+&#x2502;    &#x2502;    &#x2502;    &#x2502;    |
+&#x2502;    &#x2502;    &#x2502;    &#x2502;    &#x2514; day of week (0 - 7) (0 or 7 is Sun)
+&#x2502;    &#x2502;    &#x2502;    &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500; month (1 - 12)
+&#x2502;    &#x2502;    &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500; day of month (1 - 31)
+&#x2502;    &#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500; hour (0 - 23)
+&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500; minute (0 - 59)
+</pre>
+<h5 class="mume-header" id="example">Example</h5>
+
+<pre class="language-javascript"><span class="token comment" spellcheck="true">//분 단위 반복</span>
+<span class="token operator">*</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span>   <span class="token comment" spellcheck="true">//매 1분마다 반복</span>
+<span class="token operator">*</span><span class="token operator">/</span><span class="token number">5</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span>   <span class="token comment" spellcheck="true">//매 5분마다 반복</span>
+<span class="token operator">*</span><span class="token operator">/</span><span class="token number">10</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span>  <span class="token comment" spellcheck="true">//매 10분마다 반복</span>
+<span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span>     <span class="token comment" spellcheck="true">//매 2시~2시59분 사이 분단위 반복 ex) 2:00, 2:01, ..., 2:59</span>
+<span class="token operator">*</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span>   <span class="token comment" spellcheck="true">//매 2시간 마다 분단위 반복 ex) 2:00, 2:01, ..., 2:59, 4:00, 4:01, ..., 4:59, 6:00, 6:01, ..., 6:59, ...</span>
+
+<span class="token comment" spellcheck="true">//시간 단위 반복</span>
+<span class="token number">0</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span>   <span class="token comment" spellcheck="true">//매 1시간 마다 반복 ex) 1:00, 2:00, 3:00, 4:00, ...</span>
+<span class="token number">0</span> <span class="token operator">*</span><span class="token operator">/</span><span class="token number">6</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span>   <span class="token comment" spellcheck="true">//매 6시간 마다 반복 ex) 0:00, 6:00, 12:00, 18:00, ...</span>
+
+<span class="token comment" spellcheck="true">//특정 시간에 반복</span>
+<span class="token number">15</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span>    <span class="token comment" spellcheck="true">//매시 15분마다 반복 ex) 0:15, 1:15, 2:15 ...</span>
+<span class="token number">0</span> <span class="token number">9</span> <span class="token operator">*</span> <span class="token operator">*</span> <span class="token operator">*</span>     <span class="token comment" spellcheck="true">//매 9시마다 반복 ex) 9:00, 다음날 9:00, ...</span>
+
+</pre>
+<h1 class="mume-header" id="reference">Reference</h1>
+
+<h4 class="mume-header" id="event">event</h4>
+
+<p>라인 유저가 보낸 메시지. 이를 이벤트라 한다. 자세한 것은 <a href="https://developers.line.me/en/docs/messaging-api/reference/#message-event">LINE API Reference - Message event</a>을 참조하세요.</p>
+<pre class="language-javascript"><span class="token keyword">let</span> event <span class="token operator">=</span> <span class="token punctuation">{{ '{' }}</span>
+<span class="token string">"replyToken"</span><span class="token punctuation">:</span> <span class="token string">"nHuyWiB7yP5Zw52FIkcQobQuGDXCTA"</span><span class="token punctuation">,</span>
+<span class="token string">"type"</span><span class="token punctuation">:</span> <span class="token string">"message"</span><span class="token punctuation">,</span>
+<span class="token string">"timestamp"</span><span class="token punctuation">:</span> <span class="token number">1462629479859</span><span class="token punctuation">,</span>
+<span class="token string">"source"</span><span class="token punctuation">:</span> <span class="token punctuation">{{ '{' }}</span>
+<span class="token string">"type"</span><span class="token punctuation">:</span> <span class="token string">"user"</span><span class="token punctuation">,</span>
+<span class="token string">"userId"</span><span class="token punctuation">:</span> <span class="token string">"U4af4980629..."</span>
+<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token string">"message"</span><span class="token punctuation">:</span> <span class="token punctuation">{{ '{' }}</span>
+<span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token string">"325708"</span><span class="token punctuation">,</span>
+<span class="token string">"type"</span><span class="token punctuation">:</span> <span class="token string">"text"</span><span class="token punctuation">,</span>
+<span class="token string">"text"</span><span class="token punctuation">:</span> <span class="token string">"Hello, world"</span>
+<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</pre>
+<hr>
+<h4 class="mume-header" id="message">message</h4>
+
+<p><code>event</code> 내부에 있는 <code>message</code> Object를 쓰기 편하게 별도로 빼놓은 것 입니다.</p>
+<pre class="language-javascript"><span class="token keyword">let</span> message <span class="token operator">=</span> <span class="token punctuation">{{ '{' }}</span>
+<span class="token string">"id"</span><span class="token punctuation">:</span> <span class="token string">"325708"</span><span class="token punctuation">,</span>
+<span class="token string">"type"</span><span class="token punctuation">:</span> <span class="token string">"text"</span><span class="token punctuation">,</span>
+<span class="token string">"text"</span><span class="token punctuation">:</span> <span class="token string">"Hello, world"</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token function">reply</span><span class="token punctuation">(</span>message<span class="token punctuation">.</span>text<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// Hello, World</span>
+</pre>
+<hr>
+<h4 class="mume-header" id="replymessage">reply(message)</h4>
+
+<p><strong>message:</strong> 챗봇이 받은 이벤트에서 간단하게 String 메시지를 전달하고 싶을때 사용합니다.</p>
+<h6 class="mume-header" id="example-1">Example</h6>
+
+<pre class="language-javascript"><span class="token function">reply</span><span class="token punctuation">(</span><span class="token string">'Hello, World'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//Hello, World</span>
+</pre>
+<hr>
+<h4 class="mume-header" id="pushmessagemessage-object">pushMessage(message: Object)</h4>
+
+<p>챗봇에서 채팅방으로 답장을 하고자 할때 사용한다. 해당 메시지 오브젝트는 LINE에서 다루는 형태이고, 자세한 것은 <a href="https://developers.line.me/en/docs/messaging-api/reference/#message-objects">LINE API Reference - Message objects</a> 참조하세요.</p>
+<h6 class="mume-header" id="example-1-message">Example 1: Message</h6>
+
+<pre class="language-javascript"><span class="token keyword">let</span> msg <span class="token operator">=</span> <span class="token punctuation">{{ '{' }}</span>
+<span class="token string">"type"</span><span class="token punctuation">:</span> <span class="token string">"text"</span><span class="token punctuation">,</span>
+<span class="token string">"text"</span><span class="token punctuation">:</span> <span class="token string">"Hello, world"</span>
+<span class="token punctuation">}</span>
+<span class="token function">pushMessage</span><span class="token punctuation">(</span>msg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre>
+<h6 class="mume-header" id="example-2-sticker">Example 2: Sticker</h6>
+
+<pre class="language-javascript"><span class="token function">pushMessage</span><span class="token punctuation">(</span><span class="token punctuation">{{ '{' }}</span>
+<span class="token string">"type"</span><span class="token punctuation">:</span> <span class="token string">"sticker"</span><span class="token punctuation">,</span>
+<span class="token string">"packageId"</span><span class="token punctuation">:</span> <span class="token string">"1"</span><span class="token punctuation">,</span>
+<span class="token string">"stickerId"</span><span class="token punctuation">:</span> <span class="token string">"1"</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre>
+<h6 class="mume-header" id="example-3-location">Example 3: Location</h6>
+
+<pre class="language-javascript"><span class="token function">pushMessage</span><span class="token punctuation">(</span><span class="token punctuation">{{ '{' }}</span>
+<span class="token string">"type"</span><span class="token punctuation">:</span> <span class="token string">"location"</span><span class="token punctuation">,</span>
+<span class="token string">"title"</span><span class="token punctuation">:</span> <span class="token string">"my location"</span><span class="token punctuation">,</span>
+<span class="token string">"address"</span><span class="token punctuation">:</span> <span class="token string">"〒150-0002 東京都渋谷区渋谷２丁目２１−１"</span><span class="token punctuation">,</span>
+<span class="token string">"latitude"</span><span class="token punctuation">:</span> <span class="token number">35.65910807942215</span><span class="token punctuation">,</span>
+<span class="token string">"longitude"</span><span class="token punctuation">:</span> <span class="token number">139.70372892916203</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</pre>
+<hr>
+<h4 class="mume-header" id="ctx">ctx</h4>
+
+<p>챗봇의 상태 저장을 위한 Map Object. Map Object에 대한 사용 방법은 <a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Map">Map - JavaScript | MDN</a>을 참조하세요.</p>
+<h6 class="mume-header" id="example-2">Example</h6>
+
+<pre class="language-javascript"><span class="token keyword">let</span> foo <span class="token operator">=</span> ctx<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'Foo'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">// get</span>
+ctx<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">'Foo'</span><span class="token punctuation">,</span> <span class="token string">'Bar'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// set</span>
+ctx<span class="token punctuation">.</span><span class="token keyword">delete</span><span class="token punctuation">(</span><span class="token string">'Foo'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// del</span>
+</pre>
+<hr>
+
+</div>
