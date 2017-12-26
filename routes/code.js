@@ -192,7 +192,7 @@ router.post('/code/:id', isLogined, verifyCtxId, verifyCode, (req, res, next) =>
 });
 
 // update code by code id
-router.put('/code/:id', isLogined, verifyCodeId, verifyCode, verifyWriter, (req, res, next) => {
+router.put('/code/:id', isLogined, verifyCodeId, verifyCode, (req, res, next) => {
     Code.findOneAndUpdate({'_id': req.params.id}, {
             'name': req.body.name,
             'interval': req.body.interval,
@@ -208,7 +208,7 @@ router.put('/code/:id', isLogined, verifyCodeId, verifyCode, verifyWriter, (req,
 });
 
 // delete code by code id
-router.delete('/code/:id', isLogined, verifyCodeId, verifyWriter, (req, res, next) => {
+router.delete('/code/:id', isLogined, verifyCodeId, (req, res, next) => {
     Code.findOne({'_id': req.params.id}, (err, result) => {
         if (err) next(new InternalSE(err));
         line.cancelJob(result.id);
