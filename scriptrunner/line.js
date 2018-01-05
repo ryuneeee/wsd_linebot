@@ -3,7 +3,7 @@ const ScriptRunner = require('./script');
 const Code = require('../models/code-model');
 const runner = new ScriptRunner();
 runner.setRequires(['request', 'cheerio', 'iconv']);
-runner.on('error', (error, box) => { box.reply(error.message); });
+// runner.on('error', (error, box) => { box.reply(error.message); });
 
 const config = {
     channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
