@@ -2,7 +2,7 @@ const sdk = require('@line/bot-sdk');
 const ScriptRunner = require('./script');
 const Code = require('../models/code-model');
 const runner = new ScriptRunner();
-runner.setRequires(['request', 'cheerio', 'iconv']);
+runner.setRequires(['request', 'cheerio', 'iconv', 'axios']);
 // runner.on('error', (error, box) => { box.reply(error.message); });
 
 const config = {
