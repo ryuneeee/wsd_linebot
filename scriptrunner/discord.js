@@ -24,7 +24,6 @@ class Discord{
     reply(message, event){
         // if (!(message instanceof String)) message = String(message);
         // this.client.pushMessage(this.getCtxId(event), {type: 'text', 'text': message});
-        console.log(event);
         event.reply(message);
     };
 
