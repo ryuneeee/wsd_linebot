@@ -1,42 +1,28 @@
 const express = require('express');
 const app = require('../app');
-const line = app.line;
+const receiver = app.receiver;
 const router = express.Router();
 
+const discordjs = require('discord.js');
+const client = new discordjs.Client();
+receiver.client = client;
 
-function handleEvent(event) {
-    if (event.type !== 'message' || event.message.type !== 'text') {
-        return Promise.resolve(null);
-    }
-
-    if (event.message.text === '!script')
-        line.reply("https://" + process.env.LINE_BOT_ADDR + "/" + line.getCtxId(event), event);
-    else
-        line.script(event);
-
-}
-
-//line bot webhook
-router.post('/', line.middleware, (req, res) => {
-    try {
-        res.json(req.body.events.map(handleEvent));
-
-    } catch (e) {
-        console.error(e);
-    }
+client.on('ready', () => {
+    console.log(`Logged in as ${client.user.tag}!`);
 });
 
+client.on('message', msg => {
+    if (msg.content === 'ping') {
+        msg.reply('Pong!');
+    }
 
-// error handler
-router.use(function(err, req, res) {
-    // set locals, only providing error in development
-    console.error(err);
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    if (msg.content === '!script')
+        receiver.reply("http://" + process.env.HOST + "/" + receiver.getCtxId(msg), msg);
+    else if(!msg.author.bot)
+        receiver.script(msg);
 
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
 });
+
+client.login(process.env.DISCORD_TOKEN);
 
 module.exports = router;

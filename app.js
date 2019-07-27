@@ -7,13 +7,15 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const Line = require('./scriptrunner/line');
-const line = new Line();
-line.loadJob();
+const Discord = require('./scriptrunner/discord');
+const receiver = new Discord();
+receiver.loadJob();
 
 const app = express();
 module.exports = app;
-app.line = line;
+app.receiver = receiver;
+
+const webhook = require('./routes/bot');
 
 // set session
 app.use(session({
@@ -26,7 +28,7 @@ app.use(session({
 
 //Don't move bot router below body parser
 
-app.use('/bot', require('./routes/bot'));
+// app.use('/bot', require('./routes/bot'));
 app.set('env', 'development');
 app.use(logger('dev'));
 app.use(bodyParser.json());

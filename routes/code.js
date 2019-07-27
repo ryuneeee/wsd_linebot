@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const app = require('../app');
-const Line = require('../scriptrunner/line');
-const line = app.line;
+const Discord = require('../scriptrunner/discord');
+const receiver = app.receiver;
 const Code = require('../models/code-model');
 const cronParser = require('cron-parser');
 
@@ -10,7 +10,7 @@ const BadRequest = require('../errors/error.400');
 const Forbidden = require('../errors/error.403');
 const InternalSE = require('../errors/error.500');
 
-const testerLine = new Line();
+const testerDiscord = new Discord();
 
 // middleware
 function isLogined(req, res, next) {
@@ -28,8 +28,8 @@ function verifyCtxId(req, res, next) {
     if (ctxId === null)
         throw new BadRequest('no context id');
 
-    if (/^[CRU]{1}[0-9a-f]{32}$/g.test(ctxId) == false)
-        throw new BadRequest('illegal context id format');
+    // if (/^[CRU]{1}[0-9a-f]{32}$/g.test(ctxId) == false)
+    //     throw new BadRequest('illegal context id format');
 
     next();
 }
@@ -113,7 +113,7 @@ router.post('/codes/test', isLogined, (req, res, next) => {
         }
     };
 
-    testerLine.getCodeByCtxId = (ctxId, f) => {
+    testerDiscord.getCodeByCtxId = (ctxId, f) => {
         console.log('getcodeByCtxId');
         let code = new Code();
         code.content = req.body.code;
@@ -123,11 +123,11 @@ router.post('/codes/test', isLogined, (req, res, next) => {
         f(codes);
     };
 
-    testerLine.reply = message => {
+    testerDiscord.reply = message => {
         console.log("testing:" + message);
         result.push(message);
     };
-    testerLine.script(event);
+    testerDiscord.script(event);
 
     //Wating for script execution time. Because script execution is asynchronous.
     setTimeout(function () {
@@ -186,7 +186,7 @@ router.post('/code/:id', isLogined, verifyCtxId, verifyCode, (req, res, next) =>
     c.save((err, result) => {
         if (err) next(new InternalSE(err));
 
-        line.scriptJob(result);
+        receiver.scriptJob(result);
         res.json({'result': 'success', 'message': [result.id]}).end();
     });
 });
@@ -201,7 +201,7 @@ router.put('/code/:id', isLogined, verifyCodeId, verifyCode, (req, res, next) =>
         }, {new: true}, (err, result) => {
             if (err) next(new InternalSE(err));
 
-            line.scriptJob(result);
+        receiver.scriptJob(result);
             res.json({'result': 'success'}).end();
         }
     );
@@ -211,7 +211,7 @@ router.put('/code/:id', isLogined, verifyCodeId, verifyCode, (req, res, next) =>
 router.delete('/code/:id', isLogined, verifyCodeId, (req, res, next) => {
     Code.findOne({'_id': req.params.id}, (err, result) => {
         if (err) next(new InternalSE(err));
-        line.cancelJob(result.id);
+        receiver.cancelJob(result.id);
         result.remove();
         res.json({'result': 'success'}).end();
     });
