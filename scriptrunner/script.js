@@ -14,7 +14,7 @@ class ScriptRunner extends EventEmitter {
         super();
         this.requires = [];
         this.sandbox = sandbox || {};
-        this.timeout = 1000;
+        this.timeout = 10000;
         this.map = new Map();
         this.contextId = 'default';
     }
@@ -47,7 +47,7 @@ class ScriptRunner extends EventEmitter {
     }
 
     run(code, sandbox){
-        Function.prototype.toString = hiddenFunction;
+//        Function.prototype.toString = hiddenFunction;
         try {
             this.sandbox = this._wrappingSandbox(sandbox);
             let script = new vm.Script(code, {lineOffset: 1, displayErrors: true});
@@ -61,12 +61,12 @@ class ScriptRunner extends EventEmitter {
 
             domain.run(()=> {
                 script.runInNewContext(sandbox, {timeout: this.timeout});
-                Function.prototype.toString = Object.prototype.toString;
+//                Function.prototype.toString = Object.prototype.toString;
             });
         } catch (error) {
             if(this._events.error !== undefined) this.emit('error', error, this.sandbox); else throw error;
         } finally {
-            Function.prototype.toString = Object.prototype.toString;
+//            Function.prototype.toString = Object.prototype.toString;
         }
     }
 
@@ -75,6 +75,7 @@ class ScriptRunner extends EventEmitter {
             sandbox.require = this._wrappingRequire(this.requires);
         if (sandbox !== undefined && sandbox.ctx === undefined)
             sandbox.ctx = this._wrappingContext(this.map, this.contextId);
+	sandbox.console = console;
         return sandbox;
     }
 

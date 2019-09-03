@@ -1,4 +1,4 @@
 #!/bin/sh
 
 mkdir -p data
-mongod --dbpath ./data/
+mongod --fork --dbpath ./data --logpath log/mongodb.log --logappend
