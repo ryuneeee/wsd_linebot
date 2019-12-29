@@ -36,7 +36,7 @@
     "font-awesome": "^4.7.0",
     "iconv": "^2.3.0",
     "jquery": "^3.4.1",
-    "mongoose": "^4.13.5",
+    "mongoose": "^5.7.7",
     "morgan": "^1.9.1",
     "ng2-ace-editor": "^0.3.3",
     "node-gyp": "^3.6.2",
