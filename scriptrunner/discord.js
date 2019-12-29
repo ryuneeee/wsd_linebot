@@ -28,7 +28,7 @@ class Discord{
     };
 
     send(message, event){
-        let channel = this.client.channels.find("id", event.channel.id);
+        let channel = this.client.channels.find(x => x.id === event.channel.id);
         channel.send(message);
     };
 
@@ -100,7 +100,7 @@ class Discord{
 
     getMention(username) {
         try {
-            return `<@${this.client.users.find("username", username).id}>`
+            return `<@${this.client.users.find(x => x.username === username).id}>`
         } catch (e) {
             return "@null"
         }
