@@ -1,6 +1,6 @@
 // modules
 const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost/codes');
+mongoose.connect(`mongodb://${process.env.MONGODB_URL}/codes`);
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
